@@ -10,6 +10,13 @@ public abstract class SessionSupport implements Session {
 	private String id;
 	private String name;
 	
+	public SessionSupport(String id, String name){
+		this.id = id;
+		this.name = name;
+	}
+	
+	public SessionSupport(){}
+	
 	public String getId() {
 		return id;
 	}

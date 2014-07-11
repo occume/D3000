@@ -1,4 +1,4 @@
-package org.d3.core.login;
+package org.d3.core.protocol.websocket;
 
 import java.util.List;
 
@@ -22,7 +22,6 @@ public class TextWebsocketDecoder extends MessageToMessageDecoder<TextWebSocketF
 	@Override
 	protected void decode(ChannelHandlerContext ctx, TextWebSocketFrame msg,
 			List<Object> out) throws Exception {
-		System.out.println("TextWebsocketDecoder");
 		String data = msg.text();
 		System.out.println(data);
 		BasePacket pkt = jackson.readValue(data, BasePacket.class);

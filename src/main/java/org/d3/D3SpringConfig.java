@@ -41,7 +41,9 @@ public class D3SpringConfig
 	@Bean(name="roomService")
 	public RoomService roomService(){
 		RoomService rs = new SimpleRoomService();
-		rs.createRoom();
+		for(int i = 1; i < 11; i++){
+			rs.createRoom(i + "", "room_" + i);
+		}
 		return rs;
 	}
 

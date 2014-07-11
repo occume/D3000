@@ -5,14 +5,15 @@ import org.d3.core.packet.Packet;
 
 public class PlayerSession extends SessionSupport{
 
-	private Transfer 	t;
+	private Dispacher 	t;
 	private Channel 	channel;
 	private Room		room;
 	
 	public PlayerSession(Channel channel){
 		this.channel = channel;
+		setId(channel.id().toString());
 		try {
-			t = new Transfer();
+			t = new Dispacher(this);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -27,7 +28,7 @@ public class PlayerSession extends SessionSupport{
 	}
 	
 	public void sendMessage(Packet pkt) {
-		channel.writeAndFlush(wrap(pkt));
+		channel.writeAndFlush(pkt);
 	}
 
 	public Room getRoom() {

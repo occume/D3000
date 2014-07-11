@@ -10,7 +10,8 @@ public class RoomSession extends SessionSupport{
 	
 	private ChannelGroup group;
 	
-	public RoomSession(){
+	public RoomSession(String id, String name){
+		super(id, name);
 		group = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 	}
 
@@ -19,7 +20,7 @@ public class RoomSession extends SessionSupport{
 	}
 
 	public void sendMassage(Packet pkt) {
-		group.writeAndFlush(wrap(pkt));
+		group.writeAndFlush(pkt);
 	}
 	
 	public void addSession(PlayerSession session){

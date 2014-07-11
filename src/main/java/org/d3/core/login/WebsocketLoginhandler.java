@@ -7,6 +7,9 @@ import org.d3.D3Context;
 import org.d3.core.packet.BasePacket;
 import org.d3.core.packet.Packet;
 import org.d3.core.packet.Packets;
+import org.d3.core.protocol.websocket.PacketHandler;
+import org.d3.core.protocol.websocket.TextWebsocketDecoder;
+import org.d3.core.protocol.websocket.TextWebsocketEncoder;
 import org.d3.core.service.RoomService;
 import org.d3.core.session.PlayerSession;
 import org.d3.core.session.Room;
@@ -70,26 +73,24 @@ public class WebsocketLoginhandler extends SimpleChannelInboundHandler<TextWebSo
 			String password = rstMap.get("password");
 			
 			if(playerService.auth()){
-				Packet pkt1 = Packets.newPacket(Packets.LOG_IN_SUCCESS, null);
-				String json = jackson.writeValueAsString(pkt1);
-				ctx.writeAndFlush(new TextWebSocketFrame(json));
-				
-				Room room = roomService.getRoomById("0001");
-				if(room == null){
-					roomService.createRoom();
-				}
 				
 				PlayerSession session = new PlayerSession(ctx.channel());
-				String id = ctx.channel().id().toString();
-				session.setId(id);
-				session.setRoom(room);
+				
+//				session.setRoom(room);
 				SessionManager.getInstance().putSession(session);
 				
 				ChannelPipeline pipeline = ctx.pipeline();
 				TextWebsocketDecoder decoder = (TextWebsocketDecoder) D3Context.getBean("textWebsocketDecoder");
+				TextWebsocketEncoder encoder = (TextWebsocketEncoder) D3Context.getBean("textWebsocketEncoder");
 				pipeline.addLast(decoder);
-				pipeline.addLast(new PacketProcessor(session));
+				pipeline.addLast(encoder);
+				pipeline.addLast(new PacketHandler(session));
+				
 				pipeline.remove(this);
+				
+				Packet pkt1 = Packets.newPacket(Packets.LOG_IN_SUCCESS, null);
+				String json = jackson.writeValueAsString(pkt1);
+				ctx.writeAndFlush(new TextWebSocketFrame(json));
 			}
 			else{
 				
