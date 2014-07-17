@@ -16,7 +16,7 @@ public class Packets {
 	public static final byte LOG_OUT_SUCCESS = 0x0e;
 	public static final byte LOG_OUT_FAILURE = 0x0f;
 	
-	public static final byte GAME_LIST = 0x10;
+	//public static final byte GAME_LIST = 0x10;
 	public static final byte ROOM_LIST = 0x12;
 	public static final byte GAME_ROOM_JOIN = 0x14;
 	public static final byte GAME_ROOM_LEAVE = 0x16;
@@ -24,6 +24,10 @@ public class Packets {
 	public static final byte GAME_ROOM_JOIN_FAILURE = 0x19;
 	
 	public static final byte ROOM_CREATE = 0x30;
+	public static final byte SEEK_PAHT = 0x31;
+	public static final byte SELECT_ELEM = 0x33;
+	public static final byte MAP_DATA = 0x32;
+	public static final int HEART_BEAT = 0x34;
 	
 	public static final byte START = 0x1a;
 	public static final byte STOP = 0x1b;
@@ -42,7 +46,7 @@ public class Packets {
 	/**
 	 * If a remote connection is disconnected or closed then raise this event.
 	 */
-	public static final byte DISCONNECT = 0x22;
+	//public static final byte DISCONNECT = 0x22;
 	
 	/**
 	 * A network exception will in turn cause this even to be raised.

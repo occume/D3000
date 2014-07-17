@@ -18,8 +18,10 @@ public class TextWebsocketEncoder extends MessageToMessageEncoder<Packet>{
 	@Override
 	protected void encode(ChannelHandlerContext ctx, Packet msg,
 			List<Object> out) throws Exception {
+		
 		String json = ObjectConvert.Me().ojb2json(msg);
 		out.add(new TextWebSocketFrame(json));
+		
 	}
 
 }

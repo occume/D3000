@@ -8,6 +8,7 @@ public class PlayerSession extends SessionSupport{
 	private Dispacher 	t;
 	private Channel 	channel;
 	private Room		room;
+	private volatile boolean online;
 	
 	public PlayerSession(Channel channel){
 		this.channel = channel;
@@ -30,6 +31,18 @@ public class PlayerSession extends SessionSupport{
 	public void sendMessage(Packet pkt) {
 		channel.writeAndFlush(pkt);
 	}
+	
+	public boolean isOnline(){
+		return online;
+	}
+	
+	public void setOnline(){
+		online = true;
+	}
+	
+	public void offLine(){
+		online = false;
+	}
 
 	public Room getRoom() {
 		return room;
@@ -37,11 +50,19 @@ public class PlayerSession extends SessionSupport{
 
 	public void setRoom(Room room) {
 		this.room = room;
-		room.addSession(this);
 	}
 	
 	public Channel getChannel(){
 		return channel;
+	}
+	
+	public void setChannle(Channel channel){
+		this.channel = channel;
+	}
+	
+	public void close(){
+		channel.close();
+		room.removeSession(this);
 	}
 
 }

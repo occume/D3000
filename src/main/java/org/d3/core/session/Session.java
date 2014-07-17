@@ -16,4 +16,9 @@ public interface Session {
 	
 	public void sendMessage(Packet pkt);
 	
+	public void setLastAccessTime(long time);
+	
+	public long getLastAccessTime();
+	
+	public void close();
 }

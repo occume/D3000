@@ -18,7 +18,6 @@ public class TextWebsocketDecoder extends MessageToMessageDecoder<TextWebSocketF
 
 	@Autowired
 	private ObjectMapper jackson;
-	
 	@Override
 	protected void decode(ChannelHandlerContext ctx, TextWebSocketFrame msg,
 			List<Object> out) throws Exception {

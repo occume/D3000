@@ -36,7 +36,6 @@ public class AStarTools {
 	 * @param y2                终点Y坐标
 	 * @return {@link Lint<Point>} 坐标路径集合
 	 */
-	@Deprecated
 	public static List<Point> searchs(byte[][] map,int x1,int y1,int x2,int y2){
 //		List<Point> path = new ArrayList<Point>();
 //		if(map == null){
@@ -54,6 +53,21 @@ public class AStarTools {
 //		}
 //		return path;
 		
+		AStar aStar = new AStar(map, 2000);	//第二个参数表示2000毫秒后自动跳出
+		return aStar.find(x1, y1, x2, y2);
+	}
+	
+	public static List<Point> searchs(int x1,int y1,int x2,int y2){
+		byte[][] map=new byte[][]{// 地图数组
+                {0,0,0,0,0,1,0,0,0,0},
+                {0,0,0,0,0,1,0,0,0,0},
+                {0,0,0,0,0,1,0,0,0,0},
+                {0,0,0,0,0,1,0,0,0,0},
+                {0,0,0,0,0,1,0,0,0,0},
+                {0,0,0,0,0,1,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0}
+        };
+
 		AStar aStar = new AStar(map, 2000);	//第二个参数表示2000毫秒后自动跳出
 		return aStar.find(x1, y1, x2, y2);
 	}

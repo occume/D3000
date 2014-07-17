@@ -9,6 +9,8 @@ import org.d3.core.packet.Packet;
 public class RoomSession extends SessionSupport{
 	
 	private ChannelGroup group;
+	private static final int ROOM_SIZE = 200;
+	private int size = 0;
 	
 	public RoomSession(String id, String name){
 		super(id, name);
@@ -23,8 +25,23 @@ public class RoomSession extends SessionSupport{
 		group.writeAndFlush(pkt);
 	}
 	
-	public void addSession(PlayerSession session){
-		group.add(session.getChannel());
+	public boolean addSession(PlayerSession session){
+		synchronized (this) {
+			if(size > ROOM_SIZE){
+				return false;
+			}
+			size++;
+		}
+		
+		return group.add(session.getChannel());
+	}
+	
+	public void removeSession(PlayerSession session){
+		group.remove(session);
+	}
+	
+	public void close(){
+		group.close();
 	}
 
 }

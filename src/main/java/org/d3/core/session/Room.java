@@ -6,5 +6,7 @@ public interface Room {
 	
 	public void broadcast(Packet pkt);
 	
-	public void addSession(PlayerSession session);
+	public boolean addSession(PlayerSession session);
+	
+	public void removeSession(PlayerSession session);
 }

@@ -9,6 +9,7 @@ public abstract class SessionSupport implements Session {
 
 	private String id;
 	private String name;
+	private long lastAccessTime = System.currentTimeMillis();
 	
 	public SessionSupport(String id, String name){
 		this.id = id;
@@ -31,6 +32,14 @@ public abstract class SessionSupport implements Session {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public long getLastAccessTime() {
+		return lastAccessTime;
+	}
+
+	public void setLastAccessTime(long lastAccessTime) {
+		this.lastAccessTime = lastAccessTime;
 	}
 
 	public void onMessage(Packet pkt) {

@@ -13,11 +13,34 @@ public class PacketHandler extends SimpleChannelInboundHandler<Packet> {
 	
 	public PacketHandler(PlayerSession session){
 		this.session = session;
+		session.setOnline();
+	}
+
+	@Override
+	public void channelActive(ChannelHandlerContext ctx) throws Exception {
+		super.channelActive(ctx);
+		PlayerSession playerSession = (PlayerSession) session;
+		playerSession.setOnline();
 	}
 
 	@Override
 	protected void messageReceived(ChannelHandlerContext ctx, Packet msg)
 			throws Exception {
+		
 		session.onMessage(msg);
+		
+	}
+
+	@Override
+	public void userEventTriggered(ChannelHandlerContext ctx, Object evt)
+			throws Exception {
+		ctx.close();
+	}
+
+	@Override
+	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+		super.channelInactive(ctx);
+		PlayerSession playerSession = (PlayerSession) session;
+		playerSession.offLine();
 	}
 }
