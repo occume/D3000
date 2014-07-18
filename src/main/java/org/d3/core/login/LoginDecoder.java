@@ -26,7 +26,7 @@ public class LoginDecoder extends ByteToMessageDecoder {
 	private static final Logger LOG = LoggerFactory.getLogger(LoginDecoder.class);
 	
 	@Resource
-	private WebsocketLoginhandler websocketLoginhandler;
+	private Loginhandler websocketLoginhandler;
 	
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in,

@@ -54,7 +54,7 @@ public class Dispacher extends NonBlockingBladeBase {
 					ps.setRoom(room);
 					ret = Packets.newPacket(Packets.GAME_ROOM_JOIN_SUCCESS, ps);
 					room.broadcast(ret);
-					room.broadcast(Packets.newPacket(Packets.START, null));
+//					room.broadcast(Packets.newPacket(Packets.START, null));
 					room.broadcast(Packets.newPacket(Packets.MAP_DATA, MapUtil.getDefaultMap()));
 				}
 				else{
@@ -89,6 +89,16 @@ public class Dispacher extends NonBlockingBladeBase {
 				String tile = pkt.getTuple().toString();
 				Packet resp = Packets.newPacket(Packets.SELECT_ELEM, tile);
 				ps.getRoom().broadcast(resp);
+				
+			}
+		});
+		
+		processers.put((int)Packets.PREPARE_GAME, new Processer(){
+			public void process(Packet pkt) {
+				
+				Packet resp = Packets.newPacket(Packets.PREPARE_GAME, ps);
+				ps.getRoom().broadcast(resp);
+				ps.getRoom().playerPrepare();
 				
 			}
 		});
@@ -137,16 +147,6 @@ public class Dispacher extends NonBlockingBladeBase {
 		else{
 			
 		}
-//		
-////		Thread.sleep(1000000);
-//		System.out.println(Thread.currentThread().getName());
-////		System.out.println(pkt);
-////		Session s = SessionManager.getInstance().anySession();
-//		RoomService rs = (RoomService) D3Context.getBean("roomService");
-//		Room room = rs.getRoomById("0001");
-//		System.out.println("===" + room);
-//		Packet pkt = Packets.newPacket(Packets.RECONNECT, null);
-//		room.broadcast(pkt);
 	}
 
 }

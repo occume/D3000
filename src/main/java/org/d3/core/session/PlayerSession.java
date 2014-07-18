@@ -29,7 +29,8 @@ public class PlayerSession extends SessionSupport{
 	}
 	
 	public void sendMessage(Packet pkt) {
-		channel.writeAndFlush(pkt);
+		if(channel.isActive())
+			channel.writeAndFlush(pkt);
 	}
 	
 	public boolean isOnline(){

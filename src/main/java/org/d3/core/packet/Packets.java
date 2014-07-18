@@ -27,7 +27,10 @@ public class Packets {
 	public static final byte SEEK_PAHT = 0x31;
 	public static final byte SELECT_ELEM = 0x33;
 	public static final byte MAP_DATA = 0x32;
-	public static final int HEART_BEAT = 0x34;
+	public static final byte HEART_BEAT = 0x34;
+	
+	public static final byte PREPARE_GAME = 0x35;
+	public static final byte UN_PREPARE_GAME = 0x36;
 	
 	public static final byte START = 0x1a;
 	public static final byte STOP = 0x1b;

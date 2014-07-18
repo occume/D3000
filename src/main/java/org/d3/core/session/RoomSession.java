@@ -1,5 +1,7 @@
 package org.d3.core.session;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
@@ -9,8 +11,9 @@ import org.d3.core.packet.Packet;
 public class RoomSession extends SessionSupport{
 	
 	private ChannelGroup group;
-	private static final int ROOM_SIZE = 200;
+	private static final int ROOM_SIZE = 20;
 	private int size = 0;
+	protected AtomicInteger readyCount = new AtomicInteger();
 	
 	public RoomSession(String id, String name){
 		super(id, name);
@@ -44,4 +47,7 @@ public class RoomSession extends SessionSupport{
 		group.close();
 	}
 
+	protected int getPlayerCount(){
+		return group.size();
+	}
 }

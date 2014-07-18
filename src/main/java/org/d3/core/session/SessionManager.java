@@ -41,13 +41,13 @@ public class SessionManager {
 	/** session 清理 */
 	@Scheduled(name="SESSION_CLEAN", value="0/5 * * * * *")
 	protected void startScheduleTask() {
-		System.out.println("clear session");
+		
 		for(Entry<String, Session> e: sessions.entrySet()){
 			
 			PlayerSession session = (PlayerSession) e.getValue();
 			long lastAccessTime = session.getLastAccessTime();
 			long now = System.currentTimeMillis();
-			System.out.println(session.isOnline());
+			
 			if((now - lastAccessTime) > 300000){
 				sessions.remove(e.getKey()).close();
 			}

@@ -30,7 +30,7 @@ import io.netty.handler.timeout.IdleStateHandler;
 
 @Component
 @Sharable
-public class WebsocketLoginhandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
+public class Loginhandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
 
 	@Autowired
 	private ObjectMapper jackson;
@@ -119,7 +119,7 @@ public class WebsocketLoginhandler extends SimpleChannelInboundHandler<TextWebSo
 		pipeline.addLast(decoder);
 		pipeline.addLast(encoder);
 		pipeline.addLast("idleStateCheck", new IdleStateHandler(
-				30, 30, 30));
+				300, 300, 300));
 		pipeline.addLast(new PacketHandler(session));
 		
 		pipeline.remove(this);
