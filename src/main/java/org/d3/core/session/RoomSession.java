@@ -1,5 +1,7 @@
 package org.d3.core.session;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import io.netty.channel.group.ChannelGroup;
@@ -13,7 +15,11 @@ public class RoomSession extends SessionSupport{
 	private ChannelGroup group;
 	private static final int ROOM_SIZE = 20;
 	private int size = 0;
+	private int guanQia = 0;
+	protected int MONSTER_COUNT =20;
 	protected AtomicInteger readyCount = new AtomicInteger();
+	protected static ScheduledExecutorService scheduledService = 
+			Executors.newScheduledThreadPool(4);
 	
 	public RoomSession(String id, String name){
 		super(id, name);

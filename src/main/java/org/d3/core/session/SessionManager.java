@@ -4,10 +4,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.d3.D3Context;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Maps;
-import com.yayo.common.scheduling.Scheduled;
 
 @Component
 public class SessionManager {
@@ -39,9 +39,9 @@ public class SessionManager {
 	}
 	
 	/** session 清理 */
-	@Scheduled(name="SESSION_CLEAN", value="0/5 * * * * *")
+	 @Scheduled(cron = "0/5 * * * * *")  
 	protected void startScheduleTask() {
-		
+		 
 		for(Entry<String, Session> e: sessions.entrySet()){
 			
 			PlayerSession session = (PlayerSession) e.getValue();

@@ -4,6 +4,6 @@ import org.d3.core.packet.Packet;
 
 public interface Processer {
 
-	public void process(Packet pkt);
+	public void process(PlayerSession ps, Packet pkt);
 	
 }

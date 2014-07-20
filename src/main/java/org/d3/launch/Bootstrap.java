@@ -7,6 +7,7 @@ import org.d3.core.service.Jactor2StartService;
 import org.d3.core.service.TcpServerStartService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Sets;
@@ -14,7 +15,6 @@ import com.google.common.util.concurrent.MoreExecutors;
 import com.google.common.util.concurrent.Service;
 import com.google.common.util.concurrent.ServiceManager;
 import com.google.common.util.concurrent.ServiceManager.Listener;
-import com.yayo.common.scheduling.Scheduled;
 
 /**
  * 
@@ -76,7 +76,7 @@ public class Bootstrap{
 	}
 	
 	/** 启动定时任务 */
-	@Scheduled(name="SERVER_ONTIME_SERVER", value="0 11 12 * * *")
+	 @Scheduled(cron = "0/5 * * * * *")  
 	protected void startScheduleTask() {
 		
 		//schedule tasks

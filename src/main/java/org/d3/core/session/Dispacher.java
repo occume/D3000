@@ -15,13 +15,14 @@ import org.d3.core.service.RoomService;
 import org.d3.core.util.AStarTools;
 import org.d3.core.util.Point;
 import org.d3.game.map.MapUtil;
-import org.testng.collections.Lists;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 public class Dispacher extends NonBlockingBladeBase {
 
 	private Map<Integer, Processer>  processers;
+	private Map<Integer, Module>  modules;
 	private RoomService roomService;
 	private PlayerSession ps;
 	
@@ -30,13 +31,18 @@ public class Dispacher extends NonBlockingBladeBase {
 		this.ps = ps;
 		roomService = (RoomService) D3Context.getBean("roomService");
 		processers = Maps.newHashMap();
+		modules = Maps.newHashMap();
 		_init();
 	}
 	
 	private void _init(){
 		
+		modules.put((int)Packets.INFO, Module.INFO_MODULE);
+		modules.put((int)Packets.BULLET, Module.BULLET_MODULE);
+		modules.put((int)Packets.MONSTER, Module.MONSTER_MODULE);
+		
 		processers.put((int)Packets.ROOM_LIST, new Processer() {
-			public void process(Packet pkt) {
+			public void process(PlayerSession ps, Packet pkt) {
 				Collection<Room> rooms = roomService.getRoomList();
 				Packet pkt1 = Packets.newPacket(Packets.ROOM_LIST, rooms);
 				ps.sendMessage(pkt1);
@@ -44,7 +50,7 @@ public class Dispacher extends NonBlockingBladeBase {
 		});
 		
 		processers.put((int)Packets.GAME_ROOM_JOIN, new Processer() {
-			public void process(Packet pkt) {
+			public void process(PlayerSession ps, Packet pkt) {
 				Map<String, String> rstMap = (Map<String, String>) pkt.getTuple();
 				String id = rstMap.get("id");
 				Room room = roomService.getRoomById(id);
@@ -65,7 +71,7 @@ public class Dispacher extends NonBlockingBladeBase {
 		});
 		
 		processers.put((int)Packets.SEEK_PAHT, new Processer(){
-			public void process(Packet pkt) {
+			public void process(PlayerSession ps, Packet pkt) {
 				Map<String, String> rstMap = (Map<String, String>) pkt.getTuple();
 				String start = rstMap.get("start");
 				String end = rstMap.get("end");
@@ -84,7 +90,7 @@ public class Dispacher extends NonBlockingBladeBase {
 		});
 		
 		processers.put((int)Packets.SELECT_ELEM, new Processer(){
-			public void process(Packet pkt) {
+			public void process(PlayerSession ps, Packet pkt) {
 				
 				String tile = pkt.getTuple().toString();
 				Packet resp = Packets.newPacket(Packets.SELECT_ELEM, tile);
@@ -94,7 +100,7 @@ public class Dispacher extends NonBlockingBladeBase {
 		});
 		
 		processers.put((int)Packets.PREPARE_GAME, new Processer(){
-			public void process(Packet pkt) {
+			public void process(PlayerSession ps, Packet pkt) {
 				
 				Packet resp = Packets.newPacket(Packets.PREPARE_GAME, ps);
 				ps.getRoom().broadcast(resp);
@@ -104,7 +110,7 @@ public class Dispacher extends NonBlockingBladeBase {
 		});
 		
 		processers.put((int)Packets.HEART_BEAT, new Processer(){
-			public void process(Packet pkt) {
+			public void process(PlayerSession ps, Packet pkt) {
 				ps.setLastAccessTime(System.currentTimeMillis());
 			}
 		});
@@ -142,10 +148,11 @@ public class Dispacher extends NonBlockingBladeBase {
 		
 		Processer processer = processers.get(act);
 		if(processer != null){
-			processer.process(pkt);
+			processer.process(ps, pkt);
 		}
 		else{
-			
+			Module unit = modules.get(act);
+			unit.dispatch(ps, pkt);
 		}
 	}
 

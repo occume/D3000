@@ -34,6 +34,21 @@ public class Packets {
 	
 	public static final byte START = 0x1a;
 	public static final byte STOP = 0x1b;
+	
+	public static final byte INFO = 0x40;
+	public static final byte INFO_MOVE_TOWER = 0x01;
+	public static final byte INFO_BUILD_TOWER = 0x02;
+	
+	public static final byte GAME = 0x50;
+	public static final byte GAME_MAKE_MONSTER = 0x01;
+	
+	public static final byte BULLET = 0x60;
+	public static final byte BULLET_HIT_MONSTER = 0x01;
+	
+	public static final byte MONSTER = 0x70;
+	public static final byte MONSTER_DECREMENT_LIFE = 0x01;
+	public static final byte MONSTER_REMAIN = 0x02;
+	public static final byte MONSTER_OVER = 0x03;
 	/**
 	 * Incoming data from another machine/JVM to this JVM (server or client)
 	 */
@@ -56,8 +71,12 @@ public class Packets {
 	 */
 	public static final byte EXCEPTION = 0x24;
 	
-	public static Packet newPacket(byte type, Object tuple){
-		return new BasePacket(1, type, "", tuple);
+	public static Packet newPacket(byte act, Object tuple){
+		return new BasePacket(1, act, "", tuple);
+	}
+	
+	public static Packet newPacket(byte act, byte act_min, String from, Object tuple){
+		return new BasePacket(1, act, act_min, from, "", tuple);
 	}
 	
 	public static Packet newLoginPacket(){

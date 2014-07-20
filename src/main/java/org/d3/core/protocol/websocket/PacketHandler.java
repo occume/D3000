@@ -40,6 +40,7 @@ public class PacketHandler extends SimpleChannelInboundHandler<Packet> {
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
 		super.channelInactive(ctx);
+		
 		PlayerSession playerSession = (PlayerSession) session;
 		playerSession.getRoom().playerUnPrepare();
 		playerSession.offLine();

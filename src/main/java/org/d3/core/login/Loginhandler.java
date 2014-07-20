@@ -86,7 +86,7 @@ public class Loginhandler extends SimpleChannelInboundHandler<TextWebSocketFrame
 				applyProtocol(ctx, session);
 				
 				String reconnKey = idService.generate();
-				Packet pkt1 = Packets.newPacket(Packets.LOG_IN_SUCCESS, reconnKey);
+				Packet pkt1 = Packets.newPacket(Packets.LOG_IN_SUCCESS, session.getId());
 				String json = jackson.writeValueAsString(pkt1);
 				ctx.writeAndFlush(new TextWebSocketFrame(json));
 			}
