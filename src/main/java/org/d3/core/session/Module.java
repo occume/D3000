@@ -83,18 +83,20 @@ public interface Module {
 					
 					BaseRoom room = (BaseRoom) ps.getRoom();
 					Monster m = room.getMonster(enemyId);
-					
-					int afterHurt = m.getCurrLife() - hurt;
-					m.setCurrLife(afterHurt);
-					
 					Packet resp = null;
-					if(afterHurt <= 0){
-						resp = Packets.newPacket(Packets.MONSTER, 
-								Packets.MONSTER_OVER, playerId, pkt.getTuple());
-					}
-					else{
-						resp = Packets.newPacket(Packets.MONSTER, 
-								Packets.MONSTER_DECREMENT_LIFE, playerId, pkt.getTuple());
+					
+					synchronized (processers) {
+						int afterHurt = m.getCurrLife() - hurt;
+						m.setCurrLife(afterHurt);
+						
+						if(afterHurt <= 0){
+							resp = Packets.newPacket(Packets.MONSTER, 
+									Packets.MONSTER_OVER, playerId, pkt.getTuple());
+						}
+						else{
+							resp = Packets.newPacket(Packets.MONSTER, 
+									Packets.MONSTER_DECREMENT_LIFE, playerId, pkt.getTuple());
+						}
 					}
 					
 					room.broadcast(resp);
@@ -125,7 +127,7 @@ public interface Module {
 					tuple.add("OUT_OF_MAP");
 					
 					Packet resp = Packets.newPacket(Packets.MONSTER, 
-							Packets.MONSTER_DECREMENT_LIFE, ps.getId(), tuple);
+							Packets.MONSTER_OVER, ps.getId(), tuple);
 					ps.getRoom().broadcast(resp);
 				}
 			});
