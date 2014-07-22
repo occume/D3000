@@ -87,11 +87,9 @@
                     ws.close();
                 }
 				if(evt.act === D3.LOG_IN_SUCCESS){
-					if (onStart && typeof(onStart) === 'function') {
-                        
-                        applyProtocol(config);
-                        onStart(me);
-                    }
+					
+                    applyProtocol();
+                      
 					D3.from = evt.tuple;
                     ws.send(D3.makePacketByType(D3.ROOM_LIST, 0));
                 }
@@ -164,15 +162,12 @@
             ws = connectWebSocket(url);      
         };
         
-        me.setState = function (newState) {state = newState};
+        me.setState = function (newState) {state = newState;};
         
         function dispatch(eventName, evt) {
             if (typeof evt.target === 'undefined') {
                 evt.target = me;
             }
-            //if (eventName === D3.SESSION_MESSAGE){
-                
-            //}
             if (eventName === D3.CLOSED){
                 me.onclose(evt);
             }
@@ -203,11 +198,11 @@
         }
         
         function applyProtocol(config) {
-            ws.onmessage = (typeof config.protocol === 'undefined') ? protocol : config.protocol;
+            ws.onmessage = protocol;
         }
         
         function protocol(e) {
-            var evt = me.inCodecChain.transform(e.data);
+            var evt = D3.Codecs.encoder.transform(e.data);
             dispatch(evt.type, evt);
         }
         

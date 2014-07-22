@@ -63,7 +63,7 @@
     };
 
 	D3.makePacketByType = function (act, act_min, tuple) {
-        return D3.Codecs.encoder.transform(D3.makePacket(39600, act, act_min, null, tuple));
+        return D3.Codecs.encoder.transform(D3.makePacket(act, act_min, null, tuple));
     };
 
     D3.loginPacket = function (loginInfo) {
