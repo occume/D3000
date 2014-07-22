@@ -1,0 +1,205 @@
+#header {
+	background-color: #C09853;
+	width: 1200px;
+	margin: 0 auto;
+	height: 100px;
+}
+
+.header-top {
+	height: 100px;
+}
+
+.header-bottom {
+	height: 0px;
+}
+
+#container {
+	width: 100%;
+	position: relative;
+}
+
+.span12 {
+	background-color: #EEEEEE;
+}
+
+.navitor {
+	width: 100%;
+	position: fixed;
+	bottom: 0;
+	margin: 0;
+	background-color: #D9EDF7;
+}
+#menu{
+	overflow: hidden;
+	
+}
+
+#menu .navitorBox {
+	color: #67b2ff;
+}
+
+#menu a {
+	padding-left: 15px;
+	font-size: 18px;
+	line-height: 18px;
+	color: black;
+}
+
+.menu .divider-vertical {
+	height: 45px;
+	border-width: 1px;
+}
+
+/*** Body Content ***/
+#wrapper1 {
+	width: 100%;
+	position: relative;
+	overflow: hidden;
+}
+
+#monitor {
+	width: 400%;
+	margin: 0;
+}
+
+li {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.box {
+	float: left;
+	width: 25%;
+}
+
+.content {
+	margin: 0 auto;
+	position: relative;
+	background-color: #fff;
+}
+
+.colorF1 {
+	background-color: #f1f1f1;
+}
+.clear{
+	clear: both;
+}
+.divider-horizontal{
+	width: 100%;
+	border-bottom: 1px dashed #C09853;
+	padding: 0;
+}
+/**
+**/
+div.navitor{
+	background: none;
+}
+div.navbar-inner{
+	background: #FFFFFF;
+	filter: none;
+	text-align: center;
+}
+.inner{
+	background: #F2EFE9;
+	position: relative;
+	width: 1185px;
+	margin: 0 auto;
+	min-height: 600px;
+	padding: 15px 0 0 15px;
+	*padding: 65px 0 0 15px;
+	overflow: hidden;
+}
+.inner .wrp{
+	width: 90%;
+}
+.next-step{
+	margin-left: 35px;
+}
+div.next-step dl dd{
+	background-color: #C09853;
+	padding: 4px;
+	width: 320px;
+	text-align: center;
+	line-height: 30px;
+	cursor: pointer;
+}
+#box11 .content{
+}
+
+#box11 .content .inner .row{
+	margin-top: 50px;
+	margin-left: 30%;
+}
+#box11 .content .inner img{
+	
+}
+#box11 .login-form{
+
+	padding-top: 75px;
+	
+}
+#box11 .login-form form{
+	position: relative;
+	z-index:2;
+	margin-left: -80px;
+	color: #C09853;
+}
+#box11 .login-form form :hover{
+	color: #fff;
+	text-decoration: none;
+}
+.inner .compent dt{
+	margin:10px 0;
+}
+.inner .compent dd{
+	padding: 10px;
+	margin-left: 0px;
+}
+.inner .compent dd ul{
+	overflow: hidden;
+}
+#box12 .inner .compent dd ul li{
+	background: #ffffff;
+	margin:10px;
+	padding: 10px;
+	float:left;
+	width: 30%;
+	cursor: pointer;
+}
+#box12 .inner .compent dd ul li:hover{
+	background: #C09853;
+}
+
+#box13 .inner .compent dd ul li{
+	background: #ffffff;
+	margin:10px;
+	padding: 10px;
+	float:left;
+	width: 30%;
+	height: 200px;
+	cursor: pointer;
+}
+
+#box14 .inner .compent dd ul li{
+	overflow: hidden;
+	padding-top: 10px;
+}
+#box14 .inner .compent dd ul li label{
+	font-size: 20px;
+	display: inline-block;
+	padding: 5px 0 0 0;
+}
+#box14 .inner .compent dd ul li span{
+	display: inline-block;
+	margin-left: 50px;
+	font-size: 25px;
+	color: #5BB75B;
+}
+#box14 .inner .compent dd ul li div.divider-horizontal{
+	padding: 0;
+}
+#footer{
+	height: 100px;
+	overflow: scroll;
+}

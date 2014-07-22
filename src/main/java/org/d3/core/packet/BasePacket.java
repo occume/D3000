@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class BasePacket implements Packet, Serializable{
 
-	private int 		cid;
+	private String 		cid;
 	private int 		act;
 	private	int			act_min;
 	private String		from;
@@ -15,7 +15,7 @@ public class BasePacket implements Packet, Serializable{
 	
 	public BasePacket(){}
 	
-	public BasePacket(int cid, int act, String vs, Object tuple) {
+	public BasePacket(String cid, int act, String vs, Object tuple) {
 		super();
 		this.cid = cid;
 		this.act = act;
@@ -24,7 +24,7 @@ public class BasePacket implements Packet, Serializable{
 		this.timeStamp = System.currentTimeMillis();
 	}
 	
-	public BasePacket(int cid, int act, int act_min, String from, String vs, Object tuple) {
+	public BasePacket(String cid, int act, int act_min, String from, String vs, Object tuple) {
 		super();
 		this.cid = cid;
 		this.act = act;
@@ -35,11 +35,11 @@ public class BasePacket implements Packet, Serializable{
 		this.timeStamp = System.currentTimeMillis();
 	}
 
-	public int getCid() {
+	public String getCid() {
 		return cid;
 	}
 
-	public void setCid(int cid) {
+	public void setCid(String cid) {
 		this.cid = cid;
 	}
 
