@@ -234,7 +234,7 @@ $(function() {
 				loaded++;
 				var digit = (loaded / respLength).toFixed(2);
 				Loading.progress(digit);
-				console.log(digit);
+//				console.log(digit);
 			}
 
 			function handleComplete() {
@@ -251,6 +251,7 @@ $(function() {
 			Loading.init();
 			Loader.onLoaded(function(){
 				D3.cid = jOne.createUUID();
+				D3.cid = 39600;
 				D3.session = D3.createSession("ws://localhost:10086/d3socket");
 				
 			}).loadResp();
@@ -285,7 +286,9 @@ $(function() {
 					username = $("#username").val(),
 					password = $("#password").val(),
 					pkt = D3.loginPacket({username: username, password: password});
+				console.log(pkt);
 				D3.session.send(pkt);
+				
 				//slideWrapper.scrollTo("#box12", 500);
 				return false;
 			});

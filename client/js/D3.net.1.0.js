@@ -27,7 +27,7 @@
 
     // Default codes which use JSON to decode and encode messages.
     D3.Codecs = {
-        encoder : {transform: function (e){ return JSON.stringify(e)}},
+        encoder : {transform: function (e){ return JSON.stringify(e);}},
         decoder : {transform: function (e){
                         var evt = JSON.parse(e);
                         if((typeof evt.type !== 'undefined') && (evt.type === D3.NETWORK_MESSAGE)){
@@ -193,8 +193,7 @@
         }
 
 		function getReqConnPacket(config) {
-            var encoder =  D3.Codecs.encoder;
-            return encoder.transform(D3.reqConnPacket());
+            return D3.reqConnPacket();
         }
         
         function getReconnect(config) {

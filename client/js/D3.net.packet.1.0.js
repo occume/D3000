@@ -51,11 +51,11 @@
 
     D3.makePacket = function (act, act_min, session, tuple) {
         return {
-            cid : D3.cid || "nbxx",
+            cid : D3.cid,
             act : act,
 			act_min: act_min,
-			from: D3.from || "non",
-			vs	: D3.vs || "1.0",
+			from: D3.from,
+			vs	: D3.vs,
             target: session,
 			tuple: tuple,
             timeStamp : new Date().getTime()

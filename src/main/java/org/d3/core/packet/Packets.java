@@ -72,11 +72,11 @@ public class Packets {
 	public static final byte EXCEPTION = 0x24;
 	
 	public static Packet newPacket(byte act, Object tuple){
-		return new BasePacket("1", act, "", tuple);
+		return new BasePacket(1, act, "", tuple);
 	}
 	
 	public static Packet newPacket(byte act, byte act_min, String from, Object tuple){
-		return new BasePacket("1", act, act_min, from, "", tuple);
+		return new BasePacket(1, act, act_min, from, "", tuple);
 	}
 	
 	public static Packet newLoginPacket(){

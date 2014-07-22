@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class BasePacket implements Packet, Serializable{
 
-	private String 		cid;
+	private int 		cid;
 	private int 		act;
 	private	int			act_min;
 	private String		from;
@@ -15,7 +15,7 @@ public class BasePacket implements Packet, Serializable{
 	
 	public BasePacket(){}
 	
-	public BasePacket(String cid, int act, String vs, Object tuple) {
+	public BasePacket(int cid, int act, String vs, Object tuple) {
 		super();
 		this.cid = cid;
 		this.act = act;
@@ -24,7 +24,7 @@ public class BasePacket implements Packet, Serializable{
 		this.timeStamp = System.currentTimeMillis();
 	}
 	
-	public BasePacket(String cid, int act, int act_min, String from, String vs, Object tuple) {
+	public BasePacket(int cid, int act, int act_min, String from, String vs, Object tuple) {
 		super();
 		this.cid = cid;
 		this.act = act;
@@ -35,11 +35,11 @@ public class BasePacket implements Packet, Serializable{
 		this.timeStamp = System.currentTimeMillis();
 	}
 
-	public String getCid() {
+	public int getCid() {
 		return cid;
 	}
 
-	public void setCid(String cid) {
+	public void setCid(int cid) {
 		this.cid = cid;
 	}
 
@@ -49,38 +49,6 @@ public class BasePacket implements Packet, Serializable{
 
 	public void setAct(int act) {
 		this.act = act;
-	}
-
-	public String getVs() {
-		return vs;
-	}
-
-	public long getTimeStamp() {
-		return timeStamp;
-	}
-
-	public void setTimeStamp(long timeStamp) {
-		this.timeStamp = timeStamp;
-	}
-
-	public void setVs(String vs) {
-		this.vs = vs;
-	}
-
-	public Object getTuple() {
-		return tuple;
-	}
-
-	public void setTuple(Object tuple) {
-		this.tuple = tuple;
-	}
-
-	public String getTarget() {
-		return target;
-	}
-
-	public void setTarget(String target) {
-		this.target = target;
 	}
 
 	public int getAct_min() {
@@ -97,6 +65,38 @@ public class BasePacket implements Packet, Serializable{
 
 	public void setFrom(String from) {
 		this.from = from;
+	}
+
+	public String getVs() {
+		return vs;
+	}
+
+	public void setVs(String vs) {
+		this.vs = vs;
+	}
+
+	public String getTarget() {
+		return target;
+	}
+
+	public void setTarget(String target) {
+		this.target = target;
+	}
+
+	public Object getTuple() {
+		return tuple;
+	}
+
+	public void setTuple(Object tuple) {
+		this.tuple = tuple;
+	}
+
+	public long getTimeStamp() {
+		return timeStamp;
+	}
+
+	public void setTimeStamp(long timeStamp) {
+		this.timeStamp = timeStamp;
 	}
 
 	@Override

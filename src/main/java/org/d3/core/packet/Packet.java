@@ -1,9 +1,9 @@
 package org.d3.core.packet;
 
 public interface Packet {
-	public String getCid();
+	public int getCid();
 
-	public void setCid(String cid);
+	public void setCid(int cid);
 
 	public int getAct();
 
