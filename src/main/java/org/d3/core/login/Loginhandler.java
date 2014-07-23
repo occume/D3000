@@ -12,6 +12,7 @@ import org.d3.core.protocol.websocket.TextWebsocketDecoder;
 import org.d3.core.protocol.websocket.TextWebsocketEncoder;
 import org.d3.core.service.RoomService;
 import org.d3.core.service.UniqueIdService;
+import org.d3.core.session.Player;
 import org.d3.core.session.PlayerSession;
 import org.d3.core.session.Session;
 import org.d3.core.session.SessionManager;
@@ -79,7 +80,8 @@ public class Loginhandler extends SimpleChannelInboundHandler<TextWebSocketFrame
 			if(playerService.auth()){
 				
 				PlayerSession session = new PlayerSession(ctx.channel());
-
+				session.setPlayer(new Player(userName));
+				
 				SessionManager sessionManager = (SessionManager) D3Context.getBean("sessionManager");
 				sessionManager.putSession(session);
 				

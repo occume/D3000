@@ -1,31 +1,15 @@
 (function (D3) {
 
-	D3.CodecChain = function () {
-        this.chain = [];
-    };
-
-    D3.CodecChain.prototype.add = function (func) {
-        if (func && typeof (func) === 'function') {
-            this.chain.push(func);
-        } else {
-            throw new Error("Parameter:" + func + " is not of type function.");
-        }
-        return this;
-    };
-
-    D3.CodecChain.prototype.remove = function (func) {
-        removeFromArray(this.chain, func);
-    };
-
-    D3.CodecChain.prototype.tranform = function (message) {
-        var i = 0;
-        for(;i<this.chain.length(); i++){
-            message = this.chain[i].transform(message);
-        }
-        return message;
-    };
-
-    // Default codes which use JSON to decode and encode messages.
+	D3.processors = {};
+	
+	D3.addProcessor = function(act, act_min, processor){
+		D3.processors[act + "_" + act_min] = processor;
+	};
+	
+	D3.getProcessor = function(act, act_min){
+		return D3.processors[act + "_" + act_min];
+	};
+	
     D3.Codecs = {
         encoder : {transform: function (e){ return JSON.stringify(e);}},
         decoder : {transform: function (e){
@@ -50,8 +34,6 @@
     
     function Session(url, config, callback) {
         var me = this;
-        var onStart = callback;
-        var callbacks = {};
        
         var message = getReqConnPacket();
         var ws = connectWebSocket(url);
@@ -74,24 +56,24 @@
             };
             
             ws.onmessage = function (e) {
-				console.log(e);
+				console.log(e.data);
                 var evt = D3.Codecs.decoder.transform(e.data);
                 if(!evt.act){
                     throw new Error("Event object missing 'type' property.");
                 }
 				if(evt.act === D3.LOG_IN){
 					state = 1;
-                    //ws.send(getLoginPacket(config));
                 }
-                if(evt.act === D3.LOG_IN_FAILURE || evt.type === D3.GAME_ROOM_JOIN_FAILURE){
+                if(evt.act === D3.LOG_IN_FAILURE || evt.type === D3.ROOM_JOIN_FAILURE){
                     ws.close();
                 }
 				if(evt.act === D3.LOG_IN_SUCCESS){
 					
                     applyProtocol();
                       
-					D3.from = evt.tuple;
-                    ws.send(D3.makePacketByType(D3.ROOM_LIST, 0));
+					D3.playerId = evt.tuple;
+					loginState = 1;
+                    ws.send(D3.makePacketByType(D3.ROOM, D3.ROOM_LIST));
                 }
             };
 
@@ -124,23 +106,6 @@
 			ws.send(evt);
             return me; // chainable
         };
-
-        me.addHandler = function(eventName, callback) {
-            callbacks[eventName] = callbacks[eventName] || [];
-            callbacks[eventName].push(callback);
-            return me;// chainable
-        };
-        
-        me.removeHandler = function(eventName, handler) {
-            removeFromArray(callbacks[eventName], handler);
-        };
-
-        me.clearHandlers = function () {
-            callbacks = {};
-            me.onerror = doNothing;
-            me.onmessage = doNothing;
-            me.onclose = doNothing;
-        };
         
         me.onclose = function () {
 			console.log("close");
@@ -164,25 +129,6 @@
         
         me.setState = function (newState) {state = newState;};
         
-        function dispatch(eventName, evt) {
-            if (typeof evt.target === 'undefined') {
-                evt.target = me;
-            }
-            if (eventName === D3.CLOSED){
-                me.onclose(evt);
-            }
-			me.onmessage(evt);
-            dispatchToEventHandlers(callbacks[D3.ANY], evt);
-            dispatchToEventHandlers(callbacks[eventName], evt);
-        }
-        
-        function dispatchToEventHandlers(chain, evt) {
-            if(typeof chain === 'undefined') return; // no callbacks for this event
-            for(var i = 0; i < chain.length; i++){
-              chain[i]( evt );
-            }
-        }
-        
         function getLoginPacket(config) {
             return D3.Codecs.encoder.transform(D3.loginPacket(config));
         }
@@ -202,11 +148,29 @@
         }
         
         function protocol(e) {
-            var evt = D3.Codecs.encoder.transform(e.data);
-            dispatch(evt.type, evt);
+            var pkt = D3.Codecs.decoder.transform(e.data);
+            console.log(pkt);
+            dispatch(pkt);
         }
         
-        function doNothing(evt) {}
+        function dispatch(pkt) {
+            if (typeof pkt.target === 'undefined') {
+            	pkt.target = me;
+            }
+            if (pkt.act === D3.CLOSED){
+                me.onclose(pkt);
+            }
+            
+            var processor = D3.getProcessor(pkt.act, pkt.act_min);
+            if(processor){
+            	processor(pkt);
+            }
+            else{
+            	throw new Error("no such processor exist");
+            }
+        }
+        
+        function doNothing(pkt) {}
     }
 
     D3.ReconnetPolicies = {

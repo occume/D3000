@@ -100,8 +100,16 @@ $(function() {
 	 * 
 	 * 
 	 */
-	var bodyWidth = $(document.body).width(), boxes = $(".box"), box11 = $("#box11"), box12 = $("#box12"), box13 = $("#box13"), box14 = $("#box14"), menu = $("#menu"), loginRow = $("#box11 .row"), loginForm = loginRow
-			.find(".login-form"), slideWrapper = $("#wrapper1");
+	var bodyWidth = $(document.body).width(), 
+		boxes = $(".box"), 
+		box11 = $("#box11"), 
+		box12 = $("#box12"), 
+		box13 = $("#box13"), 
+		box14 = $("#box14"), 
+		menu = $("#menu"), 
+		loginRow = $("#box11 .row"), 
+		loginForm = loginRow.find(".login-form"), 
+		slideWrapper = $("#wrapper1");
 
 	var Loading = {
 		init : function() {
@@ -220,7 +228,9 @@ $(function() {
 			    {src:"js/lib/jquery.localscroll-1.2.7-min.js", id:"localscroll-js"},
 			    {src:"js/lib/nbw-parallax.js", id:"nbw-parallax-js"},
 			    {src:"js/lib/scrollTo.js", id:"scrollTo-js"},
-			    {src:"js/lib/jOne.js", id:"jOne-js"}
+			    {src:"js/D3.chat.1.0.js", id:"D3-chat-js"},
+			    {src:"js/lib/jOne.js", id:"jOne-js"},
+			    {src:"js/D3.game.1.0.js", id:"D3-game-js"},
 			];
 
 			var respLength = manifest.length, loaded = 0;
@@ -245,6 +255,106 @@ $(function() {
 			}
 		}	
 	};
+	
+	var RoomList = {
+		showMe: function(pkt){
+			this.data = pkt;
+			slideWrapper.scrollTo("#box12", 500);
+			this.showRooms();
+			this.bind();
+		},
+		showRooms: function(){
+			var me = this;
+			var roomList = $("#room-list ul");
+			roomList.html("");
+			$(this.data.tuple).each(function(idx, itm){
+				var room = $("<li>" + itm.name + "</li>");
+				room.data("idx", itm.id);
+				roomList.append(room);
+			});
+		},
+		send: function(){
+			var pkt = D3.makePacketByType(D3.ROOM, D3.ROOM_JOIN, {id: this.roomIdx});
+			D3.session.send(pkt);
+		},
+		bind: function(){
+			var rooms = box12.find("li"),
+				me = this;
+
+			rooms.live("click", function() {
+				var self = $(this);
+				rooms.css({
+					background : "#FFFFFF"
+				});
+				self.css({
+					background : "#5BB75B"
+				});
+				me.roomIdx = self.data("idx");
+			});
+			
+			var join = box12.find(".next-step");
+			join.click(function() {
+				me.send();
+				return false;
+			});
+		}
+	};
+	
+	var Room = function(){
+		var _init = function(){
+			var timer = setInterval(function(){
+				try{
+					
+					D3.addProcessor(D3.ROOM, D3.ROOM_JOIN_SUCCESS, 
+					function(pkt){
+						Room.showMe(pkt);
+					});
+					
+					D3.addProcessor(D3.ROOM, D3.ROOM_LEAVE, 
+					function(pkt){
+						Room.showMe(pkt);
+					});
+					
+					D3.addProcessor(D3.ROOM, D3.ROOM_PREPARE, 
+					function(pkt){
+						//Room.showMe(pkt);
+						console.log(pkt);
+						SBOX.systemMessage(pkt.tuple);
+					});
+					
+				}
+				catch(e){};
+			}, 100);
+			
+			_bind();
+		};
+		var _bind = function(){
+			var box13Next = box13.find(".next-step");
+			box13Next.click(function() {
+//				slideWrapper.scrollTo("#box14", 500);
+				var pkt = D3.makePacketByType(D3.ROOM, D3.ROOM_PREPARE, D3.playerId);
+				D3.session.send(pkt);
+				return false;
+			});
+		};
+		_init();
+		return {
+			showMe: function(pkt){
+				this.data = pkt;
+				slideWrapper.scrollTo("#box13", 500);
+				this.showPlayers();
+			},
+			showPlayers: function(){
+				var playerList = $("#player-list ul");
+				playerList.html("");
+				$(this.data.tuple).each(function(idx, itm){
+					var player = $("<li>" + itm.name + "</li>");
+					player.data("idx", itm.id);
+					playerList.append(player);
+				});
+			}
+		};
+	}();
 
 	var Game = {
 		init : function() {
@@ -253,6 +363,8 @@ $(function() {
 				D3.cid = jOne.createUUID();
 				D3.cid = 39600;
 				D3.session = D3.createSession("ws://localhost:10086/d3socket");
+				
+				slideWrapper.scrollTo("#box14", 500);
 				
 			}).loadResp();
 			this.bind();
@@ -286,35 +398,18 @@ $(function() {
 					username = $("#username").val(),
 					password = $("#password").val(),
 					pkt = D3.loginPacket({username: username, password: password});
-				console.log(pkt);
-				D3.session.send(pkt);
+				/**
+				 * 登录成功，显示房间列表
+				 */
+				D3.addProcessor(D3.ROOM, D3.ROOM_LIST, 
+				function(pkt){
+					RoomList.showMe(pkt);
+				});
 				
-				//slideWrapper.scrollTo("#box12", 500);
+				D3.session.send(pkt);
 				return false;
 			});
 
-			var servers = box12.find("li");
-
-			servers.live("click", function() {
-				servers.css({
-					background : "#FFFFFF"
-				});
-				$(this).css({
-					background : "#5BB75B"
-				});
-			});
-
-			var box12Next = box12.find(".next-step");
-			box12Next.click(function() {
-				slideWrapper.scrollTo("#box13", 500);
-				return false;
-			});
-
-			var box13Next = box13.find(".next-step");
-			box13Next.click(function() {
-				slideWrapper.scrollTo("#box14", 500);
-				return false;
-			});
 		}
 	};
 	Game.init();

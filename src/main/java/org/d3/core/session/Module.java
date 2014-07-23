@@ -1,10 +1,13 @@
 package org.d3.core.session;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.d3.D3Context;
 import org.d3.core.packet.Packet;
 import org.d3.core.packet.Packets;
+import org.d3.core.service.RoomService;
 import org.testng.collections.Lists;
 
 import com.google.common.collect.Maps;
@@ -37,6 +40,81 @@ public interface Module {
 		}
 	}
 	
+	Module ROOM_MODULE = new BaseModule(){
+		
+		private RoomService roomService;
+		
+		public void init() {
+			
+			roomService = (RoomService) D3Context.getBean("roomService");
+			
+			processers.put((int)Packets.ROOM_LIST, new Processer() {
+				public void process(PlayerSession ps, Packet pkt) {
+					Collection<Room> rooms = roomService.getRoomList();
+					Packet pkt1 = Packets.newPacket(Packets.ROOM, Packets.ROOM_LIST, rooms);
+					ps.sendMessage(pkt1);
+				}
+			});
+			
+			processers.put((int)Packets.ROOM_JOIN, new Processer() {
+				public void process(PlayerSession ps, Packet pkt) {
+					Map<String, String> rstMap = (Map<String, String>) pkt.getTuple();
+					String id = rstMap.get("id");
+					Room room = roomService.getRoomById(id);
+					
+					Packet ret = null;
+					if(room.joinRoom(ps)){
+						ps.setRoom(room);
+						ret = Packets.newPacket(Packets.ROOM, Packets.ROOM_JOIN_SUCCESS, room.getPlayers());
+						room.broadcast(ret);
+//						room.broadcast(Packets.newPacket(Packets.MAP_DATA, MapUtil.getDefaultMap()));
+					}
+					else{
+						ret = Packets.newPacket(Packets.ROOM, Packets.ROOM_JOIN_FAILURE);
+						ps.sendMessage(ret);
+					}
+				}
+			});
+			
+			processers.put((int)Packets.ROOM_PREPARE, new Processer(){
+				public void process(PlayerSession ps, Packet pkt) {
+					
+					Packet resp = Packets.newPacket(Packets.ROOM, Packets.ROOM_PREPARE, pkt.getTuple());
+					ps.getRoom().broadcast(resp);
+					ps.getRoom().playerPrepare();
+					
+				}
+			});
+			
+		}
+		
+	};
+	
+	Module CHAT_MODULE = new BaseModule(){
+		
+		private RoomService roomService;
+		
+		public void init() {
+			
+			roomService = (RoomService) D3Context.getBean("roomService");
+			
+			processers.put((int)Packets.CHAT_TO_ALL, new Processer() {
+				public void process(PlayerSession ps, Packet pkt) {
+					Packet resp = Packets.newPacket(Packets.CHAT, Packets.CHAT_TO_ALL, ps.getId(), pkt.getTuple());
+					ps.getRoom().broadcast(resp);
+				}
+			});
+			
+			processers.put((int)Packets.CHAT_TO_ONE, new Processer() {
+				public void process(PlayerSession ps, Packet pkt) {
+					
+				}
+			});
+			
+		}
+		
+	};
+	
 	Module INFO_MODULE = new BaseModule(){
 		
 		public void init() {
@@ -64,7 +142,6 @@ public interface Module {
 			});
 			
 		}
-
 		
 	};
 	

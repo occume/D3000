@@ -13,8 +13,9 @@
 <script type="text/javascript" src="js/lib/preloadjs-0.4.1.min.js"></script>
 <script type="text/javascript" src="js/initor.js"></script>
 
-<style type="text/css">
-</style>
+<style>
+		
+	</style>
 <script type="text/javascript">
 	
 </script>
@@ -73,34 +74,24 @@
 				<li id="box12" class="box _music_">
 					<div class="content">
 						<div class="inner">
-							<h3>选择服务器</h3>
+							<h3>请选择房间</h3>
 							<div class="wrp">
 				              <dl class="compent">
-				                <dt>登录过服务器</dt>
+				                <dt>热门房间</dt>
 				                <dd>
 									<ul>
-										<li>服务器1</li>
-										<li>服务器1</li>
+										<li>room_1</li>
+										<li>room_2</li>
 									</ul>
 								</dd>
 				              </dl>
 				              <div class="clear"></div>
-				              <dl class="compent">
-				                <dt>服务器列表</dt>
+				              <dl class="compent" id="room-list">
+				                <dt>房间列表</dt>
 				                <dd>
 									<ul>
-										<li>服务器1</li>
-										<li>服务器1</li>
-										<li>服务器1</li>
-										<li>服务器1</li>
-										<li>服务器1</li>
-										<li>服务器1</li>
-										<li>服务器1</li>
-										<li>服务器1</li>
-										<li>服务器1</li>
-										<li>服务器1</li>
-										<li>服务器1</li>
-										<li>服务器1</li>
+										<li>room_1</li>
+										<li>room_2</li>
 									</ul>
 								</dd>
 				              </dl>
@@ -109,7 +100,7 @@
 				            <div class="next-step">
 					            <dl>
 					                <dt></dt>
-					                <dd>下一步</dd>
+					                <dd>加入</dd>
 					            </dl>
 				            </div>
 				           
@@ -122,7 +113,7 @@
 
 						<h3>选择角色</h3>
 							<div class="wrp">
-				              <dl class="compent">
+				              <dl class="compent" id="player-list">
 				                <dt>角色列表</dt>
 				                <dd>
 									<ul>
@@ -138,7 +129,7 @@
 				            <div class="next-step">
 					            <dl>
 					                <dt></dt>
-					                <dd>Let's Go!</dd>
+					                <dd>准备</dd>
 					            </dl>
 				            </div>
 						</div>
@@ -147,38 +138,8 @@
 				</li>
 				<li id="box14" class="box _music_">
 					<div class="content">
-						<div class="inner">
+						<div class="inner" id="paper4">
 
-						<h3>角色数据</h3>
-							<div class="wrp">
-				              <dl class="compent">
-				                <dt></dt>
-				                <dd>
-									<ul>
-										<li><h2>就是这里!</h2></li>
-										<li>xx年xx月xx日，您选择了xxx作为您在游戏中的角色，开始了您在金刚之印世界的传奇之旅！</li>
-										<li>有激情，有平淡，有乐趣，有愤怒</li>
-										<li>现在，我们一起来回顾您的金刚之印迹吧！</li>
-										<li class="divider-horizontal"></li>
-										<li><label>等级：</label><span>30</span>远小于平均等级50级！ 别往下看了， 快回家练级去吧！</li>
-										<li class="divider-horizontal"></li>
-										<li><label>共获得金币：</label><span>999</span></li>
-										<li class="divider-horizontal"></li>
-										<li><label>好友：</label><span>30</span></li>
-										<li class="divider-horizontal"></li>
-										<li><label>仇人：</label><span>30</span></li>
-										<li class="divider-horizontal"></li>
-										<li><label>杀敌：</label><span>300次</span></li>
-										<li class="divider-horizontal"></li>
-										<li><label>被杀：</label><span>800次</span></li>
-										<li class="divider-horizontal"></li>
-										<li><label>升星：</label><span>800次，成功率：66%</span></li>
-									</ul>
-								</dd>
-				              </dl>
-				              <div class="clear"></div>
-				          
-						</div>
 						</div>
 					</div>
 				</li>
@@ -190,16 +151,16 @@
 				<ul id="menu" class="menu nav" pp="1">
 					<li class="divider-vertical"></li>
 					<li class="navitorBox" id="jone_music"><a
-						class="link normal nav_music_" href="javascript:;">登录</a></li>
+						class="link normal nav_music_" href="#box11">登录</a></li>
 					<li class="divider-vertical"></li>
 					<li class="navitorBox" id="jone_music"><a
-						class="link normal nav_music_" href="#box12">选择服务器</a></li>
+						class="link normal nav_music_" href="#box12">选择房间</a></li>
 					<li class="divider-vertical"></li>
 					<li class="navitorBox" id="jone_music"><a
-						class="link normal nav_music_" href="#box13">选择角色</a></li>
+						class="link normal nav_music_" href="#box13">准备游戏</a></li>
 					<li class="divider-vertical"></li>
 					<li class="navitorBox" id="jone_music"><a
-						class="link normal nav_music_" href="#box14">角色数据</a></li>
+						class="link normal nav_music_" href="#box14">开始游戏</a></li>
 					<li class="divider-vertical"></li>
 				</ul>
 			</div>
@@ -207,5 +168,16 @@
 	</div>
 	<div class="clear"></div>
 	<div id="footer"></div>
+	<!-- sbox -->
+	<div id="wrap">
+		<div id="sb">
+			<div id="one">
+				<div id="logo"><img src="img/ly.gif"/></div>
+				<div id="inbox"><input type="text" name="keyword" id="keyword" autocomplete="off"/></div>
+			</div>
+		</div>
+		<div id="help">HELP</div>
+	</div>
+	<div id="im"></div>
 </body>
 </html>

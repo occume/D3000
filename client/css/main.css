@@ -202,3 +202,19 @@ div.next-step dl dd{
 	height: 100px;
 	overflow: scroll;
 }
+/*** sbox ***/
+#wrap{position:absolute;padding:3px;background:#000;}
+#sb{position:relative;}
+#inbox input{width:300px;font-size:20px;padding:5px 0 3px 5px;}
+		
+#wrap{position:absolute;padding:5px;background:rgba(0, 0, 0, 0.6) none repeat scroll 0 0 !important;/*实现FF背景透明，文字不透明*/
+filter:Alpha(opacity=60);background:#333;/*实现IE背景透明*/}
+#wrap #sb{position:relative;}
+#wrap #sb #one{position:relative;background:#fff;}
+#wrap #one div{float:left;}
+#wrap #sb #logo{position:absolute;top:3px;left:3px;}
+#wrap #sb #logo img{width:30px;height:30px;}
+#wrap #inbox input{width:400px;font-size:18px;padding:8px 0 5px 40px;margin-bottom: 0px;}
+#help{width:443px;height:200px;position:absolute;border:3px solid #69c;background:#fff;}
+#im{position:absolute;width:500px;}
+#im p{font-size:25px;margin:10px 0 0 0;font-weight:900;font-family:cursive;}

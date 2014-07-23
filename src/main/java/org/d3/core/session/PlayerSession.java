@@ -8,6 +8,7 @@ public class PlayerSession extends SessionSupport{
 	private Dispacher 	t;
 	private Channel 	channel;
 	private Room		room;
+	private Player		player;
 	private volatile boolean online;
 	
 	public PlayerSession(Channel channel){
@@ -61,9 +62,18 @@ public class PlayerSession extends SessionSupport{
 		this.channel = channel;
 	}
 	
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
 	public void close(){
 		channel.close();
-		room.removeSession(this);
+		if(room != null)
+			room.leaveRoom(this);
 	}
 
 }

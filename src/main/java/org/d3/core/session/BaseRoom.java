@@ -3,7 +3,6 @@ package org.d3.core.session;
 import java.util.Set;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
-
 import org.d3.core.packet.Packet;
 import org.d3.core.packet.Packets;
 import org.testng.internal.annotations.Sets;
@@ -34,7 +33,6 @@ public class BaseRoom extends RoomSession implements Room {
 				broadcast(pkt);
 			}
 		}, 2, 3, TimeUnit.SECONDS);
-		
 		
 	}
 	
@@ -74,6 +72,12 @@ public class BaseRoom extends RoomSession implements Room {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	void onLeaveRoom() {
+		Packet ret = Packets.newPacket(Packets.ROOM, Packets.ROOM_LEAVE, getPlayers());
+		broadcast(ret);
 	}
 
 }

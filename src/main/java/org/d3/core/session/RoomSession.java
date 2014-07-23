@@ -1,5 +1,7 @@
 package org.d3.core.session;
 
+import java.util.Collection;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -10,9 +12,12 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 
 import org.d3.core.packet.Packet;
 
-public class RoomSession extends SessionSupport{
+import com.google.common.collect.Maps;
+
+public abstract class RoomSession extends SessionSupport{
 	
 	private ChannelGroup group;
+	private ConcurrentMap<String, Player> players;
 	private static final int ROOM_SIZE = 20;
 	private int size = 0;
 	private int guanQia = 0;
@@ -24,6 +29,7 @@ public class RoomSession extends SessionSupport{
 	public RoomSession(String id, String name){
 		super(id, name);
 		group = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+		players = Maps.newConcurrentMap();
 	}
 
 	public void onMessage(Packet pkt) {
@@ -34,19 +40,27 @@ public class RoomSession extends SessionSupport{
 		group.writeAndFlush(pkt);
 	}
 	
-	public boolean addSession(PlayerSession session){
+	public boolean joinRoom(PlayerSession session){
 		synchronized (this) {
 			if(size > ROOM_SIZE){
 				return false;
 			}
 			size++;
 		}
-		
+		players.put(session.getId(), session.getPlayer());
 		return group.add(session.getChannel());
 	}
 	
-	public void removeSession(PlayerSession session){
+	public void leaveRoom(PlayerSession session){
 		group.remove(session);
+		players.remove(session.getId());
+		onLeaveRoom();
+	}
+	
+	abstract void onLeaveRoom();
+	
+	public Collection<Player> getPlayers(){
+		return players.values();
 	}
 	
 	public void close(){

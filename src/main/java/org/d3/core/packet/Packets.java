@@ -16,12 +16,19 @@ public class Packets {
 	public static final byte LOG_OUT_SUCCESS = 0x0e;
 	public static final byte LOG_OUT_FAILURE = 0x0f;
 	
+	public static final byte CHAT = 0x20;
+	public static final byte CHAT_TO_ALL = 0x01;
+	public static final byte CHAT_TO_ONE = 0x02;
+	
 	//public static final byte GAME_LIST = 0x10;
-	public static final byte ROOM_LIST = 0x12;
-	public static final byte GAME_ROOM_JOIN = 0x14;
-	public static final byte GAME_ROOM_LEAVE = 0x16;
-	public static final byte GAME_ROOM_JOIN_SUCCESS = 0x18;
-	public static final byte GAME_ROOM_JOIN_FAILURE = 0x19;
+	public static final byte ROOM = 0x30;
+	public static final byte ROOM_LIST = 0x01;
+	public static final byte ROOM_JOIN = 0x02;
+	public static final byte ROOM_LEAVE = 0x03;
+	public static final byte ROOM_JOIN_SUCCESS = 0x04;
+	public static final byte ROOM_JOIN_FAILURE = 0x05;
+	public static final byte ROOM_PREPARE = 0x06;
+	public static final byte ROOM_UN_PREPARE = 0x07;
 	
 	public static final byte ROOM_CREATE = 0x30;
 	public static final byte SEEK_PAHT = 0x31;
@@ -59,7 +66,7 @@ public class Packets {
 	 * machines using TCP or UDP transports. It is an out-going event.
 	 */
 	public static final byte NETWORK_MESSAGE = 0x1d;
-	public static final byte CHANGE_ATTRIBUTE = 0x20;
+//	public static final byte CHANGE_ATTRIBUTE = 0x20;
 	
 	/**
 	 * If a remote connection is disconnected or closed then raise this event.
@@ -71,8 +78,16 @@ public class Packets {
 	 */
 	public static final byte EXCEPTION = 0x24;
 	
+	public static Packet newPacket(byte act, byte act_min){
+		return new BasePacket(1, act, act_min, "", "", null);
+	}
+	
 	public static Packet newPacket(byte act, Object tuple){
 		return new BasePacket(1, act, "", tuple);
+	}
+	
+	public static Packet newPacket(byte act, byte act_min, Object tuple){
+		return new BasePacket(1, act, act_min, "", "", tuple);
 	}
 	
 	public static Packet newPacket(byte act, byte act_min, String from, Object tuple){

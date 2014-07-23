@@ -42,7 +42,11 @@ public class PacketHandler extends SimpleChannelInboundHandler<Packet> {
 		super.channelInactive(ctx);
 		
 		PlayerSession playerSession = (PlayerSession) session;
-		playerSession.getRoom().playerUnPrepare();
+		if(playerSession.getRoom() != null){
+			playerSession.getRoom().playerUnPrepare();
+			playerSession.getRoom().leaveRoom(playerSession);
+		}
 		playerSession.offLine();
+		
 	}
 }

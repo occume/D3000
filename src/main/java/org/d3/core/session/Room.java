@@ -1,5 +1,7 @@
 package org.d3.core.session;
 
+import java.util.Collection;
+
 import org.d3.core.packet.Packet;
 
 public interface Room {
@@ -12,7 +14,14 @@ public interface Room {
 	
 	public void broadcast(Packet pkt);
 	
-	public boolean addSession(PlayerSession session);
+//	public boolean addSession(PlayerSession session);
+//	
+//	public void removeSession(PlayerSession session);
 	
-	public void removeSession(PlayerSession session);
+	public boolean joinRoom(PlayerSession session);
+	
+	public void leaveRoom(PlayerSession session);
+	
+	public Collection<Player> getPlayers();
+	
 }

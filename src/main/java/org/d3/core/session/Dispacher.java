@@ -1,9 +1,7 @@
 package org.d3.core.session;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-
 import org.agilewiki.jactor2.core.blades.NonBlockingBladeBase;
 import org.agilewiki.jactor2.core.requests.AOp;
 import org.agilewiki.jactor2.core.requests.AsyncResponseProcessor;
@@ -14,8 +12,6 @@ import org.d3.core.packet.Packets;
 import org.d3.core.service.RoomService;
 import org.d3.core.util.AStarTools;
 import org.d3.core.util.Point;
-import org.d3.game.map.MapUtil;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
@@ -40,35 +36,8 @@ public class Dispacher extends NonBlockingBladeBase {
 		modules.put((int)Packets.INFO, Module.INFO_MODULE);
 		modules.put((int)Packets.BULLET, Module.BULLET_MODULE);
 		modules.put((int)Packets.MONSTER, Module.MONSTER_MODULE);
-		
-		processers.put((int)Packets.ROOM_LIST, new Processer() {
-			public void process(PlayerSession ps, Packet pkt) {
-				Collection<Room> rooms = roomService.getRoomList();
-				Packet pkt1 = Packets.newPacket(Packets.ROOM_LIST, rooms);
-				ps.sendMessage(pkt1);
-			}
-		});
-		
-		processers.put((int)Packets.GAME_ROOM_JOIN, new Processer() {
-			public void process(PlayerSession ps, Packet pkt) {
-				Map<String, String> rstMap = (Map<String, String>) pkt.getTuple();
-				String id = rstMap.get("id");
-				Room room = roomService.getRoomById(id);
-				
-				Packet ret = null;
-				if(room.addSession(ps)){
-					ps.setRoom(room);
-					ret = Packets.newPacket(Packets.GAME_ROOM_JOIN_SUCCESS, ps);
-					room.broadcast(ret);
-//					room.broadcast(Packets.newPacket(Packets.START, null));
-					room.broadcast(Packets.newPacket(Packets.MAP_DATA, MapUtil.getDefaultMap()));
-				}
-				else{
-					ret = Packets.newPacket(Packets.GAME_ROOM_JOIN_FAILURE, null);
-					ps.sendMessage(ret);
-				}
-			}
-		});
+		modules.put((int)Packets.ROOM, Module.ROOM_MODULE);
+		modules.put((int)Packets.CHAT, Module.CHAT_MODULE);	
 		
 		processers.put((int)Packets.SEEK_PAHT, new Processer(){
 			public void process(PlayerSession ps, Packet pkt) {
@@ -99,15 +68,7 @@ public class Dispacher extends NonBlockingBladeBase {
 			}
 		});
 		
-		processers.put((int)Packets.PREPARE_GAME, new Processer(){
-			public void process(PlayerSession ps, Packet pkt) {
-				
-				Packet resp = Packets.newPacket(Packets.PREPARE_GAME, ps);
-				ps.getRoom().broadcast(resp);
-				ps.getRoom().playerPrepare();
-				
-			}
-		});
+		
 		
 		processers.put((int)Packets.HEART_BEAT, new Processer(){
 			public void process(PlayerSession ps, Packet pkt) {
