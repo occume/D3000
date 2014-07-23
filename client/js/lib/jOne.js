@@ -13,6 +13,7 @@ var IS_DONTENUM_BUGGY = (function(){
 })();
 
 (function(){
+	
 	var glob = function(){return this;}();
 	
 	function $A(iterable) {

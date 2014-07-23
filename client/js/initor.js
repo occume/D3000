@@ -223,13 +223,16 @@ $(function() {
 			    {src:"img/enemy.png", id:"enemy"},
 			    {src:"img/tower.png", id:"tower"},
 			    {src:"js/Bullet.js", id:"bullet-js"},
+			    {src:"js/MapData.js", id:"mapdata-js"},
 			    {src:"js/D3.net.1.0.js", id:"D3-net-js"},
 			    {src:"js/D3.net.packet.1.0.js", id:"D3-net-packet-js"},
 			    {src:"js/lib/jquery.localscroll-1.2.7-min.js", id:"localscroll-js"},
 			    {src:"js/lib/nbw-parallax.js", id:"nbw-parallax-js"},
 			    {src:"js/lib/scrollTo.js", id:"scrollTo-js"},
-			    {src:"js/D3.chat.1.0.js", id:"D3-chat-js"},
 			    {src:"js/lib/jOne.js", id:"jOne-js"},
+			    {src:"js/D3.chat.1.0.js", id:"D3-chat-js"},
+			    {src:"js/D3.raphael.1.0.js", id:"D3-raphael-js"},
+			    {src:"js/D3.monster.1.0.js", id:"D3-monster-js"},
 			    {src:"js/D3.game.1.0.js", id:"D3-game-js"},
 			];
 

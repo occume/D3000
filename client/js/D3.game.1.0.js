@@ -1,31 +1,65 @@
 ;
 (function(D3){
 	
-	var game = {
+	var paperMapOffsetX = 0,
+		paperMapOffsetY = 5;
+	
+	var Game = {
 		papers: {},
 		init: function(){
-			this.papers.map = Raphael("paper4", 1200, 600);
-			this.papers.info = Raphael("paper4", 1200, 600);
+			this.papers.map = Paper.create("paper4", 1200, 600);
+			this.papers.main = Paper.create("paper4", 1200, 600);
 			this.drapMap();
+		},
+		getPaper: function(name){
+			return this.papers[name];
 		},
 		drapMap: function(){
 			var map = this.papers.map,
-				info = this.papers.info;
-			$(map.canvas).css({
+				main = this.papers.main;
+			map.css({
 				position: "absolute",
-				top : 0,
-				left : 15
+				top : 0
 			});
-			$(info.canvas).css({
+			main.css({
 				position: "absolute",
-				top : 0,
-				left : 15
+				top : 0
 			});
-			map.text(100, 200, "map");
-			info.text(300, 500, "info");
+			
+			var col = MapOne.length,
+				row = MapOne[0].length,
+				mapCellLen = 32;
+			var
+			i = 0,
+			k = 0,
+			len = cellW = cellH = mapCellLen,
+			c;
+		
+			for(; i < col; i++){
+				for(; k < row; k++){
+					c = MapOne[i][k];
+					if(c == 0){
+						temp = map.newImage("img/brick.png",k * len + paperMapOffsetX, i * len + paperMapOffsetY, len, len);
+//						walls.push(modle("Rect")(temp, null, {x: k, y: i}));
+//						walls1.push(temp);
+					}else{
+						//temp = map.newImage("img/grass.png", k * len +paperMapOffsetX, i * len + paperMapOffsetY, len, len);
+//						pass.push(modle("Rect")(temp, null, {x: k, y: i}));
+//						pass1.push(temp);
+					}
+				}
+				k = 0;
+			}
+			
+		},
+		loop: function(){
+			D3.Monster.update();
 		}
+		
 	};
 	
-	game.init();
+	D3.Game = Game;
+	Game.init();
+	Game.loop();
 	
 }( window.D3 = window.D3 || {}));
