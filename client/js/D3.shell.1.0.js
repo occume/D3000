@@ -39,6 +39,7 @@
 			
 		},
 		over: function(monster){
+			
 			monster.onHit(15);
 			shells.remove(this);
 		},
