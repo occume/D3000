@@ -43,8 +43,6 @@
 			paper.newImage("img/pig2.png", this.x, this.y, this.width, this.height);
 			
 			var persent = (this.life / this.maxLife).toFixed(2);
-			//画出血量
-//			Canvas.fillRect(this.cxt,this.x-5,this.y-5,persen,3,"rgba(38,223,116,0.8)");
 			
 			paper.newRect(this.x, this.y - 5, this.width * persent, 5, 0);
 		},
@@ -63,6 +61,12 @@
 		},
 		update: function(){
 			
+			if(this.x >= 500){
+				//this.over(true);
+//				S.send(D3.makePacketByType(D3.MONSTER, D3.MONSTER_OVER, this.id));
+				return false;
+			}
+			
 			var x = parseInt(this.x / 50,10),
 				y = parseInt(this.y / 50,10);
 			
@@ -72,9 +76,9 @@
 				if(!this.nextStep){
 					this.passed[x + "_" + y] = !0;
 				}
-//				if(x + 1 >= 10){
-//					x = -1;
-//				}else{
+				if(x + 1 >= 10){
+					x = -1;
+				}else{
 					if(mapData[x][y - 1] && !this.passed[x + "_" + (y - 1)]){
 						this.dir = 1;
 						y -= 1;
@@ -91,17 +95,17 @@
 						this.dir = 4;
 						x -= 1;
 					}
-//				}
-				
-//				if(x == -1){
-//					this.nextStep = {x: 500, y: y * 50 + 5};
-//				}
+				}
+//				
+				if(x == -1){
+					this.nextStep = {x: 500, y: y * 50 + 5};
+				}
 	            //设置下个移动位置
-//				else {
+				else {
 					this.nextStep = {x: x * 50 + 5, y: y * 50 + 5};
 	                //记录已经走过的位置
 					this.passed[x + "_" + y] = !0;
-//				}
+				}
 				
 			}
 			

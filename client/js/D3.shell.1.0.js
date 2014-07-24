@@ -16,7 +16,7 @@
 	Shell.addMethods({
 		draw: function(){
 			var paper = D3.Game.getPaper("main");
-			paper.newImage("img/baicai.png", this.x, this.y, this.width, this.height);
+			paper.newImage("img/bg.png", this.x, this.y, this.width, this.height);
 		},
 		update: function(){
 			
@@ -39,7 +39,22 @@
 			
 		},
 		over: function(monster){
+			var paper = D3.Game.getPaper("turret"),
+				me = this,
+				boom,
+				i = 0;
 			
+			var tm = setInterval(function(){
+				if(boom)
+					boom.remove();
+				if(i == 3){
+					clearInterval(tm);
+					return;
+				}
+				
+				boom = paper.newImage("img/b" + i +".png", me.x - 32, me.y - 32, 64, 64);
+				i++;
+			},40);
 			monster.onHit(15);
 			shells.remove(this);
 		},

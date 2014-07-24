@@ -10,8 +10,8 @@
 			this.papers.topInfo = Paper.create("header", 1200, 100);
 			this.papers.bottomInfo = Paper.create("paper4", 1200, 600);
 			this.papers.turret = Paper.create("paper4", 1200, 600);
-			this.papers.map = Paper.create("paper4", 1200, 600);
 			this.papers.main = Paper.create("paper4", 1200, 600);
+			this.papers.map = Paper.create("paper4", 1200, 600);
 			
 			this.initPapers();
 			

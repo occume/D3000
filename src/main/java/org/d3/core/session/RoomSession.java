@@ -18,6 +18,7 @@ public abstract class RoomSession extends SessionSupport{
 	
 	private ChannelGroup group;
 	private ConcurrentMap<String, Player> players;
+	private ConcurrentMap<String, Boolean> colors;
 	private static final int ROOM_SIZE = 20;
 	private int size = 0;
 	private int guanQia = 0;
@@ -30,6 +31,8 @@ public abstract class RoomSession extends SessionSupport{
 		super(id, name);
 		group = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 		players = Maps.newConcurrentMap();
+		colors = Maps.newConcurrentMap();
+		colors.put("", false);
 	}
 
 	public void onMessage(Packet pkt) {
