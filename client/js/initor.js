@@ -233,7 +233,11 @@ $(function() {
 			    {src:"js/D3.chat.1.0.js", id:"D3-chat-js"},
 			    {src:"js/D3.raphael.1.0.js", id:"D3-raphael-js"},
 			    {src:"js/D3.monster.1.0.js", id:"D3-monster-js"},
-			    {src:"js/D3.game.1.0.js", id:"D3-game-js"},
+			    {src:"js/D3.turret.1.0.js", id:"D3-turret-js"},
+			    {src:"js/D3.shell.1.0.js", id:"D3-shell-js"},
+			    {src:"js/D3.map.1.0.js", id:"D3-map-js"},
+			    {src:"js/D3.info.1.0.js", id:"D3-info-js"},
+			    {src:"js/D3.game.1.0.js", id:"D3-game-js"}
 			];
 
 			var respLength = manifest.length, loaded = 0;

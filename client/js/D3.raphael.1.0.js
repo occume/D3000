@@ -1,6 +1,10 @@
 ;
 (function(){
 	
+	var CONS = {
+		dashed: {fill: "green", stroke: "none", "stroke-dasharray": ""}
+	};
+	
 	var Paper = Class.create({
 		init: function(holder, width, height){
 			this.paper = Raphael(holder, width, height);
@@ -10,6 +14,12 @@
 	Paper.addMethods({
 		css: function(attrs){
 			jOne.extend(this.paper.canvas.style, attrs);
+		},
+		set: function(){
+			return this.paper.set();
+		},
+		clear: function(){
+			this.paper.clear();
 		},
 		newBall: function(x, y, r){
 			return this.paper.circle(x, y, r).attr(CONS.dashed);

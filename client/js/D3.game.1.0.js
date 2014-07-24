@@ -7,15 +7,23 @@
 	var Game = {
 		papers: {},
 		init: function(){
+			
+			this.papers.bottomInfo = Paper.create("paper4", 1200, 600);
+			this.papers.turret = Paper.create("paper4", 1200, 600);
 			this.papers.map = Paper.create("paper4", 1200, 600);
 			this.papers.main = Paper.create("paper4", 1200, 600);
-			this.drapMap();
+			
+			this.initPapers();
+			
+			D3.BottomInfo.init();
 		},
 		getPaper: function(name){
 			return this.papers[name];
 		},
-		drapMap: function(){
+		initPapers: function(){
 			var map = this.papers.map,
+				bottomInfo = this.papers.bottomInfo,
+				turret = this.papers.turret,
 				main = this.papers.main;
 			map.css({
 				position: "absolute",
@@ -25,41 +33,35 @@
 				position: "absolute",
 				top : 0
 			});
+			turret.css({
+				position: "absolute",
+				top : 0
+			});
+			bottomInfo.css({
+				position: "absolute",
+				top : 0
+			});
 			
-			var col = MapOne.length,
-				row = MapOne[0].length,
-				mapCellLen = 32;
-			var
-			i = 0,
-			k = 0,
-			len = cellW = cellH = mapCellLen,
-			c;
-		
-			for(; i < col; i++){
-				for(; k < row; k++){
-					c = MapOne[i][k];
-					if(c == 0){
-						temp = map.newImage("img/brick.png",k * len + paperMapOffsetX, i * len + paperMapOffsetY, len, len);
-//						walls.push(modle("Rect")(temp, null, {x: k, y: i}));
-//						walls1.push(temp);
-					}else{
-						//temp = map.newImage("img/grass.png", k * len +paperMapOffsetX, i * len + paperMapOffsetY, len, len);
-//						pass.push(modle("Rect")(temp, null, {x: k, y: i}));
-//						pass1.push(temp);
-					}
-				}
-				k = 0;
-			}
+			D3.Map.drawMap();
 			
 		},
 		loop: function(){
+			this.papers.main.clear();
 			D3.Monster.update();
+			D3.Turret.update();
+			D3.Shell.update();
+		},
+		start: function(){
+			//D3.Turret.create(50, 0).draw();
+			setInterval(function(){
+				Game.loop();
+			}, 30);
 		}
 		
 	};
 	
 	D3.Game = Game;
 	Game.init();
-	Game.loop();
+	Game.start();
 	
 }( window.D3 = window.D3 || {}));

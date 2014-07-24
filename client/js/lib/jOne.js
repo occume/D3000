@@ -152,6 +152,20 @@ var IS_DONTENUM_BUGGY = (function(){
 			return included;
 		}; 
 	}
+	
+	if(!Array.prototype.remove){
+		Array.prototype.remove = function(obj){
+			
+			for(var i=0,l=this.length;i<l;i++){
+				
+				if(obj == this[i]){
+					this.splice(i,1);
+					break;
+				}
+			}
+		};
+	}
+	
 })()
 
 ;
