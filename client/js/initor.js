@@ -237,6 +237,7 @@ $(function() {
 			    {src:"js/D3.shell.1.0.js", id:"D3-shell-js"},
 			    {src:"js/D3.map.1.0.js", id:"D3-map-js"},
 			    {src:"js/D3.info.1.0.js", id:"D3-info-js"},
+			    {src:"js/D3.player.1.0.js", id:"D3-player-js"},
 			    {src:"js/D3.game.1.0.js", id:"D3-game-js"}
 			];
 
@@ -358,6 +359,10 @@ $(function() {
 					var player = $("<li>" + itm.name + "</li>");
 					player.data("idx", itm.id);
 					playerList.append(player);
+					/**
+					 * 增加一个玩家
+					 */
+					D3.Player.create(itm.id, itm.name);
 				});
 			}
 		};

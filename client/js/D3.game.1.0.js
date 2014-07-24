@@ -7,7 +7,7 @@
 	var Game = {
 		papers: {},
 		init: function(){
-			
+			this.papers.topInfo = Paper.create("header", 1200, 100);
 			this.papers.bottomInfo = Paper.create("paper4", 1200, 600);
 			this.papers.turret = Paper.create("paper4", 1200, 600);
 			this.papers.map = Paper.create("paper4", 1200, 600);
@@ -50,6 +50,7 @@
 			D3.Monster.update();
 			D3.Turret.update();
 			D3.Shell.update();
+			D3.Player.update();
 		},
 		start: function(){
 			//D3.Turret.create(50, 0).draw();
