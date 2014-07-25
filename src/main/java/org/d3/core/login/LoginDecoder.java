@@ -1,15 +1,12 @@
 package org.d3.core.login;
 
 import java.util.List;
-
 import javax.annotation.Resource;
-
 import org.d3.core.util.ProtocolUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
@@ -26,7 +23,7 @@ public class LoginDecoder extends ByteToMessageDecoder {
 	private static final Logger LOG = LoggerFactory.getLogger(LoginDecoder.class);
 	
 	@Resource
-	private Loginhandler websocketLoginhandler;
+	private Loginhandler loginhandler;
 	
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in,
@@ -43,7 +40,7 @@ public class LoginDecoder extends ByteToMessageDecoder {
 	        pipeline.addLast("aggregator", new HttpObjectAggregator(65536));
 	        pipeline.addLast("encoder", new HttpResponseEncoder());
 	        pipeline.addLast("handler", new WebSocketServerProtocolHandler("/d3socket"));
-	        pipeline.addLast("loginhandler", websocketLoginhandler);
+	        pipeline.addLast("loginhandler", loginhandler);
 	        
 	        pipeline.remove(this);
 		}
