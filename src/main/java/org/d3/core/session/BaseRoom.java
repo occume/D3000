@@ -21,18 +21,19 @@ public class BaseRoom extends RoomSession implements Room {
 	}
 
 	public void startGame() {
-		sendMassage(Packets.newPacket(Packets.START, null));
+		sendMassage(Packets.newPacket(Packets.ROOM, Packets.ROOM_START_GAME, null));
 		
 		future = scheduledService.scheduleAtFixedRate(new Runnable() {
 			public void run() {
 				Monster m = new Monster();
 				monsters.add(m);
-				Packet pkt = Packets.newPacket(Packets.GAME,
-						Packets.GAME_MAKE_MONSTER, 
+				Packet pkt = Packets.newPacket(
+						Packets.ROOM,
+						Packets.ROOM_MAKE_MONSTER, 
 						"ALL", m);
 				broadcast(pkt);
 			}
-		}, 2, 3, TimeUnit.SECONDS);
+		}, 5, 3, TimeUnit.SECONDS);
 		
 	}
 	
@@ -47,6 +48,7 @@ public class BaseRoom extends RoomSession implements Room {
 
 	public void playerPrepare() {
 		int currReadyCount = readyCount.incrementAndGet();
+		System.out.println("ready-----------");
 		System.out.println(currReadyCount);
 		System.out.println(getPlayerCount());
 		synchronized (this) {
@@ -57,12 +59,17 @@ public class BaseRoom extends RoomSession implements Room {
 	}
 
 	public void playerUnPrepare() {
+		
 		int currReadyCount = readyCount.decrementAndGet();
+		System.out.println("unready-----------");
+		System.out.println(currReadyCount);
+		System.out.println(getPlayerCount());
 		synchronized (this) {
 			if(currReadyCount == 0){
 				stopGame();
 			}
 		}
+		
 	}
 	
 	public Monster getMonster(String id){

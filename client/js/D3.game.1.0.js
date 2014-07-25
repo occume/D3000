@@ -50,7 +50,7 @@
 			D3.Monster.update();
 			D3.Turret.update();
 			D3.Shell.update();
-			D3.Player.update();
+//			D3.Player.update();
 		},
 		start: function(){
 			//D3.Turret.create(50, 0).draw();
@@ -63,6 +63,6 @@
 	
 	D3.Game = Game;
 	Game.init();
-	Game.start();
+//	Game.start();
 	
 }( window.D3 = window.D3 || {}));

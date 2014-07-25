@@ -310,9 +310,8 @@ $(function() {
 	
 	var Room = function(){
 		var _init = function(){
-			var timer = setInterval(function(){
-				try{
-					
+			
+				
 					D3.addProcessor(D3.ROOM, D3.ROOM_JOIN_SUCCESS, 
 					function(pkt){
 						Room.showMe(pkt);
@@ -326,13 +325,27 @@ $(function() {
 					D3.addProcessor(D3.ROOM, D3.ROOM_PREPARE, 
 					function(pkt){
 						//Room.showMe(pkt);
-						console.log(pkt);
+//						console.log(pkt);
+						var player = D3.Player.getPlayer(pkt.tuple);
+						player.ready4Game();
+						$("#" + pkt.tuple).css({border: "2px solid #5cb85c"});
 						SBOX.systemMessage(pkt.tuple);
 					});
-					
-				}
-				catch(e){};
-			}, 100);
+					/**
+					 * 开始游戏
+					 */
+					D3.addProcessor(D3.ROOM, D3.ROOM_START_GAME,
+					function(pkt){
+						slideWrapper.scrollTo("#box14", 500);
+						D3.Game.start();
+					});
+					/**
+					 * 出怪
+					 */
+					D3.addProcessor(D3.ROOM, D3.ROOM_MAKE_MONSTER,
+					function(pkt){
+						D3.Monster.create(50, 0, pkt.tuple.id);
+					});
 			
 			_bind();
 		};
@@ -345,25 +358,35 @@ $(function() {
 				return false;
 			});
 		};
-		_init();
 		return {
+			init: function(){
+				_init();
+			},
 			showMe: function(pkt){
 				this.data = pkt;
 				slideWrapper.scrollTo("#box13", 500);
 				this.showPlayers();
 			},
 			showPlayers: function(){
+				
 				var playerList = $("#player-list ul");
+				
 				playerList.html("");
+				D3.Player.clear();
+				
 				$(this.data.tuple).each(function(idx, itm){
-					var player = $("<li>" + itm.name + "</li>");
+					/**
+					 * 显示房间所有玩家
+					 */
+					var player = $("<li id='"+ itm.sid +"'>" + itm.name + "</li>");
 					player.data("idx", itm.id);
 					playerList.append(player);
 					/**
 					 * 增加一个玩家
 					 */
-					D3.Player.create(itm.id, itm.name);
+					D3.Player.create(itm.seat, itm.name, itm.sid);
 				});
+				D3.Player.update();
 			}
 		};
 	}();
@@ -371,12 +394,13 @@ $(function() {
 	var Game = {
 		init : function() {
 			Loading.init();
+			
 			Loader.onLoaded(function(){
 				D3.cid = jOne.createUUID();
 				D3.cid = 39600;
 				D3.session = D3.createSession("ws://localhost:10086/d3socket");
 				
-				slideWrapper.scrollTo("#box14", 500);
+//				slideWrapper.scrollTo("#box14", 500);
 				
 			}).loadResp();
 			this.bind();
@@ -415,6 +439,7 @@ $(function() {
 				 */
 				D3.addProcessor(D3.ROOM, D3.ROOM_LIST, 
 				function(pkt){
+					Room.init();
 					RoomList.showMe(pkt);
 				});
 				

@@ -43,7 +43,8 @@ public class PacketHandler extends SimpleChannelInboundHandler<Packet> {
 		
 		PlayerSession playerSession = (PlayerSession) session;
 		if(playerSession.getRoom() != null){
-			playerSession.getRoom().playerUnPrepare();
+			if(playerSession.getPlayer().isReady())
+				playerSession.getRoom().playerUnPrepare();
 			playerSession.getRoom().leaveRoom(playerSession);
 		}
 		playerSession.offLine();

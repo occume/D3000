@@ -79,6 +79,10 @@ public interface Module {
 			processers.put((int)Packets.ROOM_PREPARE, new Processer(){
 				public void process(PlayerSession ps, Packet pkt) {
 					
+					if(ps.getPlayer().isReady())
+						return;
+					ps.getPlayer().setReady(true);
+					
 					Packet resp = Packets.newPacket(Packets.ROOM, Packets.ROOM_PREPARE, pkt.getTuple());
 					ps.getRoom().broadcast(resp);
 					ps.getRoom().playerPrepare();
@@ -119,22 +123,22 @@ public interface Module {
 		
 		public void init() {
 			
-			processers.put((int)Packets.INFO_MOVE_TOWER, new Processer() {
+			processers.put((int)Packets.INFO_MOVE_TURRET, new Processer() {
 				public void process(PlayerSession ps, Packet pkt) {
 					
 					Packet resp = Packets.newPacket(Packets.INFO,
-							Packets.INFO_MOVE_TOWER, "", pkt.getTuple());
+							Packets.INFO_MOVE_TURRET, "", pkt.getTuple());
 					
 					ps.getRoom().broadcast(resp);
 					
 				}
 			});
 			
-			processers.put((int)Packets.INFO_BUILD_TOWER, new Processer() {
+			processers.put((int)Packets.INFO_BUILD_TURRET, new Processer() {
 				public void process(PlayerSession ps, Packet pkt) {
 					
 					Packet resp = Packets.newPacket(Packets.INFO, 
-							Packets.INFO_BUILD_TOWER, ps.getId(), pkt.getTuple());
+							Packets.INFO_BUILD_TURRET, ps.getId(), pkt.getTuple());
 					
 					ps.getRoom().broadcast(resp);
 					
@@ -145,21 +149,21 @@ public interface Module {
 		
 	};
 	
-	Module BULLET_MODULE = new BaseModule(){
+	Module SHELL_MODULE = new BaseModule(){
 
 		public void init() {
 			processers = Maps.newHashMap();
 			
-			processers.put((int)Packets.BULLET_HIT_MONSTER, new Processer() {
+			processers.put((int)Packets.SHELL_HIT_MONSTER, new Processer() {
 				public void process(PlayerSession ps, Packet pkt) {
 					try{
 					List<Object> list = (List<Object>) pkt.getTuple();
 					String playerId = list.get(0).toString();
-					String enemyId = list.get(1).toString();
+					String monsterId = list.get(1).toString();
 					int hurt = Integer.valueOf(list.get(2).toString());
 					
 					BaseRoom room = (BaseRoom) ps.getRoom();
-					Monster m = room.getMonster(enemyId);
+					Monster m = room.getMonster(monsterId);
 					Packet resp = null;
 					
 					synchronized (processers) {
@@ -196,11 +200,11 @@ public interface Module {
 			processers.put((int)Packets.MONSTER_OVER, new Processer() {
 				public void process(PlayerSession ps, Packet pkt) {
 					
-					String enemyId = pkt.getTuple().toString();
+					String monsterId = pkt.getTuple().toString();
 					
 					List<String> tuple = Lists.newArrayList();
 					tuple.add("SITE");
-					tuple.add(enemyId);
+					tuple.add(monsterId);
 					tuple.add("OUT_OF_MAP");
 					
 					Packet resp = Packets.newPacket(Packets.MONSTER, 

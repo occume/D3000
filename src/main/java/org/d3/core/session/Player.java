@@ -7,14 +7,17 @@ public class Player {
 	private static AtomicInteger idx = new AtomicInteger(1);
 	
 	private int id;
+	private int seat;
 	private String name;
-	private String color;
+	private String sid;
+	private boolean ready;
 	
 	public Player(){};
 	
-	public Player(String name){
+	public Player(String name, String sid){
 		this.id = idx.getAndIncrement();
 		this.name = name;
+		this.sid = sid;
 	}
 	
 	public int getId() {
@@ -30,12 +33,28 @@ public class Player {
 		this.name = name;
 	}
 
-	public String getColor() {
-		return color;
+	public String getSid() {
+		return sid;
 	}
 
-	public void setColor(String color) {
-		this.color = color;
+	public void setSid(String sid) {
+		this.sid = sid;
+	}
+
+	public int getSeat() {
+		return seat;
+	}
+
+	public void setSeat(int seat) {
+		this.seat = seat;
+	}
+
+	public boolean isReady() {
+		return ready;
+	}
+
+	public void setReady(boolean ready) {
+		this.ready = ready;
 	}
 	
 }

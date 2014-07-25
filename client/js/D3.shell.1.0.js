@@ -2,8 +2,9 @@
 (function(D3){
 	
 	var Shell = Class.create({
-		init: function(x, y, monster){
+		init: function(x, y, monster, turret){
 			this.monster = monster;
+			this.turret = turret;
 			this.x = x;
 			this.y = y;
 			this.width = 10;
@@ -33,7 +34,7 @@
 			}
 			//判断子弹击中敌人
 			if(circleInCircle(this,{x:this.monster.x+20,y:this.monster.y+20,radius:20})){
-				console.log("击中！");
+//				console.log("击中！");
 				this.over(this.monster);
 			}
 			
@@ -55,7 +56,14 @@
 				boom = paper.newImage("img/b" + i +".png", me.x - 32, me.y - 32, 64, 64);
 				i++;
 			},40);
-			monster.onHit(15);
+			
+			if(D3.playerId == this.turret.player.sid){
+				D3.session.send(D3.makePacketByType(
+						D3.SHELL, 
+						D3.SHELL_HIT_MONSTER, 
+						[this.turret.player.sid, monster.id, 15]));
+			}
+//			monster.onHit(15);
 			shells.remove(this);
 		},
 		getLineAngle : function(){
@@ -88,8 +96,8 @@
 	
 	var shells = [];
 	
-	Shell.create = function(x, y, monster){
-		var m = new Shell(x, y, monster);
+	Shell.create = function(x, y, monster, turret){
+		var m = new Shell(x, y, monster, turret);
 		shells.push(m);
 		return m;
 	};

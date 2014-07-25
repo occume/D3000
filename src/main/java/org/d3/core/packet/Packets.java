@@ -29,6 +29,8 @@ public class Packets {
 	public static final byte ROOM_JOIN_FAILURE = 0x05;
 	public static final byte ROOM_PREPARE = 0x06;
 	public static final byte ROOM_UN_PREPARE = 0x07;
+	public static final byte ROOM_START_GAME = 0x08;
+	public static final byte ROOM_MAKE_MONSTER = 0x09;
 	
 	public static final byte ROOM_CREATE = 0x30;
 	public static final byte SEEK_PAHT = 0x31;
@@ -43,14 +45,14 @@ public class Packets {
 	public static final byte STOP = 0x1b;
 	
 	public static final byte INFO = 0x40;
-	public static final byte INFO_MOVE_TOWER = 0x01;
-	public static final byte INFO_BUILD_TOWER = 0x02;
+	public static final byte INFO_MOVE_TURRET = 0x01;
+	public static final byte INFO_BUILD_TURRET = 0x02;
 	
 	public static final byte GAME = 0x50;
 	public static final byte GAME_MAKE_MONSTER = 0x01;
 	
-	public static final byte BULLET = 0x60;
-	public static final byte BULLET_HIT_MONSTER = 0x01;
+	public static final byte SHELL = 0x60;
+	public static final byte SHELL_HIT_MONSTER = 0x01;
 	
 	public static final byte MONSTER = 0x70;
 	public static final byte MONSTER_DECREMENT_LIFE = 0x01;

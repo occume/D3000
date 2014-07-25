@@ -2,19 +2,24 @@
 (function(D3){
 	
 	var Turret = Class.create({
-		init: function(x, y){
+		init: function(x, y, typeIdx, player){
 			this.x = x;
 			this.y = y;
+			this.player = player;
 			this.width = 50;
 			this.height = 50;
+			this.lv = 1;
+			this.typeIdx = typeIdx;
 			this.interval = 30;
 		}
 	});
 	
 	Turret.addMethods({
 		draw: function(){
-			var paper = D3.Game.getPaper("turret");
-			paper.newImage("img/baicai.png", this.x, this.y, this.width, this.height);
+			var paper = D3.Game.getPaper("turret"),
+				type = turretType[this.typeIdx][this.lv];
+			paper.newImage("img/" + type.src + ".png", this.x, this.y, this.width, this.height);
+			paper.newRect(this.x, this.y, 10, 10, 0).attr({fill: this.player.color});
 		},
 		update: function(){
 			if(this.interval > 0){
@@ -32,7 +37,8 @@
 				}
 				if(rectInCircle(monster, {x: this.x + 25,y: this.y + 25,radius:100})){
 //					console.log("攻击！");
-					D3.Shell.create(this.x + 20, this.y + 20, monster).draw();
+					D3.Shell.create(this.x + 20, this.y + 20, monster, this).draw();
+					break;
 				}
 			}
 		}
@@ -53,9 +59,21 @@
 	}
 	
 	var turrets = [];
+	var turretType = [
+	    {
+	    	1: {
+	    		src: "baicai"
+	    	}
+	    },
+	    {
+	    	1: {
+	    		src: "blower"
+	    	}
+	    }
+	];
 	
-	Turret.create = function(x, y){
-		var m = new Turret(x, y);
+	Turret.create = function(x, y, typeIdx, player){
+		var m = new Turret(x, y, typeIdx, player);
 		turrets.push(m);
 		return m;
 	};

@@ -34,7 +34,7 @@ public class Dispacher extends NonBlockingBladeBase {
 	private void _init(){
 		
 		modules.put((int)Packets.INFO, Module.INFO_MODULE);
-		modules.put((int)Packets.BULLET, Module.BULLET_MODULE);
+		modules.put((int)Packets.SHELL, Module.SHELL_MODULE);
 		modules.put((int)Packets.MONSTER, Module.MONSTER_MODULE);
 		modules.put((int)Packets.ROOM, Module.ROOM_MODULE);
 		modules.put((int)Packets.CHAT, Module.CHAT_MODULE);	

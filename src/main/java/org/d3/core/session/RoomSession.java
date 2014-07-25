@@ -18,10 +18,10 @@ public abstract class RoomSession extends SessionSupport{
 	
 	private ChannelGroup group;
 	private ConcurrentMap<String, Player> players;
-	private ConcurrentMap<String, Boolean> colors;
-	private static final int ROOM_SIZE = 20;
+	private ConcurrentMap<Integer, Boolean> seats;
+	private static final int ROOM_SIZE = 4;
 	private int size = 0;
-	private int guanQia = 0;
+//	private int guanQia = 0;
 	protected int MONSTER_COUNT =20;
 	protected AtomicInteger readyCount = new AtomicInteger();
 	protected static ScheduledExecutorService scheduledService = 
@@ -31,8 +31,11 @@ public abstract class RoomSession extends SessionSupport{
 		super(id, name);
 		group = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 		players = Maps.newConcurrentMap();
-		colors = Maps.newConcurrentMap();
-		colors.put("", false);
+		
+		seats = Maps.newConcurrentMap();
+		for(int i = 1; i <= ROOM_SIZE; i++){
+			seats.put(i, false);
+		}
 	}
 
 	public void onMessage(Packet pkt) {
@@ -50,17 +53,33 @@ public abstract class RoomSession extends SessionSupport{
 			}
 			size++;
 		}
-		players.put(session.getId(), session.getPlayer());
+		int seat = getFreeSeat();
+		Player player = session.getPlayer();
+		player.setSeat(seat);
+		players.put(session.getId(), player);
 		return group.add(session.getChannel());
 	}
 	
 	public void leaveRoom(PlayerSession session){
+		size--;
+		Player player = session.getPlayer();
+		seats.put(player.getSeat(), false);
 		group.remove(session);
 		players.remove(session.getId());
 		onLeaveRoom();
 	}
 	
 	abstract void onLeaveRoom();
+	
+	private int getFreeSeat(){
+		for(int i = 1; i <= seats.size(); i++){
+			if(!seats.get(i)){
+				seats.put(i, true);
+				return i;
+			}
+		}
+		return -1;
+	}
 	
 	public Collection<Player> getPlayers(){
 		return players.values();

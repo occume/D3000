@@ -80,7 +80,7 @@ public class Loginhandler extends SimpleChannelInboundHandler<TextWebSocketFrame
 			if(playerService.auth()){
 				
 				PlayerSession session = new PlayerSession(ctx.channel());
-				session.setPlayer(new Player(userName));
+				session.setPlayer(new Player(userName, session.getId()));
 				
 				SessionManager sessionManager = (SessionManager) D3Context.getBean("sessionManager");
 				sessionManager.putSession(session);

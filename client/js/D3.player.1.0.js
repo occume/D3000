@@ -2,16 +2,18 @@
 (function(D3){
 	
 	var Player = Class.create({
-		init: function(id, name){
-			this.id = id;
+		init: function(seat, name, sid){
+			this.seat = seat;
 			this.name = name;
+			this.sid = sid;
 			this.width = 300;
 			this.height = 15;
 			this.money = 100;
 			this.score = 0;
-			this.x = (id - 1) * 300;
+			this.x = (seat - 1) * 300;
 			this.y = 0;
-			this.color = colors[id];
+			this.ready = !1;
+			this.color = colors[seat];
 		}
 	});
 	
@@ -25,6 +27,9 @@
 			paper.newRect(this.x, this.y + 55, this.width, 2, 0).attr({fill: this.color, opacity: 0.2});
 			paper.text(this.x + 50, this.y + 80, "$: " + this.money).attr({"font-size": 20});
 			paper.text(this.x + 200, this.y + 80, "SCORE: " + this.score).attr({"font-size": 20, fill: "#333"});
+		},
+		ready4Game: function(){
+			this.ready = !0;
 		},
 		update: function(){
 			
@@ -49,25 +54,37 @@
 		//绿 浅蓝 橙 红
 		colors = [0, "#5cb85c", "#46b8da", "#eea236", "#d43f3a"];
 	
-	Player.create = function(id, name){
-		var m = new Player(id, name);
+	Player.create = function(seat, name, sid){
+		var m = new Player(seat, name, sid);
 		players.push(m);
 		return m;
 	};
 	
-	Player.create(1, "occume");
-	Player.create(2, "ggshop");
-	Player.create(3, "d_jin");
-	Player.create(4, "nbxx");
+	Player.clear = function(){
+		players = [];
+	};
 	
-	var drawed = 0;
+	Player.getPlayer = function(sid){
+		for(var i = 0, len = players.length; i < len; i++){
+			var s = players[i];
+			if(!s){
+				continue;
+			}
+			if(s.sid == sid){
+				return s;
+			}
+		}
+	};
+	
+//	Player.create(1, "occume");
+//	Player.create(2, "ggshop");
+//	Player.create(3, "d_jin");
+//	Player.create(4, "nbxx");
+	
 	Player.update = function(){
 		
-		if(drawed > 0){
-			return;
-		}
-		drawed++;
-		console.log("draw player");
+		var paper = D3.Game.getPaper("topInfo");
+		paper.clear();
 		
 		for(var i = 0, len = players.length; i < len; i++){
 			var s = players[i];
@@ -77,6 +94,7 @@
 			s.draw();
 			s.update();
 		}
+		
 	};
 	
 	D3.Player = Player;
