@@ -18,7 +18,7 @@
 		draw: function(){
 			var paper = D3.Game.getPaper("turret"),
 				type = turretType[this.typeIdx][this.lv];
-			paper.newImage("img/" + type.src + ".png", this.x, this.y, this.width, this.height);
+			this.core = paper.newImage("img/" + type.src + ".png", this.x, this.y, this.width, this.height).attr({transform: "r" + this.r});
 			paper.newRect(this.x, this.y, 10, 10, 0).attr({fill: this.player.color});
 		},
 		update: function(){
@@ -37,6 +37,13 @@
 				}
 				if(rectInCircle(monster, {x: this.x + 25,y: this.y + 25,radius:100})){
 //					console.log("攻击！");
+					var
+						delta_y = this.y - monster.y,
+						delta_x = this.x - monster.x, 
+						theta = Math.atan2(delta_y, delta_x),
+						r = theta / Math.PI * 180.0;
+//					console.log(r);
+					this.core.animate({transform: "r" + r}, 300);
 					D3.Shell.create(this.x + 20, this.y + 20, monster, this).draw();
 					break;
 				}

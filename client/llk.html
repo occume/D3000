@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>印迹</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/font-awesome.min.css" rel="stylesheet">
+<link href="css/buttons.css" rel="stylesheet">
+<link href="css/main.css" rel="stylesheet">
+
+<script type="text/javascript" src="js/lib/jquery.min.js"></script>
+<script type="text/javascript" src="js/lib/raphael.js"></script>
+<script type="text/javascript" src="js/lib/preloadjs-0.4.1.min.js"></script>
+<script type="text/javascript" src="js/llk/llk.initor.js"></script>
+
+<style>
+		
+	</style>
+<script type="text/javascript">
+	
+</script>
+</head>
+<body>
+	<div id="header"></div>
+	<div id="container" class="container">
+
+		<div id="wrapper1">
+			<ul id="monitor" data-index="1">
+				<li id="box11" class="box _music_">
+					<div class="content">
+						<div class="inner" id="box11-inner">
+
+							<div class="row">
+								<div class="span6">
+									<div id="paper1"
+										style="width: 1200px; height: 600px; position: absolute;top:0;left:0;"></div>
+									
+								</div>
+								<div class="span5 login-form" style="display:none;">
+									<form class="form-horizontal" method="post">
+
+										<div class="control-group warning">
+											<label class="control-label"> 通行证： </label>
+											<div class="controls">
+												<input type="text" id="username" placeholder="通行证"
+													name="username" />
+											</div>
+										</div>
+
+										<div class="control-group warning">
+											<label class="control-label"> 密码： </label>
+											<div class="controls">
+												<input type="password" id="password" placeholder="密码"
+													name="password" />
+											</div>
+										</div>
+										
+										<div class="clear"></div>
+										<div class="control-group">
+											<div class="controls">
+												<span class="button-wrap">
+													<a href="javascript:;" class="button button-pill button-highlight" id="login-btn">登&nbsp;&nbsp;录</a>
+												</span>
+											</div>
+										</div>
+
+									</form>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</li>
+				<li id="box12" class="box _music_">
+					<div class="content">
+						<div class="inner">
+							<h3>请选择房间</h3>
+							<div class="wrp">
+				              <dl class="compent">
+				                <dt>热门房间</dt>
+				                <dd>
+									<ul>
+										<li>room_1</li>
+										<li>room_2</li>
+									</ul>
+								</dd>
+				              </dl>
+				              <div class="clear"></div>
+				              <dl class="compent" id="room-list">
+				                <dt>房间列表</dt>
+				                <dd>
+									<ul>
+										<li>room_1</li>
+										<li>room_2</li>
+									</ul>
+								</dd>
+				              </dl>
+				            </div>
+				            <div class="clear"></div>
+				            <div class="next-step">
+					            <dl>
+					                <dt></dt>
+					                <dd>加入</dd>
+					            </dl>
+				            </div>
+				           
+						</div>
+					</div>
+				</li>
+				<li id="box13" class="box _music_">
+					<div class="content">
+						<div class="inner">
+
+						<h3>选择角色</h3>
+							<div class="wrp">
+				              <dl class="compent" id="player-list">
+				                <dt>角色列表</dt>
+				                <dd>
+									<ul>
+										<li>角色1</li>
+										<li>角色2</li>
+										<li>角色1</li>
+										<li>角色2</li>
+									</ul>
+								</dd>
+				              </dl>
+				              <div class="clear"></div>
+				              
+				            <div class="next-step">
+					            <dl>
+					                <dt></dt>
+					                <dd>准备</dd>
+					            </dl>
+				            </div>
+						</div>
+						</div>
+					</div>
+				</li>
+				<li id="box14" class="box _music_">
+					<div class="content">
+						<div class="inner" id="paper4">
+
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+		
+		<div class="navitor navbar">
+			<div class="navbar-inner">
+				<ul id="menu" class="menu nav" pp="1">
+					<li class="divider-vertical"></li>
+					<li class="navitorBox" id="jone_music"><a
+						class="link normal nav_music_" href="#box11">登录</a></li>
+					<li class="divider-vertical"></li>
+					<li class="navitorBox" id="jone_music"><a
+						class="link normal nav_music_" href="#box12">选择房间</a></li>
+					<li class="divider-vertical"></li>
+					<li class="navitorBox" id="jone_music"><a
+						class="link normal nav_music_" href="#box13">准备游戏</a></li>
+					<li class="divider-vertical"></li>
+					<li class="navitorBox" id="jone_music"><a
+						class="link normal nav_music_" href="#box14">开始游戏</a></li>
+					<li class="divider-vertical"></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+	<div id="footer"></div>
+	<!-- sbox -->
+	<div id="wrap">
+		<div id="sb">
+			<div id="one">
+				<div id="logo"><img src="img/ly.gif"/></div>
+				<div id="inbox"><input type="text" name="keyword" id="keyword" autocomplete="off"/></div>
+			</div>
+		</div>
+		<div id="help">HELP</div>
+	</div>
+	<div id="im"></div>
+</body>
+</html>

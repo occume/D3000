@@ -49,7 +49,6 @@
 				e = e || event;
 				var px = e.pageX,
 					py = e.pageY; 
-//				console.log(px);
 				var 
 					toX = px - paperLeft;
 					toY = py - paperTop - 100;
