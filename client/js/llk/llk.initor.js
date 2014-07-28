@@ -126,6 +126,8 @@ $(function() {
 				    {src:"js/lib/nbw-parallax.js", id:"nbw-parallax-js"},
 				    {src:"js/lib/scrollTo.js", id:"scrollTo-js"},
 				    {src:"js/lib/jOne.js", id:"jOne-js"},
+				    {src:"js/D3.net.1.0.js", id:"D3-net-js"},
+				    {src:"js/D3.net.packet.1.0.js", id:"D3-net-packet-js"},
 				   
 				    {src:"js/D3.raphael.1.0.js", id:"D3-raphael-js"},
 				   
@@ -158,6 +160,22 @@ $(function() {
 	var LLK = {
 		init : function() {
 			Loader.onLoaded(function(){
+				D3.cid = 39600;
+				D3.session = D3.createSession("ws://localhost:10086/d3socket");
+				
+				var pkt = D3.loginPacket({username: "ggshop", password: "123123"});
+				/**
+				 * 登录成功，显示房间列表
+				 */
+				D3.addProcessor(D3.ROOM, D3.ROOM_LIST, 
+				function(pkt){
+					console.log("room list");
+				});
+				
+				setTimeout(function(){
+					D3.session.send(pkt);
+				}, 500);
+				
 				LLK.run();
 			}).loadResp();
 //			slideWrapper.scrollTo("#box14", 500);
@@ -171,7 +189,14 @@ $(function() {
 			paperTop = container.aPosition().top;
 			
 			var paper = Paper.create("paper4", 1200, 600),
-				tileSet = paper.set();
+				tileSet = paper.set(),
+				paper1 = Paper.create("paper4", 1200, 600);
+			paper.css({
+				position: "absolute",
+			});
+			paper1.css({
+				position: "absolute",
+			});
 			
 			var 
 				col = 10,
@@ -180,12 +205,17 @@ $(function() {
 			var
 				i = 0,
 				k = 0,
-				pair = 0;
+				tile,
 				len = cellW = cellH = mapCellLen;
 		
 			for(; i < col; i++){
 				for(; k < row; k++){
-					tileSet.push(paper.newImage("img/brick1.jpg",i * len, k * len, len, len));
+//					tileSet.push(paper.newImage("img/brick1.jpg",i * len, k * len, len, len));
+					if((i > 0 && i < col - 1) && (k > 0 && k < row - 1)){
+						tile = paper.newRect(i * len, k * len, len, len, 0).attr({fill: "#999", transform: "s0.98"});
+						tile.data("coord", k + "_" + i);
+						tileSet.push(tile);
+					}
 				}
 				k = 0;
 			}
@@ -200,20 +230,70 @@ $(function() {
 				return {x: toX, y: toY};
 			}
 			
+			var pair = 0,
+				passed = [],
+				startTile,
+				endTile,
+				start,
+				end;
+			
 			tileSet.click(function(e){
-				var coord = getCoordinate(e);
+//				var coord = getCoordinate(e);
 				
-				var x = Math.floor(coord.x / 50),
-					y = Math.floor(coord.y / 50);
-				
-				console.log(x + "_" + y);
+//				var x = Math.floor(coord.x / 50),
+//					y = Math.floor(coord.y / 50);
+				var coord = this.data("coord");
+				console.log(coord);
 				pair++;
-				if(pair == 2){
+				if(pair == 1){
+					start = coord;
+					startTile = this;
+				}
+				else if(pair == 2){
+					end = coord;
+					endTile = this;
 					pair = 0;
+					var pkt = D3.makePacketByType(D3.SEEK_PAHT, 0, {start: start, end: end, passed: passed});
+					D3.session.send(pkt);
 				}
 				this.animate({transform: "s0.8"}, 200);
-				
 			});
+			
+			D3.addProcessor(D3.SEEK_PAHT, 0, function(pkt){
+				
+				if(!pkt.tuple){
+					setTimeout(function(){
+						startTile.animate({transform: "s0.98"}, 200);
+						endTile.animate({transform: "s0.98"}, 200);
+					}, 1000);
+					return;
+				}
+				
+				var path = "";
+				$(pkt.tuple).each(function(idx, itm){
+					var coord = itm.split("_"),
+						x = coord[1] * 50 + 25,
+						y = coord[0] * 50 + 25;
+//					paper1.newRect(x * 50, y * 50, 50, 50, 0).attr({fill: "#888", transform: "s0.1"});
+					
+					if(idx == 0){
+						path += "M" + x + "," + y;
+					}
+					else{
+						path += "L" + x + "," + y;
+					}
+				});
+				passed.push(start);
+				passed.push(end);
+				paper1.path(path);
+				
+				setTimeout(function(){
+					startTile.hide();
+					endTile.hide();
+					paper1.clear();
+				}, 1000);
+			});
+			
 		},
 		bind : function() {
 			var me = this;

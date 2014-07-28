@@ -427,7 +427,7 @@ public class AStar {
 		if (canRightBottom && !this.isClosed(checkX, checkY))
 		{
 //			arr.push([checkX, checkY]);	//加到尾部
-			list.add(new int[]{checkX, checkY});
+//			list.add(new int[]{checkX, checkY});
 		}
 		//左下
 //			checkX = p_x - 1 + (p_y & 1);
@@ -438,7 +438,7 @@ public class AStar {
 		if (canLeftBottom && !this.isClosed(checkX, checkY))
 		{
 //			arr.push([checkX, checkY]);//加到尾部
-			list.add(new int[]{checkX, checkY});
+//			list.add(new int[]{checkX, checkY});
 		}
 		//左上
 //			checkX = p_x - 1 + (p_y & 1); 			
@@ -449,7 +449,7 @@ public class AStar {
 		if (canLeftTop && !this.isClosed(checkX, checkY))
 		{
 //			arr.push([checkX, checkY]);	//加到尾部
-			list.add(new int[]{checkX, checkY});
+//			list.add(new int[]{checkX, checkY});
 		}
 		//右上
 //			checkX = p_x + (p_y & 1);
@@ -460,7 +460,7 @@ public class AStar {
 		if (canRightTop && !this.isClosed(checkX, checkY))
 		{
 //			arr.push([checkX, checkY]);//加到尾部
-			list.add(new int[]{checkX, checkY});
+//			list.add(new int[]{checkX, checkY});
 		}
 		//右
 //			checkX = p_x + 1;

@@ -39,7 +39,7 @@ public class SessionManager {
 	}
 	
 	/** session 清理 */
-	 @Scheduled(cron = "0/5 * * * * *")  
+	@Scheduled(cron = "0/5 * * * * *")
 	protected void startScheduleTask() {
 		 
 		for(Entry<String, Session> e: sessions.entrySet()){

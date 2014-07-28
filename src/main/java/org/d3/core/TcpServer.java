@@ -2,6 +2,7 @@ package org.d3.core;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
@@ -35,6 +36,16 @@ public class TcpServer implements Server {
 			b = new ServerBootstrap();
 			b.group(boss, worker)
 			 .channel(NioServerSocketChannel.class)
+			 .handler(new ChannelInitializer<Channel>() {
+
+				@Override
+				protected void initChannel(Channel ch) throws Exception {
+					System.out.println(ch);
+					System.out.println(Thread.currentThread().getName());
+					
+				}
+				
+			})
 			 .childHandler(new TcpServerChannelInitializer())
 			 .option(ChannelOption.SO_BACKLOG, 128)
              .childOption(ChannelOption.SO_KEEPALIVE, true);
