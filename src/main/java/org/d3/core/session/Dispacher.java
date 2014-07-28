@@ -13,6 +13,7 @@ import org.d3.core.packet.Packets;
 import org.d3.core.service.RoomService;
 import org.d3.core.util.AStarTools;
 import org.d3.core.util.Point;
+import org.d3.core.util.astar.AStar2;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -53,8 +54,14 @@ public class Dispacher extends NonBlockingBladeBase {
 				int x2 = Integer.valueOf(end.split("_")[0]);
 				int y2 = Integer.valueOf(end.split("_")[1]);
 				
-				List<Point> ret = AStarTools.searchs(x1, y1, x2, y2, passed);
-				Packet resp = Packets.newPacket(Packets.SEEK_PAHT, getSeekPoint(ret));
+//				List<Point> ret = AStarTools.searchs(x1, y1, x2, y2, passed);
+				List<Point> ret = AStar2.search(x1, y1, x2, y2, passed);
+				
+				List<String> ret1 = getSeekPoint(ret);
+				
+				
+				
+				Packet resp = Packets.newPacket(Packets.SEEK_PAHT, ret1);
 				System.out.println(ret);
 				
 //				ps.getRoom().broadcast(resp);
@@ -108,7 +115,7 @@ public class Dispacher extends NonBlockingBladeBase {
 		}
 		
 		if(turn > 2){
-			return null;
+			return ret;
 		}
 		
 		for(Point p: points){

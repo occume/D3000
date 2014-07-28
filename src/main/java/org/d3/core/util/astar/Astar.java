@@ -43,8 +43,8 @@ public class Astar{
     public Astar() {
         row = map.length;
         column = map[0].length;
-        targetX = 3;
-        targetY = 3;
+        targetX = 4;
+        targetY = 4;
     }
      
 
