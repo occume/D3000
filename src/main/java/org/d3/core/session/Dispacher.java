@@ -70,7 +70,6 @@ public class Dispacher extends NonBlockingBladeBase {
 				
 				Packet resp = Packets.newPacket(Packets.SEEK_PAHT, lp);
 				System.out.println(lp);
-
 				
 //				ps.getRoom().broadcast(resp);
 				ps.sendMessage(resp);
@@ -104,7 +103,7 @@ public class Dispacher extends NonBlockingBladeBase {
 //		Point prev = null;
 //		Point next = null;
 //		int turn = 0;
-		
+
 //		for(int i = 0; i < points.size(); i++){
 //			try{
 //				prev = points.get(i - 1);
