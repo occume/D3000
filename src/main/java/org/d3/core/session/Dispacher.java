@@ -11,11 +11,13 @@ import org.agilewiki.jactor2.core.requests.AsyncResponseProcessor;
 import org.agilewiki.jactor2.core.requests.impl.AsyncRequestImpl;
 import org.d3.D3Context;
 import org.d3.core.service.RoomService;
-import org.d3.core.util.AStarTools;
+
 import org.d3.core.util.Point;
+
 import org.d3.core.util.astar.LLK;
 import org.d3.net.packet.Packet;
 import org.d3.net.packet.Packets;
+
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -57,6 +59,7 @@ public class Dispacher extends NonBlockingBladeBase {
 				int y2 = Integer.valueOf(end.split("_")[1]);
 				
 //				List<Point> ret = AStarTools.searchs(x1, y1, x2, y2, passed);
+
 				List<Point> ret = LLK.search(x1, y1, x2, y2, passed);
 				LinkedList<String> lp = getSeekPoint(ret);
 				
@@ -67,6 +70,7 @@ public class Dispacher extends NonBlockingBladeBase {
 				
 				Packet resp = Packets.newPacket(Packets.SEEK_PAHT, lp);
 				System.out.println(lp);
+
 				
 //				ps.getRoom().broadcast(resp);
 				ps.sendMessage(resp);
@@ -117,11 +121,7 @@ public class Dispacher extends NonBlockingBladeBase {
 //				}
 //			}
 //		}
-		
-//		if(turn > 2){
-//			return null;
-//		}
-//		
+
 		for(Point p: points){
 			ret.add(p.getX() + "_" + p.getY());
 		}
