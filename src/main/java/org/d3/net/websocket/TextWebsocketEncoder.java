@@ -1,9 +1,9 @@
-package org.d3.core.protocol.websocket;
+package org.d3.net.websocket;
 
 import java.util.List;
 
-import org.d3.core.packet.Packet;
 import org.d3.core.util.ObjectConvert;
+import org.d3.net.packet.Packet;
 import org.springframework.stereotype.Component;
 
 import io.netty.channel.ChannelHandlerContext;

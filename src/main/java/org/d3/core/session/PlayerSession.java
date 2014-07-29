@@ -1,7 +1,9 @@
 package org.d3.core.session;
 
 import io.netty.channel.Channel;
-import org.d3.core.packet.Packet;
+
+import org.d3.Room;
+import org.d3.net.packet.Packet;
 
 public class PlayerSession extends SessionSupport{
 

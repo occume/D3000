@@ -2,7 +2,7 @@ package org.d3.core;
 
 import org.d3.D3Context;
 import org.d3.core.concurrent.D3Gate;
-import org.d3.core.login.LoginDecoder;
+import org.d3.net.handler.login.LoginDecoder;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;

@@ -1,8 +1,10 @@
-package org.d3.core.session;
+package org.d3;
 
 import java.util.Collection;
 
-import org.d3.core.packet.Packet;
+import org.d3.core.session.Player;
+import org.d3.core.session.PlayerSession;
+import org.d3.net.packet.Packet;
 
 public interface Room {
 	

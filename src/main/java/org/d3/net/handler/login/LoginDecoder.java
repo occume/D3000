@@ -1,4 +1,4 @@
-package org.d3.core.login;
+package org.d3.net.handler.login;
 
 import java.util.List;
 import javax.annotation.Resource;

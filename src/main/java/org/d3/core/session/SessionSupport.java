@@ -2,8 +2,8 @@ package org.d3.core.session;
 
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 
-import org.d3.core.packet.Packet;
 import org.d3.core.util.ObjectConvert;
+import org.d3.net.packet.Packet;
 
 public abstract class SessionSupport implements Session {
 

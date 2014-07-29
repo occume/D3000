@@ -2,7 +2,7 @@ package org.d3.core.service;
 
 import java.util.Collection;
 
-import org.d3.core.session.Room;
+import org.d3.Room;
 
 public interface RoomService {
 	

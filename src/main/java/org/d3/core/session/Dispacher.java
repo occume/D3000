@@ -1,5 +1,7 @@
 package org.d3.core.session;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -8,11 +10,12 @@ import org.agilewiki.jactor2.core.requests.AOp;
 import org.agilewiki.jactor2.core.requests.AsyncResponseProcessor;
 import org.agilewiki.jactor2.core.requests.impl.AsyncRequestImpl;
 import org.d3.D3Context;
-import org.d3.core.packet.Packet;
-import org.d3.core.packet.Packets;
 import org.d3.core.service.RoomService;
 import org.d3.core.util.AStarTools;
 import org.d3.core.util.Point;
+import org.d3.core.util.astar.LLK;
+import org.d3.net.packet.Packet;
+import org.d3.net.packet.Packets;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -53,9 +56,17 @@ public class Dispacher extends NonBlockingBladeBase {
 				int x2 = Integer.valueOf(end.split("_")[0]);
 				int y2 = Integer.valueOf(end.split("_")[1]);
 				
-				List<Point> ret = AStarTools.searchs(x1, y1, x2, y2, passed);
-				Packet resp = Packets.newPacket(Packets.SEEK_PAHT, getSeekPoint(ret));
-				System.out.println(ret);
+//				List<Point> ret = AStarTools.searchs(x1, y1, x2, y2, passed);
+				List<Point> ret = LLK.search(x1, y1, x2, y2, passed);
+				LinkedList<String> lp = getSeekPoint(ret);
+				
+				if(lp != null){
+					lp.addFirst(start);
+					lp.addLast(end);
+				}
+				
+				Packet resp = Packets.newPacket(Packets.SEEK_PAHT, lp);
+				System.out.println(lp);
 				
 //				ps.getRoom().broadcast(resp);
 				ps.sendMessage(resp);
@@ -80,37 +91,37 @@ public class Dispacher extends NonBlockingBladeBase {
 		
 	}
 	
-	private List<String> getSeekPoint(List<Point> points){
+	private LinkedList<String> getSeekPoint(List<Point> points){
 		if(points == null){
 			return null;
 		}
 		
-		List<String> ret = Lists.newArrayList();
-		Point prev = null;
-		Point next = null;
-		int turn = 0;
+		LinkedList<String> ret = Lists.newLinkedList();
+//		Point prev = null;
+//		Point next = null;
+//		int turn = 0;
 		
-		for(int i = 0; i < points.size(); i++){
-			try{
-				prev = points.get(i - 1);
-				next = points.get(i + 1);
-			}
-			catch(Exception e){
-				continue;
-			}
-			if(prev != null && next != null){
-				if(prev.x == next.x || prev.y == next.y);
-				else{
-					turn++;
-					System.out.println("拐弯");
-				}
-			}
-		}
+//		for(int i = 0; i < points.size(); i++){
+//			try{
+//				prev = points.get(i - 1);
+//				next = points.get(i + 1);
+//			}
+//			catch(Exception e){
+//				continue;
+//			}
+//			if(prev != null && next != null){
+//				if(prev.x == next.x || prev.y == next.y);
+//				else{
+//					turn++;
+//					System.out.println("拐弯");
+//				}
+//			}
+//		}
 		
-		if(turn > 2){
-			return null;
-		}
-		
+//		if(turn > 2){
+//			return null;
+//		}
+//		
 		for(Point p: points){
 			ret.add(p.getX() + "_" + p.getY());
 		}

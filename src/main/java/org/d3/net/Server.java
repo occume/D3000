@@ -1,4 +1,4 @@
-package org.d3.core;
+package org.d3.net;
 
 public interface Server {
 	public void launch();

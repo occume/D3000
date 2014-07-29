@@ -10,7 +10,7 @@ import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
 
-import org.d3.core.packet.Packet;
+import org.d3.net.packet.Packet;
 
 import com.google.common.collect.Maps;
 

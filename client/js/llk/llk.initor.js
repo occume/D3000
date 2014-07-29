@@ -291,7 +291,7 @@ $(function() {
 					startTile.hide();
 					endTile.hide();
 					paper1.clear();
-				}, 1000);
+				}, 4000);
 			});
 			
 		},

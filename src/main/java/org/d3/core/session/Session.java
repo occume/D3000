@@ -1,6 +1,6 @@
 package org.d3.core.session;
 
-import org.d3.core.packet.Packet;
+import org.d3.net.packet.Packet;
 
 public interface Session {
 	

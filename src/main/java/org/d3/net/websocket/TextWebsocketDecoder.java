@@ -1,9 +1,9 @@
-package org.d3.core.protocol.websocket;
+package org.d3.net.websocket;
 
 import java.util.List;
 
 import org.codehaus.jackson.map.ObjectMapper;
-import org.d3.core.packet.BasePacket;
+import org.d3.net.packet.BasePacket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

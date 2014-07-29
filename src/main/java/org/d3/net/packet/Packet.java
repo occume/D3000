@@ -1,4 +1,4 @@
-package org.d3.core.packet;
+package org.d3.net.packet;
 
 public interface Packet {
 	public int getCid();

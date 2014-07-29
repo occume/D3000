@@ -1,4 +1,5 @@
-package org.d3.core.packet;
+package org.d3.net.packet;
+
 
 public class Packets {
 	
