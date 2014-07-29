@@ -1,4 +1,4 @@
-package org.d3.core.util;
+package org.d3.util;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.d3.D3Context;

@@ -69,7 +69,7 @@ public abstract class RoomSession extends SessionSupport{
 		onLeaveRoom();
 	}
 	
-	abstract void onLeaveRoom();
+	public abstract void onLeaveRoom();
 	
 	private int getFreeSeat(){
 		for(int i = 1; i <= seats.size(); i++){

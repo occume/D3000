@@ -1,9 +1,9 @@
-package org.d3.core.util.astar;
+package org.d3.util.astar;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.d3.core.util.Point;
+import org.d3.util.Point;
 
 import com.google.common.collect.Lists;
 

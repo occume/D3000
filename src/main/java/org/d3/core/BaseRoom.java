@@ -1,10 +1,12 @@
-package org.d3.core.session;
+package org.d3.core;
 
 import java.util.Set;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import org.d3.Room;
+import org.d3.core.session.Monster;
+import org.d3.core.session.RoomSession;
 import org.d3.net.packet.Packet;
 import org.d3.net.packet.Packets;
 import org.testng.internal.annotations.Sets;
@@ -83,8 +85,7 @@ public class BaseRoom extends RoomSession implements Room {
 		return null;
 	}
 
-	@Override
-	void onLeaveRoom() {
+	public void onLeaveRoom() {
 		Packet ret = Packets.newPacket(Packets.ROOM, Packets.ROOM_LEAVE, getPlayers());
 		broadcast(ret);
 	}

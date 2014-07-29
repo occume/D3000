@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<globe>
+	
+	<game>
+		<val>dot:org.d3.game:小小塔防</val>
+		<val>llk:org.d3.game:连连看</val>
+	</game>
+	
+</globe>

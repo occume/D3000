@@ -1,4 +1,4 @@
-package org.d3.core.util;
+package org.d3.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;

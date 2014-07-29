@@ -1,6 +1,6 @@
-package org.d3.core.util.astar;
+package org.d3.util.astar;
 
-import org.d3.core.util.Point;
+import org.d3.util.Point;
 
 
 public class Line

@@ -1,4 +1,4 @@
-package org.d3.core.util;
+package org.d3.util;
 
 public class ComUtil {
 	

@@ -1,12 +1,12 @@
-package org.d3.core.util.astar;
+package org.d3.util.astar;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Vector;
 
-import org.d3.core.util.AStar;
-import org.d3.core.util.Point;
+import org.d3.util.AStar;
+import org.d3.util.Point;
 
 public class LLK
 {
