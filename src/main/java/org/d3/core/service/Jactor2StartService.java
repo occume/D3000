@@ -25,8 +25,8 @@ public class Jactor2StartService extends AbstractService {
 	@Override
 	protected void doStart() {
 		try {
-			new Plant(Runtime.getRuntime().availableProcessors() * 2);
-			PlantConfiguration config = new PlantConfiguration();
+//			new Plant(Runtime.getRuntime().availableProcessors() * 2);
+//			PlantConfiguration config = new PlantConfiguration();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

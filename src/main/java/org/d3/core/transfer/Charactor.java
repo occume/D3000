@@ -1,5 +1,8 @@
 package org.d3.core.transfer;
 
+import org.agilewiki.jactor2.core.blades.pubSub.RequestBus;
+import org.agilewiki.jactor2.core.blades.pubSub.SubscribeAOp;
+import org.agilewiki.jactor2.core.reactors.NonBlockingReactor;
 import org.d3.Game;
 import org.d3.Room;
 import org.d3.game.Nbxx;
@@ -31,6 +34,20 @@ public class Charactor {
 			e.printStackTrace();
 		}
 		this.game = new Nbxx();
+	}
+	
+	public void register(RequestBus<Packet> requestBus, NonBlockingReactor reactor){
+		 try {
+			new SubscribeAOp<Packet>(requestBus, reactor) {
+			     @Override
+			     protected void processContent(Packet _content) throws Exception {
+			         System.out.println("got " + _content + " " + Thread.currentThread().getName());
+			         sendMessage(_content);
+			     }
+			 }.signal();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void onMessage(Packet pkt){

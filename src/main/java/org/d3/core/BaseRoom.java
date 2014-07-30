@@ -7,6 +7,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.agilewiki.jactor2.core.blades.pubSub.RequestBus;
+import org.agilewiki.jactor2.core.reactors.NonBlockingReactor;
 import org.d3.Room;
 import org.d3.core.transfer.Charactor;
 import org.d3.game.bean.Player;
@@ -20,13 +22,20 @@ public abstract class BaseRoom  implements Room {
 	
 	private String id;
 	private String name;
-	
+	NonBlockingReactor _reactor;
+	RequestBus<Packet> requestBus;
 	
 	public BaseRoom(String id, String name){
 		this.id = id;
 		this.name = name;
-//		group = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 		players = Maps.newConcurrentMap();
+		
+		try {
+			_reactor = new NonBlockingReactor();
+			requestBus = new RequestBus<Packet>(_reactor);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void broadcast(Packet pkt) {
@@ -59,7 +68,6 @@ public abstract class BaseRoom  implements Room {
 		
 	}
 	
-//	private ChannelGroup group;
 	private ConcurrentMap<String, Charactor> players;
 	
 	private int size = 0;
@@ -72,8 +80,13 @@ public abstract class BaseRoom  implements Room {
 
 	public void sendMassage(Packet pkt) {
 //		group.writeAndFlush(pkt);
-		for(Charactor c: players.values()){
-			c.sendMessage(pkt);
+//		for(Charactor c: players.values()){
+//			c.sendMessage(pkt);
+//		}
+		try {
+			requestBus.sendsContentAOp(pkt).signal();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -81,7 +94,7 @@ public abstract class BaseRoom  implements Room {
 	protected abstract void onLeaveRoom(Player player);
 	protected abstract int getFreeSeat();
 	
-	public boolean joinRoom(Charactor charactor){
+	public boolean joinRoom(final Charactor charactor){
 		synchronized (this) {
 			if(size > getRoomSize()){
 				return false;
@@ -92,6 +105,8 @@ public abstract class BaseRoom  implements Room {
 		Player player = charactor.getPlayer();
 		player.setSeat(seat);
 		players.put(charactor.getId(), charactor);
+
+		charactor.register(requestBus, _reactor);
 		return true;
 	}
 	
