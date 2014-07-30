@@ -6,9 +6,10 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.atomic.AtomicInteger;
+
 import org.d3.Room;
 import org.d3.core.transfer.Charactor;
-import org.d3.core.transfer.Player;
+import org.d3.game.bean.Player;
 import org.d3.net.packet.Packet;
 import org.d3.net.packet.Packets;
 

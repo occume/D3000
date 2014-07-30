@@ -6,8 +6,8 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import org.d3.core.BaseRoom;
-import org.d3.core.transfer.Player;
 import org.d3.game.bean.Monster;
+import org.d3.game.bean.Player;
 import org.d3.net.packet.Packet;
 import org.d3.net.packet.Packets;
 

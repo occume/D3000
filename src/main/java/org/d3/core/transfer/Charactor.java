@@ -3,6 +3,7 @@ package org.d3.core.transfer;
 import org.d3.Game;
 import org.d3.Room;
 import org.d3.game.Nbxx;
+import org.d3.game.bean.Player;
 import org.d3.net.packet.Packet;
 import org.d3.net.session.Session;
 

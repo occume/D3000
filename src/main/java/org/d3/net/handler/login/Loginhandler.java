@@ -1,12 +1,13 @@
 package org.d3.net.handler.login;
 
 import java.util.Map;
+
 import org.codehaus.jackson.map.ObjectMapper;
 import org.d3.D3Context;
 import org.d3.core.service.RoomService;
 import org.d3.core.service.UniqueIdService;
 import org.d3.core.transfer.Charactor;
-import org.d3.core.transfer.Player;
+import org.d3.game.bean.Player;
 import org.d3.net.packet.BasePacket;
 import org.d3.net.packet.Packet;
 import org.d3.net.packet.Packets;
