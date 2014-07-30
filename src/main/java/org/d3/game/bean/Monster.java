@@ -1,4 +1,4 @@
-package org.d3.core.session;
+package org.d3.game.bean;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

@@ -1,18 +1,19 @@
 package org.d3.net.handler.login;
 
 import java.util.Map;
-
 import org.codehaus.jackson.map.ObjectMapper;
 import org.d3.D3Context;
 import org.d3.core.service.RoomService;
 import org.d3.core.service.UniqueIdService;
-import org.d3.core.session.Player;
-import org.d3.core.session.PlayerSession;
-import org.d3.core.session.Session;
-import org.d3.core.session.SessionManager;
+import org.d3.core.transfer.Charactor;
+import org.d3.core.transfer.Player;
 import org.d3.net.packet.BasePacket;
 import org.d3.net.packet.Packet;
 import org.d3.net.packet.Packets;
+import org.d3.net.session.PlayerSession;
+import org.d3.net.session.Session;
+import org.d3.net.session.SessionManager;
+import org.d3.net.session.Sessions;
 import org.d3.net.websocket.PacketHandler;
 import org.d3.net.websocket.TextWebsocketDecoder;
 import org.d3.net.websocket.TextWebsocketEncoder;
@@ -79,13 +80,10 @@ public class Loginhandler extends SimpleChannelInboundHandler<TextWebSocketFrame
 			
 			if(playerService.auth()){
 				
-				PlayerSession session = new PlayerSession(ctx.channel());
-				session.setPlayer(new Player(userName, session.getId()));
+				Session session = Sessions.newSession(ctx.channel());
+				Charactor c = new Charactor(session, new Player(session, userName, session.getId()));
 				
-				SessionManager sessionManager = (SessionManager) D3Context.getBean("sessionManager");
-				sessionManager.putSession(session);
-				
-				applyProtocol(ctx, session);
+				applyProtocol(ctx, c);
 				
 				String reconnKey = idService.generate();
 				Packet pkt1 = Packets.newPacket(Packets.LOG_IN_SUCCESS, session.getId());
@@ -107,14 +105,15 @@ public class Loginhandler extends SimpleChannelInboundHandler<TextWebSocketFrame
 			
 			if(session != null){
 				PlayerSession ps = (PlayerSession) session;
-				ps.setChannle(ctx.channel());
-				applyProtocol(ctx, ps);
+//				ps.setChannle(ctx.channel());
+//				applyProtocol(ctx, ps);
 			}
 		}
 		
 	}
 	
-	private void applyProtocol(ChannelHandlerContext ctx, PlayerSession session){
+	private void applyProtocol(ChannelHandlerContext ctx, Charactor c){
+		
 		ChannelPipeline pipeline = ctx.pipeline();
 		TextWebsocketDecoder decoder = (TextWebsocketDecoder) D3Context.getBean("textWebsocketDecoder");
 		TextWebsocketEncoder encoder = (TextWebsocketEncoder) D3Context.getBean("textWebsocketEncoder");
@@ -122,7 +121,7 @@ public class Loginhandler extends SimpleChannelInboundHandler<TextWebSocketFrame
 		pipeline.addLast(encoder);
 		pipeline.addLast("idleStateCheck", new IdleStateHandler(
 				300, 300, 300));
-		pipeline.addLast(new PacketHandler(session));
+		pipeline.addLast(new PacketHandler(c));
 		
 		pipeline.remove(this);
 	}

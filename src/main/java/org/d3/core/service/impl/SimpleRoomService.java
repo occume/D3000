@@ -6,13 +6,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.d3.Room;
 import org.d3.core.BaseRoom;
 import org.d3.core.service.RoomService;
+import org.d3.game.NbxxRoom;
 
 public class SimpleRoomService implements RoomService {
 
 	private ConcurrentHashMap<String, Room> rooms = new ConcurrentHashMap<String, Room>();
 	
 	public void createRoom(String id, String name){
-		Room room = new BaseRoom(id, name);
+		Room room = new NbxxRoom(id, name);
 		rooms.put(id, room);
 	}
 	

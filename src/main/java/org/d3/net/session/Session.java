@@ -1,4 +1,4 @@
-package org.d3.core.session;
+package org.d3.net.session;
 
 import org.d3.net.packet.Packet;
 

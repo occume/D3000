@@ -2,9 +2,10 @@ package org.d3;
 
 import java.util.Collection;
 
-import org.d3.core.session.Player;
-import org.d3.core.session.PlayerSession;
+import org.d3.core.transfer.Charactor;
+import org.d3.core.transfer.Player;
 import org.d3.net.packet.Packet;
+import org.d3.net.session.PlayerSession;
 
 public interface Room {
 	
@@ -14,15 +15,17 @@ public interface Room {
 	
 	public void startGame();
 	
+	public void stopGame();
+	
 	public void broadcast(Packet pkt);
 	
 //	public boolean addSession(PlayerSession session);
 //	
 //	public void removeSession(PlayerSession session);
 	
-	public boolean joinRoom(PlayerSession session);
+	public boolean joinRoom(Charactor charactor);
 	
-	public void leaveRoom(PlayerSession session);
+	public void leaveRoom(Charactor charactor);
 	
 	public Collection<Player> getPlayers();
 	

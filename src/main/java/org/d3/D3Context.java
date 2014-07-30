@@ -31,7 +31,7 @@ public class D3Context implements Context, LifeCycle, ApplicationContextAware{
 	private Map<String, Game> games = Maps.newHashMap();
 	
 	private void initGames(){
-		System.out.println(Config.getInstance().getItem("update-time"))
+		System.out.println(Config.getInstance().getItem("game/val"))
 		;
 	}
 	

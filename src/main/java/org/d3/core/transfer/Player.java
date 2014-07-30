@@ -1,6 +1,8 @@
-package org.d3.core.session;
+package org.d3.core.transfer;
 
 import java.util.concurrent.atomic.AtomicInteger;
+
+import org.d3.net.session.Session;
 
 public class Player {
 	
@@ -14,7 +16,7 @@ public class Player {
 	
 	public Player(){};
 	
-	public Player(String name, String sid){
+	public Player(Session session, String name, String sid){
 		this.id = idx.getAndIncrement();
 		this.name = name;
 		this.sid = sid;

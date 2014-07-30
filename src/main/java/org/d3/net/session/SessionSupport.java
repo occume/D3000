@@ -1,4 +1,4 @@
-package org.d3.core.session;
+package org.d3.net.session;
 
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 

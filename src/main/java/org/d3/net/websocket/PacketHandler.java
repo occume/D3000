@@ -1,7 +1,6 @@
 package org.d3.net.websocket;
 
-import org.d3.core.session.PlayerSession;
-import org.d3.core.session.Session;
+import org.d3.core.transfer.Charactor;
 import org.d3.net.packet.Packet;
 
 import io.netty.channel.ChannelHandlerContext;
@@ -9,25 +8,24 @@ import io.netty.channel.SimpleChannelInboundHandler;
 
 public class PacketHandler extends SimpleChannelInboundHandler<Packet> {
 	
-	private Session session;
+	private Charactor charactor;
 	
-	public PacketHandler(PlayerSession session){
-		this.session = session;
-		session.setOnline();
+	public PacketHandler(Charactor charactor){
+		this.charactor = charactor;
 	}
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		super.channelActive(ctx);
-		PlayerSession playerSession = (PlayerSession) session;
-		playerSession.setOnline();
+//		PlayerSession playerSession = (PlayerSession) session;
+//		playerSession.setOnline();
 	}
 
 	@Override
 	protected void messageReceived(ChannelHandlerContext ctx, Packet msg)
 			throws Exception {
 		
-		session.onMessage(msg);
+		charactor.onMessage(msg);
 		
 	}
 
@@ -41,13 +39,12 @@ public class PacketHandler extends SimpleChannelInboundHandler<Packet> {
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
 		super.channelInactive(ctx);
 		
-		PlayerSession playerSession = (PlayerSession) session;
-		if(playerSession.getRoom() != null){
-			if(playerSession.getPlayer().isReady())
-				playerSession.getRoom().playerUnPrepare();
-			playerSession.getRoom().leaveRoom(playerSession);
+//		PlayerSession playerSession = (PlayerSession) session;
+		if(charactor.getRoom() != null){
+			charactor.getRoom().leaveRoom(charactor);
+			if(charactor.getPlayer().isReady())
+				charactor.getRoom().playerUnPrepare();
 		}
-		playerSession.offLine();
-		
+//		playerSession.offLine();
 	}
 }

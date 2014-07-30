@@ -1,54 +1,36 @@
 package org.d3.core;
 
-import java.util.Set;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
-
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.d3.Room;
-import org.d3.core.session.Monster;
-import org.d3.core.session.RoomSession;
+import org.d3.core.transfer.Charactor;
+import org.d3.core.transfer.Player;
 import org.d3.net.packet.Packet;
 import org.d3.net.packet.Packets;
-import org.testng.internal.annotations.Sets;
 
-public class BaseRoom extends RoomSession implements Room {
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+
+public abstract class BaseRoom  implements Room {
 	
-	private Set<Monster> monsters;
+	private String id;
+	private String name;
+	
 	
 	public BaseRoom(String id, String name){
-		super(id, name);
-		monsters = Sets.newHashSet();
+		this.id = id;
+		this.name = name;
+//		group = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+		players = Maps.newConcurrentMap();
 	}
 
 	public void broadcast(Packet pkt) {
 		sendMassage(pkt);
 	}
-
-	public void startGame() {
-		sendMassage(Packets.newPacket(Packets.ROOM, Packets.ROOM_START_GAME, null));
-		
-		future = scheduledService.scheduleAtFixedRate(new Runnable() {
-			public void run() {
-				Monster m = new Monster();
-				monsters.add(m);
-				Packet pkt = Packets.newPacket(
-						Packets.ROOM,
-						Packets.ROOM_MAKE_MONSTER, 
-						"ALL", m);
-				broadcast(pkt);
-			}
-		}, 5, 3, TimeUnit.SECONDS);
-		
-	}
-	
-	public void stopGame(){
-		if(future != null){
-			future.cancel(false);
-		}
-		monsters.clear();
-	}
-	
-	private ScheduledFuture future;
 
 	public void playerPrepare() {
 		int currReadyCount = readyCount.incrementAndGet();
@@ -76,18 +58,86 @@ public class BaseRoom extends RoomSession implements Room {
 		
 	}
 	
-	public Monster getMonster(String id){
-		for(Monster m: monsters){
-			if(id.equals(m.getId())){
-				return m;
-			}
-		}
-		return null;
-	}
+//	private ChannelGroup group;
+	private ConcurrentMap<String, Charactor> players;
+	
+	private int size = 0;
+//	private int guanQia = 0;
+	protected int MONSTER_COUNT =20;
+	protected AtomicInteger readyCount = new AtomicInteger();
+	protected static ScheduledExecutorService scheduledService = 
+			Executors.newScheduledThreadPool(4);
+	
 
-	public void onLeaveRoom() {
+	public void sendMassage(Packet pkt) {
+//		group.writeAndFlush(pkt);
+		for(Charactor c: players.values()){
+			c.sendMessage(pkt);
+		}
+	}
+	
+	protected abstract int getRoomSize();
+	protected abstract void onLeaveRoom(Player player);
+	protected abstract int getFreeSeat();
+	
+	public boolean joinRoom(Charactor charactor){
+		synchronized (this) {
+			if(size > getRoomSize()){
+				return false;
+			}
+			size++;
+		}
+		int seat = getFreeSeat();
+		Player player = charactor.getPlayer();
+		player.setSeat(seat);
+		players.put(charactor.getId(), charactor);
+		return true;
+	}
+	
+	public void leaveRoom(Charactor charactor){
+		size--;
+		Player player = charactor.getPlayer();
+		
+//		group.remove(session);
+		players.remove(charactor.getId());
+		
 		Packet ret = Packets.newPacket(Packets.ROOM, Packets.ROOM_LEAVE, getPlayers());
 		broadcast(ret);
+		onLeaveRoom(player);
+	}
+	
+	
+	public Collection<Player> getPlayers(){
+		ArrayList<Player> ret = Lists.newArrayList();
+		for(Charactor c: players.values()){
+			ret.add(c.getPlayer());
+		}
+		return ret;
+	}
+	
+	public void close(){
+		players.clear();
+		players = null;
+//		group.close();
 	}
 
+	protected int getPlayerCount(){
+		return players.size();
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }
