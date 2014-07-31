@@ -41,7 +41,6 @@ public class Charactor {
 			new SubscribeAOp<Packet>(requestBus, reactor) {
 			     @Override
 			     protected void processContent(Packet _content) throws Exception {
-			         System.out.println("got " + _content + " " + Thread.currentThread().getName());
 			         sendMessage(_content);
 			     }
 			 }.signal();
