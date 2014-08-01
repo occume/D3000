@@ -10,7 +10,6 @@ import org.d3.game.NbxxRoom;
 import org.d3.game.bean.Monster;
 import org.d3.net.packet.Packet;
 import org.d3.net.packet.Packets;
-import org.d3.net.session.PlayerSession;
 import org.testng.collections.Lists;
 
 import com.google.common.collect.Maps;

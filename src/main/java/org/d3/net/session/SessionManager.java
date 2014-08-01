@@ -15,9 +15,7 @@ public class SessionManager {
 	private Map<String, Session> sessions = Maps.newConcurrentMap();
 	
 	private static SessionManager manager;
-//	
-//	private SessionManager(){};
-//	
+	
 	public static SessionManager getInstance(){
 		if(manager == null){
 			manager = (SessionManager) D3Context.getBean("sessionManager");

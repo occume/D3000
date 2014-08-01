@@ -1,6 +1,7 @@
 package org.d3.util;
 
 import java.io.File;
+import java.net.URL;
 import java.util.Collection;
 import java.util.List;
 
@@ -14,11 +15,11 @@ import com.google.common.collect.Multimap;
 
 public class Config {
 
-	private static final String PATH = System.getProperty("user.dir") + "/target/classes"
-					+ File.separator + "global_config.xml";
-//	private static final String PATH = "/global_config.xml";
+	private static final String CONFIG_FILENAME = "global_config.xml";
 	
-	private static final String ROOT_PATH = "/globe/";
+	private static final String PATH = getCurrClassPath() + CONFIG_FILENAME;
+	
+	private static final String ROOT_NODE = "/globe/";
 	
 	private final File file;
 	
@@ -27,6 +28,16 @@ public class Config {
 	private Multimap<String, String> configMap;
 	
 	private static Config instance = new Config();
+	
+	private static String getCurrClassPath(){
+		URL url = Config.class.getClassLoader().getResource("");
+		return url.getPath();
+	}
+	
+	public static void main(String...strings){
+		String path = getCurrClassPath();
+		System.out.println(path);
+	}
 	
 	private Config(){
 		
@@ -85,7 +96,7 @@ public class Config {
 				}
 			}
 		}
-		return configMap.get(ROOT_PATH + name);
+		return configMap.get(ROOT_NODE + name);
 	}
 	
 }

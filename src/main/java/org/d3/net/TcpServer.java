@@ -39,14 +39,11 @@ public class TcpServer implements Server {
 			b.group(boss, worker)
 			 .channel(NioServerSocketChannel.class)
 			 .handler(new ChannelInitializer<Channel>() {
-
 				@Override
 				protected void initChannel(Channel ch) throws Exception {
-					System.out.println(ch);
+					System.out.println(ch.getClass());
 					System.out.println(Thread.currentThread().getName());
-					
 				}
-				
 			})
 			 .childHandler(new TcpServerChannelInitializer())
 			 .option(ChannelOption.SO_BACKLOG, 128)

@@ -40,8 +40,6 @@ public class Dispacher extends NonBlockingBladeBase {
 				int y1 = Integer.valueOf(start.split("_")[1]);
 				int x2 = Integer.valueOf(end.split("_")[0]);
 				int y2 = Integer.valueOf(end.split("_")[1]);
-				
-//				List<Point> ret = AStarTools.searchs(x1, y1, x2, y2, passed);
 
 				List<Point> ret = LLK.search(x1, y1, x2, y2, passed);
 				LinkedList<String> lp = getSeekPoint(ret);
@@ -52,9 +50,6 @@ public class Dispacher extends NonBlockingBladeBase {
 				}
 				
 				Packet resp = Packets.newPacket(Packets.SEEK_PAHT, lp);
-				System.out.println(lp);
-				
-//				ps.getRoom().broadcast(resp);
 				charactor.sendMessage(resp);
 			}
 		});

@@ -9,9 +9,11 @@ import org.d3.D3SpringConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class RedisExample {
 	
 //	 @Autowired
@@ -31,8 +33,8 @@ public class RedisExample {
 	public static void main(String[] args) throws MalformedURLException {
 		AbstractApplicationContext context = new AnnotationConfigApplicationContext(D3SpringConfig.class);
 		
-//		RedisExample e = (RedisExample) context.getBean("redisExample");
-//		e.addLink("occume", new URL("http://www.t7joy.com"));
+		RedisExample e = (RedisExample) context.getBean("redisExample");
+		e.addLink("occume", new URL("http://www.t7joy.com"));
 	}
 
 }
