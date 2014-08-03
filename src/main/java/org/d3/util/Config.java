@@ -17,31 +17,56 @@ public class Config {
 
 	private static final String CONFIG_FILENAME = "global_config.xml";
 	
-	private static final String PATH = getCurrClassPath() + CONFIG_FILENAME;
+	private static final String PATH = CONFIG_FILENAME;
 	
 	private static final String ROOT_NODE = "/globe/";
 	
-	private final File file;
+	private File file = null;
 	
 	private volatile long lastModifiedTime = 0;
 	
 	private Multimap<String, String> configMap;
 	
-	private static Config instance = new Config();
+	private static Config instance = null;
 	
-	private static String getCurrClassPath(){
+	private static File getConfigFile(){
 		URL url = Config.class.getClassLoader().getResource("");
-		return url.getPath();
+		File file = new File(url.getPath());
+		if(file.exists()){
+			File p = file.getParentFile();
+			System.out.println(getPath(p));
+			return null;
+		}
+		return null;
+	}
+	
+	private static File getPath(File file){
+		String[] files = file.list();
+		String thePath = file.getPath();
+		File temp = null;
+		for(String name: files){
+			temp = new File(thePath + File.separator + name);
+			if(temp.isDirectory()){
+				getPath(temp);
+			}
+			else{
+				if(CONFIG_FILENAME.equals(name)){
+					System.out.println("---" + temp);
+					return temp;
+				}
+			}
+		}
+		return null;
 	}
 	
 	public static void main(String...strings){
-		String path = getCurrClassPath();
-		System.out.println(path);
+		File file = getConfigFile();
+		System.out.println(file);
 	}
 	
 	private Config(){
 		
-		file = new File(PATH);
+		file = getConfigFile();
 		lastModifiedTime = file.lastModified();
 		
 		if(lastModifiedTime == 0){

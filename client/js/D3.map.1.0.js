@@ -23,7 +23,7 @@
 					[0,1,0,0,0,0,0,0,0,0],
 					[0,1,0,0,0,0,0,0,0,0]];
 	
-	var maps = [0, map1, map2];
+	var maps = [0, map1];
 	
 	var Map = {
 		_mapData: map1,

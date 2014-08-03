@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Vector;
-
-import org.d3.util.AStar;
 import org.d3.util.Point;
 
 public class LLK
