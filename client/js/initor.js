@@ -342,7 +342,7 @@ $(function() {
 					 */
 					D3.addProcessor(D3.ROOM, D3.ROOM_MAKE_MONSTER,
 					function(pkt){
-						D3.Monster.create(50, 0, pkt.tuple.id);
+						D3.Monster.create(0, 50, pkt.tuple.id);
 					});
 			
 			_bind();

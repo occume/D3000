@@ -17,7 +17,8 @@
 	Shell.addMethods({
 		draw: function(){
 			var paper = D3.Game.getPaper("main");
-			paper.newImage("img/bg.png", this.x, this.y, this.width, this.height);
+//			paper.newImage("img/bg.png", this.x, this.y, this.width, this.height);
+			paper.newBall(this.x, this.y, 10).attr({fill: "#000"});
 		},
 		update: function(){
 			
@@ -29,7 +30,7 @@
 			if(this.y > this.monster.y+20)this.y -= v.ysp;
 			else if(this.y < this.monster.y + 20)this.y += v.ysp;
 			
-			if(this.y >= 500 || this.y <= 0 || this.x >= 500 || this.x <= 0){
+			if(this.y >= 500 || this.y <= 0 || this.x >= 1150 || this.x <= 0){
 				return this.over();
 			}
 			if(circleInCircle(this,{x:this.monster.x+20,y:this.monster.y+20,radius:20})){

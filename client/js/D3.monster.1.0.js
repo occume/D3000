@@ -3,8 +3,6 @@
 	
 	var Monster = Class.create({
 		init: function(x, y, id){
-//			this.cxt = cxt;
-//			this.img = img;
 			this.id = id;
 			this.x = x;
 			this.y = y;
@@ -14,27 +12,8 @@
 			this.v = 2;
 			this.maxLife = 50;
 			this.life = 50;
-			//敌人类型
-//			this.type = type;
-			//敌人最大血量
-//			this.maxLife = 50 + type * 100;
-		    //敌人当前血量
-//			this.life = 50 + type * 100;
-//			this.sp = 2;
-			//是否活着
-//			this.islive = true;
-			//移动的方向
 			this.dir = null;
-		    //下个移动位置
 			this.nextStep = null;
-			//冰冻时间
-//			this.frozenTime = 0;
-			//敌人的序号
-//			this.num = 0;
-			//记录已经走过的位置
-//			this.hadWalk = {};
-			
-//			this.id = id;
 		}
 	});
 	
@@ -62,7 +41,7 @@
 		},
 		update: function(){
 			
-			if(this.x >= 500){
+			if(this.x >= 1150){
 				//this.over(true);
 				D3.session.send(D3.makePacketByType(D3.MONSTER, D3.MONSTER_OVER, this.id));
 				return false;
@@ -77,7 +56,7 @@
 				if(!this.nextStep){
 					this.passed[x + "_" + y] = !0;
 				}
-				if(x + 1 >= 10){
+				if(x + 1 >= 23){
 					x = -1;
 				}else{
 					if(mapData[x][y - 1] && !this.passed[x + "_" + (y - 1)]){
@@ -99,7 +78,7 @@
 				}
 //				
 				if(x == -1){
-					this.nextStep = {x: 500, y: y * 50 + 5};
+					this.nextStep = {x: 1150, y: y * 50 + 5};
 				}
 	            //设置下个移动位置
 				else {
