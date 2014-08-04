@@ -222,8 +222,6 @@ $(function() {
 			    {src:"img/bullet.png", id:"bullet"},
 			    {src:"img/enemy.png", id:"enemy"},
 			    {src:"img/tower.png", id:"tower"},
-			    {src:"js/Bullet.js", id:"bullet-js"},
-			    {src:"js/MapData.js", id:"mapdata-js"},
 			    {src:"js/D3.net.1.0.js", id:"D3-net-js"},
 			    {src:"js/D3.net.packet.1.0.js", id:"D3-net-packet-js"},
 			    {src:"js/lib/jquery.localscroll-1.2.7-min.js", id:"localscroll-js"},

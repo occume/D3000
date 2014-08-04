@@ -11,7 +11,6 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.util.concurrent.GlobalEventExecutor;
 
 import org.d3.core.NamedThreadFactory;
-import org.d3.core.TcpServerChannelInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -41,8 +40,6 @@ public class TcpServer implements Server {
 			 .handler(new ChannelInitializer<Channel>() {
 				@Override
 				protected void initChannel(Channel ch) throws Exception {
-					System.out.println(ch.getClass());
-					System.out.println(Thread.currentThread().getName());
 				}
 			})
 			 .childHandler(new TcpServerChannelInitializer())

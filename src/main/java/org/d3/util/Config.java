@@ -21,28 +21,26 @@ public class Config {
 	
 	private static final String ROOT_NODE = "/globe/";
 	
-	private File file = null;
+	private static File file = null;
 	
 	private volatile long lastModifiedTime = 0;
 	
 	private Multimap<String, String> configMap;
 	
-	private static Config instance = null;
+	private static Config instance = new Config();
 	
-	private static File getConfigFile(){
+	private static void getConfigFile(){
 		URL url = Config.class.getClassLoader().getResource("");
 		File file = new File(url.getPath());
 		if(file.exists()){
 			File p = file.getParentFile();
-			System.out.println(getPath(p));
-			return null;
+			getPath(p);
 		}
-		return null;
 	}
 	
-	private static File getPath(File file){
-		String[] files = file.list();
-		String thePath = file.getPath();
+	private static void getPath(File config_dir){
+		String[] files = config_dir.list();
+		String thePath = config_dir.getPath();
 		File temp = null;
 		for(String name: files){
 			temp = new File(thePath + File.separator + name);
@@ -51,22 +49,19 @@ public class Config {
 			}
 			else{
 				if(CONFIG_FILENAME.equals(name)){
-					System.out.println("---" + temp);
-					return temp;
+					file = temp;
 				}
 			}
 		}
-		return null;
 	}
 	
 	public static void main(String...strings){
-		File file = getConfigFile();
-		System.out.println(file);
+		getConfigFile();
 	}
 	
 	private Config(){
 		
-		file = getConfigFile();
+		getConfigFile();
 		lastModifiedTime = file.lastModified();
 		
 		if(lastModifiedTime == 0){

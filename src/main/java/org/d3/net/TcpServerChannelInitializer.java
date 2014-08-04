@@ -1,4 +1,4 @@
-package org.d3.core;
+package org.d3.net;
 
 import org.d3.D3Context;
 import org.d3.core.concurrent.D3Gate;
@@ -20,7 +20,6 @@ public class TcpServerChannelInitializer extends
 	@Override
 	protected void initChannel(SocketChannel ch) throws Exception {
 		
-		System.out.println(Thread.currentThread().getName());
 		gate.acquire();
 		
 		ChannelPipeline pipeline = ch.pipeline();

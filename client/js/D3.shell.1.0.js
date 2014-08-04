@@ -32,7 +32,6 @@
 			if(this.y >= 500 || this.y <= 0 || this.x >= 500 || this.x <= 0){
 				return this.over();
 			}
-			//判断子弹击中敌人
 			if(circleInCircle(this,{x:this.monster.x+20,y:this.monster.y+20,radius:20})){
 //				console.log("击中！");
 				this.over(this.monster);

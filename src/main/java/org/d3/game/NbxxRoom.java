@@ -17,8 +17,9 @@ import com.google.common.collect.Sets;
 public class NbxxRoom extends BaseRoom {
 	
 	private Set<Monster> monsters;
-	private ConcurrentMap<Integer, Boolean> seats;
+	private ConcurrentMap<String, Boolean> seats;
 	private static final int ROOM_SIZE = 4;
+	private static String SEAT = "SEAT";
 
 	public NbxxRoom(String id, String name) {
 		super(id, name);
@@ -26,8 +27,9 @@ public class NbxxRoom extends BaseRoom {
 		
 		seats = Maps.newConcurrentMap();
 		for(int i = 1; i <= ROOM_SIZE; i++){
-			seats.put(i, false);
+			seats.put(SEAT + i, false);
 		}
+		System.out.println(seats);
 	}
 	
 	private ScheduledFuture future;
@@ -72,13 +74,15 @@ public class NbxxRoom extends BaseRoom {
 
 	@Override
 	protected void onLeaveRoom(Player player) {
-		seats.put(player.getSeat(), false);
+		seats.put(SEAT + player.getSeat(), false);
 	}
-
-	public int getFreeSeat(){
+	@Override
+	public int freeSeat(){
+		Thread.dumpStack();
 		for(int i = 1; i <= seats.size(); i++){
-			if(!seats.get(i)){
-				seats.put(i, true);
+			if(!seats.get(SEAT + i)){
+				seats.put(SEAT + i, true);
+				System.out.println(i);
 				return i;
 			}
 		}

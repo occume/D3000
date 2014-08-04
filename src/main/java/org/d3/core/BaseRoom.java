@@ -71,7 +71,6 @@ public abstract class BaseRoom  implements Room {
 	private ConcurrentMap<String, Charactor> players;
 	
 	private int size = 0;
-//	private int guanQia = 0;
 	protected int MONSTER_COUNT =20;
 	protected AtomicInteger readyCount = new AtomicInteger();
 	protected static ScheduledExecutorService scheduledService = 
@@ -79,10 +78,6 @@ public abstract class BaseRoom  implements Room {
 	
 
 	public void sendMassage(Packet pkt) {
-//		group.writeAndFlush(pkt);
-//		for(Charactor c: players.values()){
-//			c.sendMessage(pkt);
-//		}
 		try {
 			requestBus.sendsContentAOp(pkt).signal();
 		} catch (Exception e) {
@@ -92,7 +87,7 @@ public abstract class BaseRoom  implements Room {
 	
 	protected abstract int getRoomSize();
 	protected abstract void onLeaveRoom(Player player);
-	protected abstract int getFreeSeat();
+	protected abstract int freeSeat();
 	
 	public boolean joinRoom(final Charactor charactor){
 		synchronized (this) {
@@ -101,7 +96,8 @@ public abstract class BaseRoom  implements Room {
 			}
 			size++;
 		}
-		int seat = getFreeSeat();
+		int seat = freeSeat();
+		System.out.println("seat = " + seat);
 		Player player = charactor.getPlayer();
 		player.setSeat(seat);
 		players.put(charactor.getId(), charactor);
@@ -114,7 +110,6 @@ public abstract class BaseRoom  implements Room {
 		size--;
 		Player player = charactor.getPlayer();
 		
-//		group.remove(session);
 		players.remove(charactor.getId());
 		
 		Packet ret = Packets.newPacket(Packets.ROOM, Packets.ROOM_LEAVE, getPlayers());
@@ -134,7 +129,6 @@ public abstract class BaseRoom  implements Room {
 	public void close(){
 		players.clear();
 		players = null;
-//		group.close();
 	}
 
 	protected int getPlayerCount(){

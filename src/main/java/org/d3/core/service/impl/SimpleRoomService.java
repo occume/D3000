@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.d3.Room;
-import org.d3.core.BaseRoom;
 import org.d3.core.service.RoomService;
 import org.d3.game.NbxxRoom;
 
