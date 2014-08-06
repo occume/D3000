@@ -1,0 +1,6 @@
+option java_package = "org.d3.net.pb";
+
+message Message {
+    required int32 id = 1;
+	required string name = 2;
+}

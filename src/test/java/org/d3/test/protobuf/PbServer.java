@@ -16,6 +16,7 @@ import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 
 import org.d3.core.NamedThreadFactory;
 import org.d3.net.pb.Example;
+import org.d3.net.pb.PbDecoder;
 import org.d3.net.websocket.TextWebsocketDecoder;
 
 public class PbServer {
@@ -40,7 +41,7 @@ public class PbServer {
 				        p.addLast("encoder", new HttpResponseEncoder());
 				        p.addLast("handler", new WebSocketServerProtocolHandler("/ws"));
 						
-				        p.addLast("", new TextWebsocketDecoder());
+				        p.addLast("", new PbDecoder());
 				        
 						p.addLast("frameDecoder", new ProtobufVarint32FrameDecoder());
 						p.addLast("protobufDecoder",

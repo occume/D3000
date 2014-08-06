@@ -32,7 +32,7 @@ public class PbDecoder extends MessageToMessageDecoder<BinaryWebSocketFrame> {
 		}
 		
 		Message m = Example.Message.parseFrom(data);
-		System.out.println(m.getText());
+		System.out.println(m.getId() + ": " +m.getName());
 		System.out.println(msg);
 	}
 
