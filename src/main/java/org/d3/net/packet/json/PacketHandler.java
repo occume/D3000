@@ -1,4 +1,4 @@
-package org.d3.net.websocket;
+package org.d3.net.packet.json;
 
 import org.d3.core.transfer.Charactor;
 import org.d3.net.packet.Packet;

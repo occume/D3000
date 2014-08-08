@@ -1,6 +1,6 @@
 package org.d3.test.protobuf;
 
-import org.d3.net.pb.Example.Message;
+import org.d3.net.packet.protobuf.Example.Message;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;

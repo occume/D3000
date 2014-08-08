@@ -1,4 +1,4 @@
-package org.d3.net.websocket;
+package org.d3.net.packet.json;
 
 import java.util.List;
 

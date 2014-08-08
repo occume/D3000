@@ -11,6 +11,8 @@ if (typeof dcodeIO === 'undefined' || !dcodeIO.ProtoBuf) {
 // Initialize ProtoBuf.js
 var ProtoBuf = dcodeIO.ProtoBuf;
 var Message = ProtoBuf.loadProtoFile("./example.proto").build("Message");
+var Game = ProtoBuf.loadProtoFile("./complex.proto").build("Game");
+var Car = Game.Cars.Car;
 </script>
 </head>
 <body>
@@ -27,9 +29,10 @@ socket.binaryType = "arraybuffer"; // We are talking binary
 
 function send() {
     if (socket.readyState == WebSocket.OPEN) {
-        var msg = new Message(text.value);
-        socket.send(msg.toArrayBuffer());
-        log.value += "Sent: "+msg.text+"\n";
+        //var msg = new Message(1, text.value);
+        var car = new Car("Rusty", new Car.Vendor("Iron Inc.", new Car.Vendor.Address("US")), Car.Speed.SUPERFAST);
+        socket.send(car.toArrayBuffer());
+        log.value += "Sent: "+car.model+"\n";
     } else {
         log.value += "Not connected\n";
     }
@@ -46,8 +49,8 @@ socket.onclose = function() {
 socket.onmessage = function(evt) {
     try {
         // Decode the Message
-        var msg = Message.decode(evt.data);
-        log.value += "Received: "+msg.text+"\n";
+        var msg = Car.decode(evt.data);
+        log.value += "Received: "+msg.vendor.name+"\n";
     } catch (err) {
         log.value += "Error: "+err+"\n";
     }

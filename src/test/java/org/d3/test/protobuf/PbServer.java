@@ -11,13 +11,12 @@ import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpRequestDecoder;
 import io.netty.handler.codec.http.HttpResponseEncoder;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
-import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
 
 import org.d3.core.NamedThreadFactory;
-import org.d3.net.pb.Example;
-import org.d3.net.pb.PbDecoder;
-import org.d3.net.websocket.TextWebsocketDecoder;
+import org.d3.net.packet.json.TextWebsocketDecoder;
+import org.d3.net.packet.protobuf.Example;
+import org.d3.net.packet.protobuf.ProtobufDecoder;
 
 public class PbServer {
 
@@ -41,12 +40,12 @@ public class PbServer {
 				        p.addLast("encoder", new HttpResponseEncoder());
 				        p.addLast("handler", new WebSocketServerProtocolHandler("/ws"));
 						
-				        p.addLast("", new PbDecoder());
-				        
-						p.addLast("frameDecoder", new ProtobufVarint32FrameDecoder());
-						p.addLast("protobufDecoder",
-						        new ProtobufDecoder(Example.Message.getDefaultInstance()));
-						p.addLast("pb", new Pbhandler());
+				        p.addLast("protobuf-decoder", new ProtobufDecoder());
+//				        
+//						p.addLast("frameDecoder", new ProtobufVarint32FrameDecoder());
+//						p.addLast("protobufDecoder",
+//						        new ProtobufDecoder(Example.Message.getDefaultInstance()));
+//						p.addLast("pb", new Pbhandler());
 					}
 				})
 			 .option(ChannelOption.SO_BACKLOG, 128)
