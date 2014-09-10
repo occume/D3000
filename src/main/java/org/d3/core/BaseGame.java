@@ -6,7 +6,8 @@ import org.d3.Game;
 import org.d3.LifeCycle;
 import org.d3.Room;
 import org.d3.core.transfer.Module;
-import org.testng.collections.Maps;
+
+import com.google.common.collect.Maps;
 
 public abstract class BaseGame implements Game, LifeCycle{
 

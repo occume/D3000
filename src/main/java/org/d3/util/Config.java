@@ -1,14 +1,19 @@
 package org.d3.util;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Collection;
 import java.util.List;
+import java.util.jar.JarFile;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
@@ -23,6 +28,10 @@ public class Config {
 	
 	private static File file = null;
 	
+	private static InputStream ins = null;
+	
+	private static Resource res = null;
+	
 	private volatile long lastModifiedTime = 0;
 	
 	private Multimap<String, String> configMap;
@@ -30,12 +39,31 @@ public class Config {
 	private static Config instance = new Config();
 	
 	private static void getConfigFile(){
-		URL url = Config.class.getClassLoader().getResource("");
-		File file = new File(url.getPath());
-		if(file.exists()){
-			File p = file.getParentFile();
-			getPath(p);
-		}
+//		URL url = Config.class.getClassLoader().getResource("");
+//		System.out.println("url = " + url);
+//		if(url == null){
+//			url = Config.class.getProtectionDomain().getCodeSource().getLocation();
+//			url = Config.class.getResource("/" + CONFIG_FILENAME);
+//			file = new File(url.getFile());
+//			System.out.println(file.lastModified());
+			res = new ClassPathResource("/" + CONFIG_FILENAME);
+			try {
+				System.out.println(res.lastModified());
+//				file = r.getFile();
+				ins = res.getInputStream();
+//				r.c
+//				System.out.println(file.lastModified());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			return;
+//		}
+//		File file = new File(url.getPath());
+//		if(file.exists()){
+////			File p = file.getParentFile();
+//			getPath(file);
+//		}
 	}
 	
 	private static void getPath(File config_dir){
@@ -62,7 +90,11 @@ public class Config {
 	private Config(){
 		
 		getConfigFile();
-		lastModifiedTime = file.lastModified();
+		try {
+			lastModifiedTime = res.lastModified();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		if(lastModifiedTime == 0){
 			System.err.println(PATH + " file does not exist!");
@@ -80,7 +112,7 @@ public class Config {
 		Document doc = null;
 		
 		try {
-			doc = saxReader.read(file);
+			doc = saxReader.read(ins);
 		} catch (DocumentException e) {
 			System.err.println(PATH + " file does not exist!");
 		}
@@ -107,7 +139,13 @@ public class Config {
 	
 	final public Collection<String> getItem(String name){
 		
-		long newTime = file.lastModified();
+		long newTime = -1;
+		try {
+			newTime = res.lastModified();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(newTime > lastModifiedTime){
 			synchronized (this) {
 				if(newTime > lastModifiedTime){

@@ -1,9 +1,13 @@
 package org.d3.net.handler.login;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.Resource;
 
+import org.d3.net.handler.string.D3StringDecoder;
+import org.d3.net.handler.string.StringHandler;
+import org.d3.net.manage.World;
 import org.d3.util.ProtocolUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +22,8 @@ import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpRequestDecoder;
 import io.netty.handler.codec.http.HttpResponseEncoder;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
+import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.string.StringEncoder;
 
 @Component
 @Scope("prototype")
@@ -48,10 +54,24 @@ public class LoginDecoder extends ByteToMessageDecoder {
 	        pipeline.remove(this);
 		}
 		else{
-			LOG.error("invalid protocol");
-			ctx.writeAndFlush(1);
-			ctx.close();
+			pipeline.addLast("string-decoder", new D3StringDecoder());
+			pipeline.addLast("string-encoder", new StringEncoder());
+			pipeline.addLast("string-handler", new StringHandler());
+			
+			World.ALL.add(ctx.channel());
+			
+			pipeline.remove(this);
+//			LOG.error("invalid protocol");
+//			ctx.writeAndFlush(1);
+//			ctx.close();
 		}
+	}
+	
+	static AtomicInteger clientCount = new AtomicInteger(1);
+	@Override
+	public void channelActive(ChannelHandlerContext ctx) throws Exception {
+		System.out.print(clientCount.getAndIncrement() + " >> ");
+		System.out.println(ctx.channel().remoteAddress());
 	}
 
 }

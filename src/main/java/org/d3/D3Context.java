@@ -9,7 +9,8 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
-import org.testng.collections.Maps;
+
+import com.google.common.collect.Maps;
 
 @Component
 public class D3Context implements Context, LifeCycle, ApplicationContextAware{

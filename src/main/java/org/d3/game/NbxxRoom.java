@@ -29,7 +29,6 @@ public class NbxxRoom extends BaseRoom {
 		for(int i = 1; i <= ROOM_SIZE; i++){
 			seats.put(SEAT + i, false);
 		}
-		System.out.println(seats);
 	}
 	
 	private ScheduledFuture future;

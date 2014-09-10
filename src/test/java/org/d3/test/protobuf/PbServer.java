@@ -6,6 +6,7 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.ServerSocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpRequestDecoder;
@@ -30,6 +31,15 @@ public class PbServer {
 			ServerBootstrap b = new ServerBootstrap();
 			b.group(boss, worker)
 			 .channel(NioServerSocketChannel.class)
+			 .handler(new ChannelInitializer<ServerSocketChannel>() {
+
+				@Override
+				protected void initChannel(ServerSocketChannel ch) throws Exception {
+					System.out.println(Thread.currentThread().getName());
+					throw new RuntimeException("get out 111");
+				}
+				
+			})
 			 .childHandler(new ChannelInitializer<Channel>() {
 					@Override
 					protected void initChannel(Channel ch) throws Exception {
@@ -51,9 +61,12 @@ public class PbServer {
 			 .option(ChannelOption.SO_BACKLOG, 128)
              .childOption(ChannelOption.SO_KEEPALIVE, true);
 			
-			Channel serverChannel = b.bind(8080).sync().channel();
+//			Channel serverChannel = b.bind(8080).sync().channel();
+//			Thread.dumpStack();
+			b.bind(8080);
+			System.out.println("server start");
 			
-		} catch (InterruptedException e) {
+		} catch (Exception e) {
 		}
 		
 	}
