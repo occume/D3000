@@ -1,6 +1,6 @@
 package org.d3.core.service;
 
-import org.d3.server.Server;
+import org.d3.client.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -8,18 +8,18 @@ import com.google.common.util.concurrent.AbstractService;
 import com.google.common.util.concurrent.MoreExecutors;
 
 @Component
-public class TcpServerStartService extends AbstractService {
+public class ReportClientStartService extends AbstractService {
 
 	@Autowired
-	Server tcpServer;
+	Client client;
 	
-	public TcpServerStartService(){
+	public ReportClientStartService(){
 		super();
 		addListener(
 		        new Listener() {
 					@Override
 					public void starting() {
-						TcpServerStartService.this.notifyStarted();
+						ReportClientStartService.this.notifyStarted();
 					}
 		        },
 		        MoreExecutors.sameThreadExecutor());
@@ -27,12 +27,12 @@ public class TcpServerStartService extends AbstractService {
 	
 	@Override
 	protected void doStart() {
-		tcpServer.start();
+		client.start();
 	}
 
 	@Override
 	protected void doStop() {
-		tcpServer.stop();
+		client.stop();
 	}
 
 }

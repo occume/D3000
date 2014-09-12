@@ -10,7 +10,8 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.util.concurrent.GlobalEventExecutor;
 
-import org.d3.core.NamedThreadFactory;
+import org.d3.server.Server;
+import org.d3.thread.NamedThreadFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -26,7 +27,7 @@ public class TcpServer implements Server {
 	
 	public static final ChannelGroup ALL_CHANNELS = new DefaultChannelGroup("D3-CHANNELS", GlobalEventExecutor.INSTANCE);
 	
-	public void launch()
+	public void start()
 	{
 		
 		try {
@@ -55,7 +56,7 @@ public class TcpServer implements Server {
 		
 	}
 
-	public void shutDown() {
+	public void stop() {
 		// TODO Auto-generated method stub
 
 	}

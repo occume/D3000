@@ -4,6 +4,7 @@ import java.util.Set;
 
 import org.d3.D3Context;
 import org.d3.core.service.Jactor2StartService;
+import org.d3.core.service.ReportClientStartService;
 import org.d3.core.service.TcpServerStartService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +40,11 @@ public class Bootstrap{
 		 */
 		TcpServerStartService tcpService = (TcpServerStartService) D3Context.getBean("tcpServerStartService");
 		services.add(tcpService);
+		/**
+		 * 节点状态报告服务
+		 */
+		ReportClientStartService clientService = (ReportClientStartService) D3Context.getBean("reportClientStartService");
+		services.add(clientService);
 		
 		/**
 		 * Jactor2服务
