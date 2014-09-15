@@ -1,5 +1,7 @@
 package org.d3.net.client;
 
+import java.util.Map;
+
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
@@ -11,9 +13,12 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.string.StringEncoder;
 
 import org.d3.client.Client;
+import org.d3.net.session.SessionManager;
 import org.d3.thread.NamedThreadFactory;
+import org.d3.util.ObjectConvert;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.testng.collections.Maps;
 
 @Component
 public class ReportClient implements Client{
@@ -51,7 +56,7 @@ public class ReportClient implements Client{
 					worker.shutdownGracefully();
 				}
 				tryCount++;
-				System.out.println("try " + tryCount);
+//				System.out.println("try " + tryCount);
 			}
 		}
 	}
@@ -65,11 +70,16 @@ public class ReportClient implements Client{
 	/** 启动定时任务 */
 	 @Scheduled(cron = "0/5 * * * * *")  
 	protected void startScheduleTask() {
-		System.out.println("report heart " + channel);
-		if(channel != null && channel.isActive()){
-			channel.writeAndFlush("i am alive");
-		}
-
+//		System.out.println("report heart " + channel);
+		if(channel == null || !channel.isActive())
+			return;
+		
+		Map<String, Integer> state = Maps.newHashMap();
+		int channelCount = SessionManager.getInstance().getChanneCount();
+		state.put("channelCount", channelCount);
+		String myState = ObjectConvert.Me().ojb2json(state);
+		channel.writeAndFlush(myState);
+		
 	}
 	
 	private void tryStart(){

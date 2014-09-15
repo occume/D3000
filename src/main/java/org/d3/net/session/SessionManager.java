@@ -23,6 +23,10 @@ public class SessionManager {
 		return manager;
 	}
 	
+	public int getChanneCount(){
+		return sessions.size();
+	}
+	
 	public Session getSession(String id){
 		return sessions.get(id);
 	}
@@ -39,18 +43,18 @@ public class SessionManager {
 	/** session 清理 */
 	@Scheduled(cron = "0/5 * * * * *")
 	protected void startScheduleTask() {
-		 
-		for(Entry<String, Session> e: sessions.entrySet()){
-			
-			PlayerSession session = (PlayerSession) e.getValue();
-			long lastAccessTime = session.getLastAccessTime();
-			long now = System.currentTimeMillis();
-			
-			if((now - lastAccessTime) > 300000){
-				sessions.remove(e.getKey()).close();
-			}
-			
-		}
+		
+//		for(Entry<String, Session> e: sessions.entrySet()){
+//			
+//			PlayerSession session = (PlayerSession) e.getValue();
+//			long lastAccessTime = session.getLastAccessTime();
+//			long now = System.currentTimeMillis();
+//			
+//			if((now - lastAccessTime) > 300000){
+//				sessions.remove(e.getKey()).close();
+//			}
+//			
+//		}
 		
 	}
 }

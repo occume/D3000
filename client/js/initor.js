@@ -396,7 +396,7 @@ $(function() {
 			Loader.onLoaded(function(){
 				D3.cid = jOne.createUUID();
 				D3.cid = 39600;
-				D3.session = D3.createSession("ws://112.124.115.136:10086/d3socket");
+				D3.session = D3.createSession("ws://localhost:10086/d3socket");
 				
 //				slideWrapper.scrollTo("#box14", 500);
 				

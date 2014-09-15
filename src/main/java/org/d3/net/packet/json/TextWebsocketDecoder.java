@@ -22,7 +22,7 @@ public class TextWebsocketDecoder extends MessageToMessageDecoder<TextWebSocketF
 	protected void decode(ChannelHandlerContext ctx, TextWebSocketFrame msg,
 			List<Object> out) throws Exception {
 		String data = msg.text();
-		System.out.println(data);
+//		System.out.println(data);
 		BasePacket pkt = jackson.readValue(data, BasePacket.class);
 		out.add(pkt);
 	}
