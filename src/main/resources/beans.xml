@@ -19,5 +19,7 @@
 	<context:component-scan base-package="org.d3,com.yayo" />
 	
 	<bean id="jackson" class="org.codehaus.jackson.map.ObjectMapper" />
+	<bean id="stringDecoder" class="io.netty.handler.codec.string.StringDecoder" />
+	<bean id="stringEncoder" class="io.netty.handler.codec.string.StringEncoder" />
 	
 </beans>

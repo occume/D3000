@@ -8,10 +8,14 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.string.StringEncoder;
 
 import org.d3.client.Client;
 import org.d3.thread.NamedThreadFactory;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ReportClient implements Client{
 	
 	private EventLoopGroup worker;
@@ -30,6 +34,7 @@ public class ReportClient implements Client{
 			@Override
 			protected void initChannel(SocketChannel ch) throws Exception {
 				
+				ch.pipeline().addLast(new StringEncoder());
 				ch.pipeline().addLast(new ReportClientHandler());
 				
 			}
@@ -56,6 +61,17 @@ public class ReportClient implements Client{
 		client.start();
 	}
 	private int tryCount = 0;
+	
+	/** 启动定时任务 */
+	 @Scheduled(cron = "0/5 * * * * *")  
+	protected void startScheduleTask() {
+		System.out.println("report heart " + channel);
+		if(channel != null && channel.isActive()){
+			channel.writeAndFlush("i am alive");
+		}
+
+	}
+	
 	private void tryStart(){
 		
 	}
