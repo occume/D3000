@@ -18,7 +18,8 @@ import org.d3.thread.NamedThreadFactory;
 import org.d3.util.ObjectConvert;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.testng.collections.Maps;
+
+import com.google.common.collect.Maps;
 
 @Component
 public class ReportClient implements Client{
@@ -68,7 +69,7 @@ public class ReportClient implements Client{
 	private int tryCount = 0;
 	
 	/** 启动定时任务 */
-	 @Scheduled(cron = "0/5 * * * * *")  
+	 @Scheduled(cron = "0/5 * * * * *")
 	protected void startScheduleTask() {
 //		System.out.println("report heart " + channel);
 		if(channel == null || !channel.isActive())

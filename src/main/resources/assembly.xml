@@ -11,7 +11,7 @@
     <dependencySet>
       <outputDirectory>/</outputDirectory>
       <useProjectArtifact>false</useProjectArtifact>
-      <unpack>true</unpack>
+      <unpack>false</unpack>
       <scope>runtime</scope>
       <excludes>
       </excludes>

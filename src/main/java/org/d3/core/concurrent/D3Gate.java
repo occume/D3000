@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component(value="gate")
 public class D3Gate {
 	
-	private int num = 1;
+	private int num = 25;
 	private Semaphore pass = new Semaphore(num);
 	
 	public int acquire(){

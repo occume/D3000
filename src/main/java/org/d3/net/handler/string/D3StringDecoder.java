@@ -7,7 +7,6 @@ public class D3StringDecoder extends StringDecoder {
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
-		System.out.println("active");
 		ctx.fireChannelActive();
 	}
 

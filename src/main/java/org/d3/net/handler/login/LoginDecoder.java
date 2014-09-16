@@ -59,7 +59,7 @@ public class LoginDecoder extends ByteToMessageDecoder {
 			pipeline.addLast("string-handler", new StringHandler());
 			
 			World.ALL.add(ctx.channel());
-			
+			System.out.println(ctx.channel());
 			pipeline.remove(this);
 //			LOG.error("invalid protocol");
 //			ctx.writeAndFlush(1);

@@ -34,6 +34,11 @@ public class Bootstrap{
 	
 	public Bootstrap(){
 		
+		
+	}
+	
+	public void lanucher(){
+		
 		Set<Service> services = Sets.newLinkedHashSet();
 		/**
 		 * TCP服务
@@ -71,9 +76,7 @@ public class Bootstrap{
 			}
 			
 		}, MoreExecutors.sameThreadExecutor());
-	}
-	
-	public void lanucher(){
+		
 		serviceManager.startAsync();
 	}
 	
