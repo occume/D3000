@@ -1,4 +1,4 @@
-package org.d3.net.handler.login;
+package org.d3.net.handler;
 
 import java.util.Map;
 
@@ -29,11 +29,12 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import io.netty.handler.timeout.IdleStateHandler;
 
 @Component
 @Sharable
-public class Loginhandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
+public class Loginhandler extends SimpleChannelInboundHandler<WebSocketFrame> {
 
 	@Autowired
 	private ObjectMapper jackson;
@@ -46,9 +47,9 @@ public class Loginhandler extends SimpleChannelInboundHandler<TextWebSocketFrame
 	
 	@Override
 	protected void messageReceived(ChannelHandlerContext ctx,
-			TextWebSocketFrame msg) throws Exception {
-		
-		String inData = msg.text();
+			WebSocketFrame msg) throws Exception {
+		System.out.println(msg.getClass().getName());
+		String inData = "";//msg.text();
 		BasePacket pkt = null;
 		try{
 			pkt = jackson.readValue(inData, BasePacket.class);

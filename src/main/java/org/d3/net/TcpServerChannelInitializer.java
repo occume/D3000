@@ -2,7 +2,7 @@ package org.d3.net;
 
 import org.d3.D3Context;
 import org.d3.core.concurrent.D3Gate;
-import org.d3.net.handler.login.LoginDecoder;
+import org.d3.net.handler.ClientTypeDecoder;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -23,8 +23,8 @@ public class TcpServerChannelInitializer extends
 		gate.acquire();
 		
 		ChannelPipeline pipeline = ch.pipeline();
-		LoginDecoder loginDecoder = (LoginDecoder) D3Context.getBean("loginDecoder");
-		pipeline.addLast("initHandler", loginDecoder);
+		ClientTypeDecoder clientTypeDecoder = (ClientTypeDecoder) D3Context.getBean("clientTypeDecoder");
+		pipeline.addLast("initHandler", clientTypeDecoder);
 		
 	}
 	

@@ -1,11 +1,10 @@
-package org.d3.net.handler.login;
+package org.d3.net.handler;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.Resource;
 
-import org.d3.net.handler.string.D3StringDecoder;
 import org.d3.net.handler.string.StringHandler;
 import org.d3.net.manage.World;
 import org.d3.util.ProtocolUtil;
@@ -27,9 +26,9 @@ import io.netty.handler.codec.string.StringEncoder;
 
 @Component
 @Scope("prototype")
-public class LoginDecoder extends ByteToMessageDecoder {
+public class ClientTypeDecoder extends ByteToMessageDecoder {
 
-	private static final Logger LOG = LoggerFactory.getLogger(LoginDecoder.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ClientTypeDecoder.class);
 	
 	@Resource
 	private Loginhandler loginhandler;
@@ -48,13 +47,13 @@ public class LoginDecoder extends ByteToMessageDecoder {
 			pipeline.addLast("decoder", new HttpRequestDecoder());
 	        pipeline.addLast("aggregator", new HttpObjectAggregator(65536));
 	        pipeline.addLast("encoder", new HttpResponseEncoder());
-	        pipeline.addLast("handler", new WebSocketServerProtocolHandler("/d3socket"));
+	        pipeline.addLast("handler", new WebSocketServerProtocolHandler("/d3-server"));
 	        pipeline.addLast("loginhandler", loginhandler);
 	        
 	        pipeline.remove(this);
 		}
 		else{
-			pipeline.addLast("string-decoder", new D3StringDecoder());
+			pipeline.addLast("string-decoder", new StringDecoder());
 			pipeline.addLast("string-encoder", new StringEncoder());
 			pipeline.addLast("string-handler", new StringHandler());
 			
