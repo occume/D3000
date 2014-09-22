@@ -16,7 +16,7 @@ public class LoadTest {
 	
 	public static void main(String...strings){
 	
-		for(int i = 0; i < 500; i++){
+		for(int i = 0; i < 100; i++){
 			new Thread(new Runnable() {
 				public void run() {
 					try {
@@ -52,13 +52,13 @@ class Client{
 			
 		});
 		
-		Channel c = b.connect("112.124.115.136", 10086).sync().channel();
+		Channel c = b.connect("10.2.254.205", 8080).sync().channel();
 		
 		for(;;){
 			if(c != null && c.isActive())
 				c.writeAndFlush("hi, this is a test!");
 			
-			TimeUnit.MILLISECONDS.sleep(100);
+			TimeUnit.MILLISECONDS.sleep(100000);
 		}
 	}
 	

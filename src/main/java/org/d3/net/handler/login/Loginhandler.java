@@ -55,7 +55,7 @@ public class Loginhandler extends SimpleChannelInboundHandler<TextWebSocketFrame
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		System.out.println(inData);
+//		System.out.println(inData);
 		if(pkt.getAct() == Packets.CONNECT){
 			
 			Packet pkt1 = Packets.newLoginPacket();

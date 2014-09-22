@@ -77,7 +77,7 @@ public class NbxxRoom extends BaseRoom {
 	}
 	@Override
 	public int freeSeat(){
-		Thread.dumpStack();
+//		Thread.dumpStack();
 		for(int i = 1; i <= seats.size(); i++){
 			if(!seats.get(SEAT + i)){
 				seats.put(SEAT + i, true);

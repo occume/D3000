@@ -34,7 +34,7 @@ public class MonitorClient {
 		});
 		
 		try {
-			b.connect("112.124.115.136", 10086).sync().channel();
+			b.connect("10.2.254.205", 8080).sync().channel();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
