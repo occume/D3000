@@ -28,17 +28,16 @@ public class Bootstrap{
 //	@Autowired
 //	private BufferFacade bufferFacade;
 
-	private Logger LOG = LoggerFactory.getLogger(getClass());
+	private Logger LOG = LoggerFactory.getLogger(Bootstrap.class);
 	
 	ServiceManager serviceManager;
 	
 	public Bootstrap(){
 		
-		
 	}
 	
 	public void lanucher(){
-		
+
 		Set<Service> services = Sets.newLinkedHashSet();
 		/**
 		 * TCP服务
@@ -48,8 +47,8 @@ public class Bootstrap{
 		/**
 		 * 节点状态报告服务
 		 */
-		ReportClientStartService clientService = (ReportClientStartService) D3Context.getBean("reportClientStartService");
-		services.add(clientService);
+//		ReportClientStartService clientService = (ReportClientStartService) D3Context.getBean("reportClientStartService");
+//		services.add(clientService);
 		
 		/**
 		 * Jactor2服务
@@ -67,7 +66,7 @@ public class Bootstrap{
 
 			@Override
 			public void healthy() {
-				System.out.println("all service has been started");
+				LOG.info("all service has been started");
 			}
 
 			@Override

@@ -81,24 +81,24 @@ public class Packets {
 	 */
 	public static final byte EXCEPTION = 0x24;
 	
-	public static Packet newPacket(byte act, byte act_min){
-		return new BasePacket(1, act, act_min, "", "", null);
-	}
+//	public static Packet newPacket(byte act, byte act_min){
+//		return new BasePacket(1, act, act_min, "", "", null);
+//	}
+//	
+//	public static Packet newPacket(byte act, Object tuple){
+//		return new BasePacket(1, act, "", tuple);
+//	}
+//	
+//	public static Packet newPacket(byte act, byte act_min, Object tuple){
+//		return new BasePacket(1, act, act_min, "", "", tuple);
+//	}
+//	
+//	public static Packet newPacket(byte act, byte act_min, String from, Object tuple){
+//		return new BasePacket(1, act, act_min, from, "", tuple);
+//	}
 	
-	public static Packet newPacket(byte act, Object tuple){
-		return new BasePacket(1, act, "", tuple);
-	}
-	
-	public static Packet newPacket(byte act, byte act_min, Object tuple){
-		return new BasePacket(1, act, act_min, "", "", tuple);
-	}
-	
-	public static Packet newPacket(byte act, byte act_min, String from, Object tuple){
-		return new BasePacket(1, act, act_min, from, "", tuple);
-	}
-	
-	public static Packet newLoginPacket(){
-		return newPacket(LOG_IN, null);
-	}
+//	public static Packet newLoginPacket(){
+//		return newPacket(LOG_IN, null);
+//	}
 	
 }

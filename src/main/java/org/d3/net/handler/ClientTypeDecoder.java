@@ -31,7 +31,7 @@ public class ClientTypeDecoder extends ByteToMessageDecoder {
 	private static final Logger LOG = LoggerFactory.getLogger(ClientTypeDecoder.class);
 	
 	@Resource
-	private Loginhandler loginhandler;
+	private WSMessageTypeDecoder msgTypeDecoder;
 	
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in,
@@ -48,7 +48,7 @@ public class ClientTypeDecoder extends ByteToMessageDecoder {
 	        pipeline.addLast("aggregator", new HttpObjectAggregator(65536));
 	        pipeline.addLast("encoder", new HttpResponseEncoder());
 	        pipeline.addLast("handler", new WebSocketServerProtocolHandler("/d3-server"));
-	        pipeline.addLast("loginhandler", loginhandler);
+	        pipeline.addLast("msgTypeDecoder", msgTypeDecoder);
 	        
 	        pipeline.remove(this);
 		}

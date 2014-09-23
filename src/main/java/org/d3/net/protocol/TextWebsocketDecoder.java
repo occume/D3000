@@ -1,4 +1,4 @@
-package org.d3.net.packet.json;
+package org.d3.net.protocol;
 
 import java.util.List;
 

@@ -11,9 +11,8 @@ import org.d3.game.bean.Player;
 import org.d3.net.packet.BasePacket;
 import org.d3.net.packet.Packet;
 import org.d3.net.packet.Packets;
-import org.d3.net.packet.json.PacketHandler;
-import org.d3.net.packet.json.TextWebsocketDecoder;
-import org.d3.net.packet.json.TextWebsocketEncoder;
+import org.d3.net.protocol.TextWebsocketDecoder;
+import org.d3.net.protocol.TextWebsocketEncoder;
 import org.d3.net.session.PlayerSession;
 import org.d3.net.session.Session;
 import org.d3.net.session.SessionManager;
@@ -32,8 +31,8 @@ import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import io.netty.handler.timeout.IdleStateHandler;
 
-@Component
-@Sharable
+//@Component
+//@Sharable
 public class Loginhandler extends SimpleChannelInboundHandler<WebSocketFrame> {
 
 	@Autowired

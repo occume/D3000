@@ -1,4 +1,4 @@
-package org.d3.net.packet.json;
+package org.d3.net.handler;
 
 import org.d3.core.transfer.Charactor;
 import org.d3.net.packet.Packet;
@@ -10,9 +10,7 @@ public class PacketHandler extends SimpleChannelInboundHandler<Packet> {
 	
 	private Charactor charactor;
 	
-	public PacketHandler(Charactor charactor){
-		this.charactor = charactor;
-	}
+	public PacketHandler(){}
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -24,7 +22,7 @@ public class PacketHandler extends SimpleChannelInboundHandler<Packet> {
 	@Override
 	protected void messageReceived(ChannelHandlerContext ctx, Packet msg)
 			throws Exception {
-		
+		System.out.println(msg);
 		charactor.onMessage(msg);
 		
 	}

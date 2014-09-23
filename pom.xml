@@ -48,7 +48,6 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.6.1</version>
-			<scope>test</scope>
 		</dependency>
 		
 		<dependency>
@@ -87,10 +86,10 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
         </dependency>
        
 		<dependency>   
-      <groupId>dom4j</groupId>    
-      <artifactId>dom4j</artifactId>    
-      <version>1.6</version>   
-    </dependency> 
+	      <groupId>dom4j</groupId>    
+	      <artifactId>dom4j</artifactId>    
+	      <version>1.6</version>   
+	    </dependency> 
 		
 		<!-- JDK 6 -->
 		<dependency>
