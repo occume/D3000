@@ -71,6 +71,7 @@ public class ClientTypeDecoder extends ByteToMessageDecoder {
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		System.out.print(clientCount.getAndIncrement() + " >> ");
 		System.out.println(ctx.channel().remoteAddress());
+		ctx.fireChannelActive();
 	}
 
 }

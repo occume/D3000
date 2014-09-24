@@ -14,7 +14,7 @@ public class Launcher {
 	public static void main(String[] args) throws IOException {
 		
 		try {
-			new Plant(Runtime.getRuntime().availableProcessors() * 2);
+			new Plant(100);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

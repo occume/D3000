@@ -12,7 +12,8 @@ import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpRequestDecoder;
 import io.netty.handler.codec.http.HttpResponseEncoder;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
-import org.d3.net.packet.protobuf.ProtobufDecoder;
+
+import org.d3.net.protocol.ProtobufDecoder;
 import org.d3.thread.NamedThreadFactory;
 
 public class PbServer {

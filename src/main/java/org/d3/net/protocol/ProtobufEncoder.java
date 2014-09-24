@@ -17,7 +17,7 @@ public class ProtobufEncoder extends MessageToMessageEncoder<ByteBuf>{
 	@Override
 	protected void encode(ChannelHandlerContext ctx, ByteBuf msg,
 			List<Object> out) throws Exception {
-
+//System.out.println("encoder");
 		out.add(new BinaryWebSocketFrame(msg));
 		
 	}

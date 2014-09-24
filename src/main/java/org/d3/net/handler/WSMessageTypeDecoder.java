@@ -41,7 +41,9 @@ public class WSMessageTypeDecoder extends SimpleChannelInboundHandler<WebSocketF
 			pipeline.addLast(encoder);
 			
 		}
-		pipeline.addLast(new PacketHandler());
+		PacketHandler packetHandler = (PacketHandler) D3Context.getBean("packetHandler");
+		
+		pipeline.addLast("packetHandler", packetHandler);
 		pipeline.remove(this);
 	}
 	
