@@ -48,7 +48,7 @@ public class Config {
 //			System.out.println(file.lastModified());
 			res = new ClassPathResource("/" + CONFIG_FILENAME);
 			try {
-				System.out.println(res.lastModified());
+//				System.out.println(res.lastModified());
 //				file = r.getFile();
 				ins = res.getInputStream();
 //				r.c

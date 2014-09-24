@@ -81,7 +81,7 @@ public class NbxxRoom extends BaseRoom {
 		for(int i = 1; i <= seats.size(); i++){
 			if(!seats.get(SEAT + i)){
 				seats.put(SEAT + i, true);
-				System.out.println(i);
+//				System.out.println(i);
 				return i;
 			}
 		}
