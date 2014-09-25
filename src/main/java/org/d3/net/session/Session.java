@@ -1,7 +1,9 @@
 package org.d3.net.session;
 
+import io.netty.channel.Channel;
+
+import org.d3.module.chat.ChatRoom;
 import org.d3.module.user.bean.Player;
-import org.d3.net.packet.Packet;
 
 public interface Session {
 	
@@ -24,6 +26,12 @@ public interface Session {
 	public void setPlayer(Player player);
 	
 	public Player getPlayer();
+	
+	public void setRoom(ChatRoom room);
+	
+	public ChatRoom getRoom();
+	
+	public Channel channel();
 	
 	public void close();
 }

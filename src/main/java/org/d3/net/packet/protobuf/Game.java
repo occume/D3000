@@ -794,47 +794,47 @@ public final class Game {
   public interface ChatOrBuilder
       extends com.google.protobuf.MessageOrBuilder {
 
-    // required string name = 1;
+    // optional string name = 1;
     /**
-     * <code>required string name = 1;</code>
+     * <code>optional string name = 1;</code>
      */
     boolean hasName();
     /**
-     * <code>required string name = 1;</code>
+     * <code>optional string name = 1;</code>
      */
     java.lang.String getName();
     /**
-     * <code>required string name = 1;</code>
+     * <code>optional string name = 1;</code>
      */
     com.google.protobuf.ByteString
         getNameBytes();
 
-    // required string target = 2;
+    // optional string target = 2;
     /**
-     * <code>required string target = 2;</code>
+     * <code>optional string target = 2;</code>
      */
     boolean hasTarget();
     /**
-     * <code>required string target = 2;</code>
+     * <code>optional string target = 2;</code>
      */
     java.lang.String getTarget();
     /**
-     * <code>required string target = 2;</code>
+     * <code>optional string target = 2;</code>
      */
     com.google.protobuf.ByteString
         getTargetBytes();
 
-    // required string info = 3;
+    // optional string info = 3;
     /**
-     * <code>required string info = 3;</code>
+     * <code>optional string info = 3;</code>
      */
     boolean hasInfo();
     /**
-     * <code>required string info = 3;</code>
+     * <code>optional string info = 3;</code>
      */
     java.lang.String getInfo();
     /**
-     * <code>required string info = 3;</code>
+     * <code>optional string info = 3;</code>
      */
     com.google.protobuf.ByteString
         getInfoBytes();
@@ -949,17 +949,17 @@ public final class Game {
     }
 
     private int bitField0_;
-    // required string name = 1;
+    // optional string name = 1;
     public static final int NAME_FIELD_NUMBER = 1;
     private java.lang.Object name_;
     /**
-     * <code>required string name = 1;</code>
+     * <code>optional string name = 1;</code>
      */
     public boolean hasName() {
       return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
-     * <code>required string name = 1;</code>
+     * <code>optional string name = 1;</code>
      */
     public java.lang.String getName() {
       java.lang.Object ref = name_;
@@ -976,7 +976,7 @@ public final class Game {
       }
     }
     /**
-     * <code>required string name = 1;</code>
+     * <code>optional string name = 1;</code>
      */
     public com.google.protobuf.ByteString
         getNameBytes() {
@@ -992,17 +992,17 @@ public final class Game {
       }
     }
 
-    // required string target = 2;
+    // optional string target = 2;
     public static final int TARGET_FIELD_NUMBER = 2;
     private java.lang.Object target_;
     /**
-     * <code>required string target = 2;</code>
+     * <code>optional string target = 2;</code>
      */
     public boolean hasTarget() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
-     * <code>required string target = 2;</code>
+     * <code>optional string target = 2;</code>
      */
     public java.lang.String getTarget() {
       java.lang.Object ref = target_;
@@ -1019,7 +1019,7 @@ public final class Game {
       }
     }
     /**
-     * <code>required string target = 2;</code>
+     * <code>optional string target = 2;</code>
      */
     public com.google.protobuf.ByteString
         getTargetBytes() {
@@ -1035,17 +1035,17 @@ public final class Game {
       }
     }
 
-    // required string info = 3;
+    // optional string info = 3;
     public static final int INFO_FIELD_NUMBER = 3;
     private java.lang.Object info_;
     /**
-     * <code>required string info = 3;</code>
+     * <code>optional string info = 3;</code>
      */
     public boolean hasInfo() {
       return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
-     * <code>required string info = 3;</code>
+     * <code>optional string info = 3;</code>
      */
     public java.lang.String getInfo() {
       java.lang.Object ref = info_;
@@ -1062,7 +1062,7 @@ public final class Game {
       }
     }
     /**
-     * <code>required string info = 3;</code>
+     * <code>optional string info = 3;</code>
      */
     public com.google.protobuf.ByteString
         getInfoBytes() {
@@ -1088,18 +1088,6 @@ public final class Game {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized != -1) return isInitialized == 1;
 
-      if (!hasName()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasTarget()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
-      if (!hasInfo()) {
-        memoizedIsInitialized = 0;
-        return false;
-      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -1339,18 +1327,6 @@ public final class Game {
       }
 
       public final boolean isInitialized() {
-        if (!hasName()) {
-          
-          return false;
-        }
-        if (!hasTarget()) {
-          
-          return false;
-        }
-        if (!hasInfo()) {
-          
-          return false;
-        }
         return true;
       }
 
@@ -1373,16 +1349,16 @@ public final class Game {
       }
       private int bitField0_;
 
-      // required string name = 1;
+      // optional string name = 1;
       private java.lang.Object name_ = "";
       /**
-       * <code>required string name = 1;</code>
+       * <code>optional string name = 1;</code>
        */
       public boolean hasName() {
         return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
-       * <code>required string name = 1;</code>
+       * <code>optional string name = 1;</code>
        */
       public java.lang.String getName() {
         java.lang.Object ref = name_;
@@ -1396,7 +1372,7 @@ public final class Game {
         }
       }
       /**
-       * <code>required string name = 1;</code>
+       * <code>optional string name = 1;</code>
        */
       public com.google.protobuf.ByteString
           getNameBytes() {
@@ -1412,7 +1388,7 @@ public final class Game {
         }
       }
       /**
-       * <code>required string name = 1;</code>
+       * <code>optional string name = 1;</code>
        */
       public Builder setName(
           java.lang.String value) {
@@ -1425,7 +1401,7 @@ public final class Game {
         return this;
       }
       /**
-       * <code>required string name = 1;</code>
+       * <code>optional string name = 1;</code>
        */
       public Builder clearName() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -1434,7 +1410,7 @@ public final class Game {
         return this;
       }
       /**
-       * <code>required string name = 1;</code>
+       * <code>optional string name = 1;</code>
        */
       public Builder setNameBytes(
           com.google.protobuf.ByteString value) {
@@ -1447,16 +1423,16 @@ public final class Game {
         return this;
       }
 
-      // required string target = 2;
+      // optional string target = 2;
       private java.lang.Object target_ = "";
       /**
-       * <code>required string target = 2;</code>
+       * <code>optional string target = 2;</code>
        */
       public boolean hasTarget() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
-       * <code>required string target = 2;</code>
+       * <code>optional string target = 2;</code>
        */
       public java.lang.String getTarget() {
         java.lang.Object ref = target_;
@@ -1470,7 +1446,7 @@ public final class Game {
         }
       }
       /**
-       * <code>required string target = 2;</code>
+       * <code>optional string target = 2;</code>
        */
       public com.google.protobuf.ByteString
           getTargetBytes() {
@@ -1486,7 +1462,7 @@ public final class Game {
         }
       }
       /**
-       * <code>required string target = 2;</code>
+       * <code>optional string target = 2;</code>
        */
       public Builder setTarget(
           java.lang.String value) {
@@ -1499,7 +1475,7 @@ public final class Game {
         return this;
       }
       /**
-       * <code>required string target = 2;</code>
+       * <code>optional string target = 2;</code>
        */
       public Builder clearTarget() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -1508,7 +1484,7 @@ public final class Game {
         return this;
       }
       /**
-       * <code>required string target = 2;</code>
+       * <code>optional string target = 2;</code>
        */
       public Builder setTargetBytes(
           com.google.protobuf.ByteString value) {
@@ -1521,16 +1497,16 @@ public final class Game {
         return this;
       }
 
-      // required string info = 3;
+      // optional string info = 3;
       private java.lang.Object info_ = "";
       /**
-       * <code>required string info = 3;</code>
+       * <code>optional string info = 3;</code>
        */
       public boolean hasInfo() {
         return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
-       * <code>required string info = 3;</code>
+       * <code>optional string info = 3;</code>
        */
       public java.lang.String getInfo() {
         java.lang.Object ref = info_;
@@ -1544,7 +1520,7 @@ public final class Game {
         }
       }
       /**
-       * <code>required string info = 3;</code>
+       * <code>optional string info = 3;</code>
        */
       public com.google.protobuf.ByteString
           getInfoBytes() {
@@ -1560,7 +1536,7 @@ public final class Game {
         }
       }
       /**
-       * <code>required string info = 3;</code>
+       * <code>optional string info = 3;</code>
        */
       public Builder setInfo(
           java.lang.String value) {
@@ -1573,7 +1549,7 @@ public final class Game {
         return this;
       }
       /**
-       * <code>required string info = 3;</code>
+       * <code>optional string info = 3;</code>
        */
       public Builder clearInfo() {
         bitField0_ = (bitField0_ & ~0x00000004);
@@ -1582,7 +1558,7 @@ public final class Game {
         return this;
       }
       /**
-       * <code>required string info = 3;</code>
+       * <code>optional string info = 3;</code>
        */
       public Builder setInfoBytes(
           com.google.protobuf.ByteString value) {
@@ -1627,8 +1603,8 @@ public final class Game {
     java.lang.String[] descriptorData = {
       "\n\ngame.proto\022\004Game\"6\n\005Login\022\014\n\004name\030\001 \001(" +
       "\t\022\020\n\010password\030\002 \001(\t\022\r\n\005state\030\003 \001(\t\"2\n\004Ch" +
-      "at\022\014\n\004name\030\001 \002(\t\022\016\n\006target\030\002 \002(\t\022\014\n\004info" +
-      "\030\003 \002(\tB\"\n\032org.d3.net.packet.protobufB\004Ga" +
+      "at\022\014\n\004name\030\001 \001(\t\022\016\n\006target\030\002 \001(\t\022\014\n\004info" +
+      "\030\003 \001(\tB\"\n\032org.d3.net.packet.protobufB\004Ga" +
       "me"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =

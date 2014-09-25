@@ -3,14 +3,15 @@ package org.d3.core.service;
 import java.util.Collection;
 
 import org.d3.Room;
+import org.d3.module.chat.ChatRoom;
 
 public interface RoomService {
 	
-	public Room getRoomById(String id);
+	public ChatRoom getRoomById(int id);
 
-	public void createRoom(String id, String name);
+	public void createRoom(int id, String name);
 	
 	public void createRoom();
 	
-	public Collection<Room> getRoomList();
+	public Collection<ChatRoom> getRoomList();
 }

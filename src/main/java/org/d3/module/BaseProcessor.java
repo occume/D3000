@@ -3,7 +3,6 @@ package org.d3.module;
 import javax.annotation.PostConstruct;
 
 import org.agilewiki.jactor2.core.blades.NonBlockingBladeBase;
-import org.agilewiki.jactor2.core.reactors.NonBlockingReactor;
 import org.agilewiki.jactor2.core.requests.AOp;
 import org.agilewiki.jactor2.core.requests.AsyncResponseProcessor;
 import org.agilewiki.jactor2.core.requests.impl.AsyncRequestImpl;
@@ -26,7 +25,7 @@ public abstract class BaseProcessor  extends NonBlockingBladeBase implements Pro
 
 		try {
 			process0(session, pkt).call();
-		} catch (Exception e) {
+		} catch (Throwable e) {
 			if(LOG.isDebugEnabled())
 				e.printStackTrace();
 			LOG.error(e.getMessage());
@@ -42,11 +41,10 @@ public abstract class BaseProcessor  extends NonBlockingBladeBase implements Pro
 					AsyncResponseProcessor<Packet> _asyncResponseProcessor)
 					{
 				
-				doProcess(session, pkt);
-				
 				try {
+					doProcess(session, pkt);
 					_asyncResponseProcessor.processAsyncResponse(null);
-				} catch (Exception e) {
+				} catch (Throwable e) {
 					if(LOG.isDebugEnabled())
 						e.printStackTrace();
 				}
@@ -62,12 +60,14 @@ public abstract class BaseProcessor  extends NonBlockingBladeBase implements Pro
 	
 	public abstract int getType();
 	
+	public abstract String getDescription();
+	
 	@PostConstruct
 	public void register() {
 		Registry registry = (Registry) D3Context.getBean(getModuleName());
 		if(registry != null){
 			if(LOG.isDebugEnabled()){
-				LOG.debug("register LoginModule");
+				LOG.debug("register " +getDescription());
 			}
 			registry.register(getType(), this);
 		}

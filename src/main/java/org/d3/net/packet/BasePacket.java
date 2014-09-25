@@ -55,6 +55,12 @@ public class BasePacket implements Packet, Serializable{
 		this.timeStamp = timeStamp;
 	}
 
+	@Override
+	public String toString() {
+		return "BasePacket [module=" + module + ", cmd=" + cmd + ", tuple="
+				+ tuple + ", timeStamp=" + timeStamp + "]";
+	}
+
 	private static final long serialVersionUID = -38147247115869567L;
 	
 }

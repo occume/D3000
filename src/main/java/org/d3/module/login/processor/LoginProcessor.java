@@ -1,7 +1,6 @@
 package org.d3.module.login.processor;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.buffer.Unpooled;
 import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
 
@@ -38,16 +37,18 @@ public class LoginProcessor extends BaseProcessor {
 		User user = Protobufs.getLoginUser(data);
 
 		if(playerService.auth()){
+			
 			session.setPlayer(new Player(user.getName(), user.getPassword()));
 			
 			Login ret = Game.Login.newBuilder()
+						.setName(user.getName())
 						.setState("00")
 						.build();
 			byte module = (byte) pkt.getModule();
 			byte cmd = (byte) pkt.getCmd();
 			ByteBuf resp = Unpooled.wrappedBuffer(new byte[]{module, cmd}, ret.toByteArray());
 			session.sendMessage(new BinaryWebSocketFrame(resp));
-//			System.out.println("pass auth");
+
 		}
 		else{
 			LOG.debug(D3Log.D3_LOG_DEBUG + "User auth fail: " + user);
@@ -64,6 +65,11 @@ public class LoginProcessor extends BaseProcessor {
 	@Override
 	public int getType() {
 		return 1;
+	}
+
+	@Override
+	public String getDescription() {
+		return "LoginProcessor";
 	}
 	
 }

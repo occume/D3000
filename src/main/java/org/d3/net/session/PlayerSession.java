@@ -2,14 +2,16 @@ package org.d3.net.session;
 
 import io.netty.channel.Channel;
 
+import org.d3.module.chat.ChatRoom;
 import org.d3.module.user.bean.Player;
-import org.d3.net.packet.Packet;
 
 public class PlayerSession extends SessionSupport{
 
 	private Channel 	channel;
 	
 	private Player player;
+	
+	private ChatRoom room;
 	
 	private volatile boolean online;
 	
@@ -53,6 +55,18 @@ public class PlayerSession extends SessionSupport{
 	
 	public Player getPlayer(){
 		return this.player;
+	}
+
+	public void setRoom(ChatRoom room) {
+		this.room = room;
+	}
+
+	public ChatRoom getRoom() {
+		return room;
+	}
+
+	public Channel channel() {
+		return channel;
 	}
 
 }

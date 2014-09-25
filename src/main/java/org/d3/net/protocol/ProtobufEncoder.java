@@ -2,6 +2,8 @@ package org.d3.net.protocol;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import io.netty.buffer.ByteBuf;
@@ -14,10 +16,13 @@ import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
 @Sharable
 public class ProtobufEncoder extends MessageToMessageEncoder<ByteBuf>{
 
+	private static Logger LOG = LoggerFactory.getLogger(ProtobufEncoder.class);
 	@Override
 	protected void encode(ChannelHandlerContext ctx, ByteBuf msg,
 			List<Object> out) throws Exception {
-//System.out.println("encoder");
+		if(LOG.isDebugEnabled()){
+			LOG.debug(msg.toString());
+		}
 		out.add(new BinaryWebSocketFrame(msg));
 		
 	}

@@ -5,6 +5,8 @@ import org.d3.module.Dispatcher;
 import org.d3.net.packet.InPacket;
 import org.d3.net.session.Session;
 import org.d3.net.session.Sessions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -17,7 +19,9 @@ import io.netty.channel.SimpleChannelInboundHandler;
 public class PacketHandler extends SimpleChannelInboundHandler<InPacket> {
 	
 //	private Charactor charactor;
-	Session session;
+	
+	private static Logger LOG = LoggerFactory.getLogger(PacketHandler.class);
+	private Session session;
 	
 	@Autowired
 	private Dispatcher dispatcher;
@@ -42,6 +46,9 @@ public class PacketHandler extends SimpleChannelInboundHandler<InPacket> {
 	protected void messageReceived(ChannelHandlerContext ctx, InPacket pkt)
 			throws Exception {
 //		charactor.onMessage(msg);
+		if(LOG.isDebugEnabled()){
+			LOG.debug(pkt.toString());
+		}
 		dispatcher.dispatch(session, pkt);
 	}
 
