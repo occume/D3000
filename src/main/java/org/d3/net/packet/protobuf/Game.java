@@ -838,6 +838,21 @@ public final class Game {
      */
     com.google.protobuf.ByteString
         getInfoBytes();
+
+    // optional string state = 4;
+    /**
+     * <code>optional string state = 4;</code>
+     */
+    boolean hasState();
+    /**
+     * <code>optional string state = 4;</code>
+     */
+    java.lang.String getState();
+    /**
+     * <code>optional string state = 4;</code>
+     */
+    com.google.protobuf.ByteString
+        getStateBytes();
   }
   /**
    * Protobuf type {@code Game.Chat}
@@ -907,6 +922,11 @@ public final class Game {
             case 26: {
               bitField0_ |= 0x00000004;
               info_ = input.readBytes();
+              break;
+            }
+            case 34: {
+              bitField0_ |= 0x00000008;
+              state_ = input.readBytes();
               break;
             }
           }
@@ -1078,10 +1098,54 @@ public final class Game {
       }
     }
 
+    // optional string state = 4;
+    public static final int STATE_FIELD_NUMBER = 4;
+    private java.lang.Object state_;
+    /**
+     * <code>optional string state = 4;</code>
+     */
+    public boolean hasState() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    /**
+     * <code>optional string state = 4;</code>
+     */
+    public java.lang.String getState() {
+      java.lang.Object ref = state_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          state_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string state = 4;</code>
+     */
+    public com.google.protobuf.ByteString
+        getStateBytes() {
+      java.lang.Object ref = state_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        state_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private void initFields() {
       name_ = "";
       target_ = "";
       info_ = "";
+      state_ = "";
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -1104,6 +1168,9 @@ public final class Game {
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         output.writeBytes(3, getInfoBytes());
       }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeBytes(4, getStateBytes());
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -1124,6 +1191,10 @@ public final class Game {
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(3, getInfoBytes());
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(4, getStateBytes());
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -1251,6 +1322,8 @@ public final class Game {
         bitField0_ = (bitField0_ & ~0x00000002);
         info_ = "";
         bitField0_ = (bitField0_ & ~0x00000004);
+        state_ = "";
+        bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
 
@@ -1291,6 +1364,10 @@ public final class Game {
           to_bitField0_ |= 0x00000004;
         }
         result.info_ = info_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.state_ = state_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -1320,6 +1397,11 @@ public final class Game {
         if (other.hasInfo()) {
           bitField0_ |= 0x00000004;
           info_ = other.info_;
+          onChanged();
+        }
+        if (other.hasState()) {
+          bitField0_ |= 0x00000008;
+          state_ = other.state_;
           onChanged();
         }
         this.mergeUnknownFields(other.getUnknownFields());
@@ -1571,6 +1653,80 @@ public final class Game {
         return this;
       }
 
+      // optional string state = 4;
+      private java.lang.Object state_ = "";
+      /**
+       * <code>optional string state = 4;</code>
+       */
+      public boolean hasState() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>optional string state = 4;</code>
+       */
+      public java.lang.String getState() {
+        java.lang.Object ref = state_;
+        if (!(ref instanceof java.lang.String)) {
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          state_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string state = 4;</code>
+       */
+      public com.google.protobuf.ByteString
+          getStateBytes() {
+        java.lang.Object ref = state_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          state_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string state = 4;</code>
+       */
+      public Builder setState(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
+        state_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string state = 4;</code>
+       */
+      public Builder clearState() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        state_ = getDefaultInstance().getState();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string state = 4;</code>
+       */
+      public Builder setStateBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000008;
+        state_ = value;
+        onChanged();
+        return this;
+      }
+
       // @@protoc_insertion_point(builder_scope:Game.Chat)
     }
 
@@ -1602,10 +1758,10 @@ public final class Game {
   static {
     java.lang.String[] descriptorData = {
       "\n\ngame.proto\022\004Game\"6\n\005Login\022\014\n\004name\030\001 \001(" +
-      "\t\022\020\n\010password\030\002 \001(\t\022\r\n\005state\030\003 \001(\t\"2\n\004Ch" +
+      "\t\022\020\n\010password\030\002 \001(\t\022\r\n\005state\030\003 \001(\t\"A\n\004Ch" +
       "at\022\014\n\004name\030\001 \001(\t\022\016\n\006target\030\002 \001(\t\022\014\n\004info" +
-      "\030\003 \001(\tB\"\n\032org.d3.net.packet.protobufB\004Ga" +
-      "me"
+      "\030\003 \001(\t\022\r\n\005state\030\004 \001(\tB\"\n\032org.d3.net.pack" +
+      "et.protobufB\004Game"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -1623,7 +1779,7 @@ public final class Game {
           internal_static_Game_Chat_fieldAccessorTable = new
             com.google.protobuf.GeneratedMessage.FieldAccessorTable(
               internal_static_Game_Chat_descriptor,
-              new java.lang.String[] { "Name", "Target", "Info", });
+              new java.lang.String[] { "Name", "Target", "Info", "State", });
           return null;
         }
       };

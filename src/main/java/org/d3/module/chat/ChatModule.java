@@ -12,6 +12,8 @@ public class ChatModule extends BaseModule{
 	private static Logger LOG = LoggerFactory.getLogger(ChatModule.class);
 	
 	public static final int ROOM_LIST = 2;
+	public static final int ENTER_ROOM = 3;
+	public static final int CHAT = 4;
 
 	public String getDescription() {
 		return "Module for Chat";

@@ -1,5 +1,6 @@
 package org.d3.net.packet;
 
+import org.d3.module.chat.ChatInfo;
 import org.d3.module.user.bean.User;
 import org.d3.net.packet.protobuf.Game;
 import org.slf4j.Logger;
@@ -20,6 +21,17 @@ public class Protobufs {
 			LOG.error("parse login user error: " + e.getMessage());
 		}
 		return user;
+	}
+	
+	public static ChatInfo getChatInfo(byte[] data){
+		ChatInfo info = null;
+		try {
+			Game.Chat chat = Game.Chat.parseFrom(data);
+			info = new ChatInfo(chat.getName(), chat.getTarget(), chat.getInfo());
+		} catch (InvalidProtocolBufferException e) {
+			LOG.error("parse chat info error: " + e.getMessage());
+		}
+		return info;
 	}
 	
 }

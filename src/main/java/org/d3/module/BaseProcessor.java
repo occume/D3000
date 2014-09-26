@@ -1,10 +1,13 @@
 package org.d3.module;
 
+import java.io.IOException;
+
 import javax.annotation.PostConstruct;
 
 import org.agilewiki.jactor2.core.blades.NonBlockingBladeBase;
 import org.agilewiki.jactor2.core.requests.AOp;
 import org.agilewiki.jactor2.core.requests.AsyncResponseProcessor;
+import org.agilewiki.jactor2.core.requests.ExceptionHandler;
 import org.agilewiki.jactor2.core.requests.impl.AsyncRequestImpl;
 import org.d3.D3Context;
 import org.d3.net.packet.InPacket;
@@ -22,7 +25,7 @@ public abstract class BaseProcessor  extends NonBlockingBladeBase implements Pro
 	private static Logger LOG = LoggerFactory.getLogger(BaseProcessor.class);
 
 	public void process(Session session, InPacket pkt) {
-
+		
 		try {
 			process0(session, pkt).call();
 		} catch (Throwable e) {
@@ -36,18 +39,30 @@ public abstract class BaseProcessor  extends NonBlockingBladeBase implements Pro
 	public AOp<Packet> process0(final Session session, final InPacket pkt){
 		return new AOp<Packet>("transfer-onMessage", getReactor()) {
 
+			@SuppressWarnings({ "rawtypes", "unchecked" })
 			public void processAsyncOperation(
 					AsyncRequestImpl _asyncRequestImpl,
 					AsyncResponseProcessor<Packet> _asyncResponseProcessor)
 					{
+
+				_asyncRequestImpl.setExceptionHandler(new ExceptionHandler<String>() {
+					@Override
+						public String processException(final Exception _exception) {
+							System.out.println("--------------");
+							return null;
+						}
+					}
+				);
 				
 				try {
+//					validate(session, pkt);
 					doProcess(session, pkt);
 					_asyncResponseProcessor.processAsyncResponse(null);
 				} catch (Throwable e) {
 					if(LOG.isDebugEnabled())
 						e.printStackTrace();
 				}
+				
 			}
 		};
 	}
@@ -61,6 +76,8 @@ public abstract class BaseProcessor  extends NonBlockingBladeBase implements Pro
 	public abstract int getType();
 	
 	public abstract String getDescription();
+	
+//	public abstract void validate(Session session, InPacket pkt);
 	
 	@PostConstruct
 	public void register() {

@@ -3,7 +3,6 @@ package org.d3.module.chat;
 import org.d3.net.session.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
@@ -14,7 +13,7 @@ public class ChatRoom{
 	private String name;
 	private int number;
 	
-	public final ChannelGroup channels;
+	public final transient ChannelGroup channels;
 	
 	private static Logger LOG = LoggerFactory.getLogger(ChatRoom.class);
 	
@@ -55,6 +54,7 @@ public class ChatRoom{
 
 	public synchronized void enterRoom(Session session){
 		
+		session.setRoom(this);
 		channels.add(session.channel());
 		number = channels.size();
 		
