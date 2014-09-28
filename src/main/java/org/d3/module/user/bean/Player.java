@@ -1,6 +1,6 @@
 package org.d3.module.user.bean;
 
-public class Player {
+public class Player implements Comparable{
 	
 	private long 	id;
 	private String 	name;
@@ -57,6 +57,11 @@ public class Player {
 	public String toString() {
 		return "Player [id=" + id + ", name=" + name + ", title=" + title
 				+ ", icon=" + icon + ", sex=" + sex + "]";
+	}
+
+	public int compareTo(Object o) {
+		Player user = (Player) o;
+		return this.name.compareTo(user.getName());
 	}
 	
 }

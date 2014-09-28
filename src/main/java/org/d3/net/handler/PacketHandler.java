@@ -46,6 +46,7 @@ public class PacketHandler extends SimpleChannelInboundHandler<InPacket> {
 	protected void messageReceived(ChannelHandlerContext ctx, InPacket pkt)
 			throws Exception {
 //		charactor.onMessage(msg);
+		System.out.println(Thread.currentThread().getName());
 		if(LOG.isDebugEnabled()){
 			LOG.debug(pkt.toString());
 		}
@@ -61,7 +62,8 @@ public class PacketHandler extends SimpleChannelInboundHandler<InPacket> {
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
 		super.channelInactive(ctx);
-		
+		System.out.println("inactive");
+		session.close();
 //		PlayerSession playerSession = (PlayerSession) session;
 //		if(charactor.getRoom() != null){
 //			charactor.getRoom().leaveRoom(charactor);

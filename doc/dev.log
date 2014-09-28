@@ -1,0 +1,2 @@
+1. deode和encode的时候，注意bytebuf释放时可能会引起bytebuf引用状态计数器非法状态的问题
+	在继承的一些handler中，其本身会释放传递进来的bytebuf，如果要在2个或多个handler中处理，记得调用bytebuf的retain方法

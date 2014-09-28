@@ -1,5 +1,7 @@
 package org.d3;
 
+import io.netty.channel.EventLoopGroup;
+
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -48,5 +50,8 @@ public class D3Context implements Context, LifeCycle, ApplicationContextAware{
 		// TODO Auto-generated method stub
 		
 	}
-	
+//	
+//	public EventLoopGroup getEventLoopGroup(){
+//		
+//	}
 }

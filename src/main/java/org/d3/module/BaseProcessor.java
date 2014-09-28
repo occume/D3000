@@ -16,56 +16,54 @@ import org.d3.net.session.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class BaseProcessor  extends NonBlockingBladeBase implements Processor {
-
-	public BaseProcessor() throws Exception {
-		super();
-	}
+public abstract class BaseProcessor implements Processor {
+//	public abstract class BaseProcessor  extends NonBlockingBladeBase implements Processor {
 
 	private static Logger LOG = LoggerFactory.getLogger(BaseProcessor.class);
 
 	public void process(Session session, InPacket pkt) {
 		
-		try {
-			process0(session, pkt).call();
-		} catch (Throwable e) {
-			if(LOG.isDebugEnabled())
-				e.printStackTrace();
-			LOG.error(e.getMessage());
-		}
+//		try {
+//			process0(session, pkt).call();
+//		} catch (Throwable e) {
+//			if(LOG.isDebugEnabled())
+//				e.printStackTrace();
+//			LOG.error(e.getMessage());
+//		}
+		doProcess(session, pkt);
 		
 	}
 	
-	public AOp<Packet> process0(final Session session, final InPacket pkt){
-		return new AOp<Packet>("transfer-onMessage", getReactor()) {
-
-			@SuppressWarnings({ "rawtypes", "unchecked" })
-			public void processAsyncOperation(
-					AsyncRequestImpl _asyncRequestImpl,
-					AsyncResponseProcessor<Packet> _asyncResponseProcessor)
-					{
-
-				_asyncRequestImpl.setExceptionHandler(new ExceptionHandler<String>() {
-					@Override
-						public String processException(final Exception _exception) {
-							System.out.println("--------------");
-							return null;
-						}
-					}
-				);
-				
-				try {
-//					validate(session, pkt);
-					doProcess(session, pkt);
-					_asyncResponseProcessor.processAsyncResponse(null);
-				} catch (Throwable e) {
-					if(LOG.isDebugEnabled())
-						e.printStackTrace();
-				}
-				
-			}
-		};
-	}
+//	public AOp<Packet> process0(final Session session, final InPacket pkt){
+//		return new AOp<Packet>("transfer-onMessage", getReactor()) {
+//
+//			@SuppressWarnings({ "rawtypes", "unchecked" })
+//			public void processAsyncOperation(
+//					AsyncRequestImpl _asyncRequestImpl,
+//					AsyncResponseProcessor<Packet> _asyncResponseProcessor)
+//					{
+//
+//				_asyncRequestImpl.setExceptionHandler(new ExceptionHandler<String>() {
+//					@Override
+//						public String processException(final Exception _exception) {
+//							System.out.println("--------------");
+//							return null;
+//						}
+//					}
+//				);
+//				
+//				try {
+////					validate(session, pkt);
+//					doProcess(session, pkt);
+//					_asyncResponseProcessor.processAsyncResponse(null);
+//				} catch (Throwable e) {
+//					if(LOG.isDebugEnabled())
+//						e.printStackTrace();
+//				}
+//				
+//			}
+//		};
+//	}
 	
 	
 	

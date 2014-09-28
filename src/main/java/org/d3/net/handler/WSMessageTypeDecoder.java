@@ -6,10 +6,12 @@ import org.d3.net.protocol.ProtobufDecoder;
 import org.d3.net.protocol.ProtobufEncoder;
 import org.d3.net.protocol.TextWebsocketDecoder;
 import org.d3.net.protocol.TextWebsocketEncoder;
+import org.d3.thread.NamedThreadFactory;
 import org.springframework.stereotype.Component;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
+import io.netty.channel.DefaultEventLoopGroup;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
@@ -43,8 +45,10 @@ public class WSMessageTypeDecoder extends SimpleChannelInboundHandler<WebSocketF
 		}
 		PacketHandler packetHandler = (PacketHandler) D3Context.getBean("packetHandler");
 		
-		pipeline.addLast("packetHandler", packetHandler);
+		pipeline.addLast(new DefaultEventLoopGroup(100, new NamedThreadFactory("D3-Packet_Handler")), "packetHandler", packetHandler);
 		pipeline.remove(this);
+		msg.retain();
+		ctx.fireChannelRead(msg);
 	}
 	
 	private void applyProtocol(ChannelHandlerContext ctx, Charactor c){

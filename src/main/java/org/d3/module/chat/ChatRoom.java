@@ -1,5 +1,7 @@
 package org.d3.module.chat;
 
+import java.util.concurrent.ConcurrentSkipListSet;
+import org.d3.module.user.bean.Player;
 import org.d3.net.session.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +15,8 @@ public class ChatRoom{
 	private String name;
 	private int number;
 	
-	public final transient ChannelGroup channels;
+	private final transient ChannelGroup channels;
+	private ConcurrentSkipListSet<Player> players = new ConcurrentSkipListSet<Player>();
 	
 	private static Logger LOG = LoggerFactory.getLogger(ChatRoom.class);
 	
@@ -52,11 +55,20 @@ public class ChatRoom{
 		this.number = number;
 	}
 
+	public ConcurrentSkipListSet<Player> getPlayers() {
+		return players;
+	}
+
+	public void setPlayers(ConcurrentSkipListSet<Player> players) {
+		this.players = players;
+	}
+
 	public synchronized void enterRoom(Session session){
 		
 		session.setRoom(this);
 		channels.add(session.channel());
 		number = channels.size();
+		players.add(session.getPlayer());
 		
 		if(LOG.isDebugEnabled()){
 			LOG.debug(session.getPlayer().getName() + " enter room " + name + ";number = " + number);
@@ -67,6 +79,7 @@ public class ChatRoom{
 		
 		channels.remove(session.channel());
 		number = channels.size();
+		players.remove(session.getPlayer());
 		
 		if(LOG.isDebugEnabled()){
 			LOG.debug(session.getPlayer().getName() + " leave room " + name + ";number = " + number);

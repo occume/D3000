@@ -47,6 +47,7 @@ public class PlayerSession extends SessionSupport{
 	
 	public void close(){
 		channel.close();
+		getRoom().leaveRoom(this);
 	}
 
 	public void setPlayer(Player player) {
