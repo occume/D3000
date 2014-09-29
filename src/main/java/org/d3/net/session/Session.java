@@ -33,5 +33,9 @@ public interface Session {
 	
 	public Channel channel();
 	
+	public void setChannel(Channel channel);
+	
+	public boolean isActive();
+	
 	public void close();
 }

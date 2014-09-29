@@ -1,5 +1,8 @@
 package org.d3.net.packet;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+
 
 public class Packets {
 	
@@ -80,6 +83,13 @@ public class Packets {
 	 * A network exception will in turn cause this even to be raised.
 	 */
 	public static final byte EXCEPTION = 0x24;
+	
+	public static ByteBuf makeReplyPacket(int module, int cmd, byte[] data){
+		byte m = (byte) module;
+		byte c = (byte) cmd;
+		ByteBuf resp = Unpooled.wrappedBuffer(new byte[]{m, c}, data);
+		return resp;
+	}
 	
 //	public static Packet newPacket(byte act, byte act_min){
 //		return new BasePacket(1, act, act_min, "", "", null);

@@ -2,8 +2,12 @@ package org.d3.net.handler;
 
 import org.d3.core.transfer.Charactor;
 import org.d3.module.Dispatcher;
+import org.d3.module.Module;
+import org.d3.module.user.bean.User;
 import org.d3.net.packet.InPacket;
+import org.d3.net.packet.Protobufs;
 import org.d3.net.session.Session;
+import org.d3.net.session.SessionManager;
 import org.d3.net.session.Sessions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,18 +43,37 @@ public class PacketHandler extends SimpleChannelInboundHandler<InPacket> {
 
 	@Override
 	public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
-		session = Sessions.newSession(ctx.channel());
+//		session = Sessions.newSession(ctx.channel());
 	}
 
 	@Override
-	protected void messageReceived(ChannelHandlerContext ctx, InPacket pkt)
+	protected void messageReceived(ChannelHandlerContext ctx, InPacket ask)
 			throws Exception {
 //		charactor.onMessage(msg);
-		System.out.println(Thread.currentThread().getName());
-		if(LOG.isDebugEnabled()){
-			LOG.debug(pkt.toString());
+		if(ask.getModule() == Module.LOGIN){
+			byte[] data = (byte[]) ask.getTuple();
+			User user = Protobufs.getLoginUser(data);
+			Session session = SessionManager.instance().getByName(user.getName());
+			if(session != null){
+				if(session.isActive()){
+					LOG.error("repeat login! " + user.getName() + " is online now!");
+					ctx.close();
+					return;
+				}
+				else{
+					session.setChannel(ctx.channel());
+				}
+			}
+			else{
+				session = Sessions.newSession(ctx.channel());
+			}
+			this.session = session;
+			ask.setTuple(user);
 		}
-		dispatcher.dispatch(session, pkt);
+		if(LOG.isDebugEnabled()){
+			LOG.debug(ask.toString());
+		}
+		dispatcher.dispatch(session, ask);
 	}
 
 	@Override
@@ -63,7 +86,8 @@ public class PacketHandler extends SimpleChannelInboundHandler<InPacket> {
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
 		super.channelInactive(ctx);
 		System.out.println("inactive");
-		session.close();
+		if(session != null)
+			session.close();
 //		PlayerSession playerSession = (PlayerSession) session;
 //		if(charactor.getRoom() != null){
 //			charactor.getRoom().leaveRoom(charactor);

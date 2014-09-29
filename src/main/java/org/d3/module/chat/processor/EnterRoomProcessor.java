@@ -13,6 +13,7 @@ import org.d3.module.chat.ChatModule;
 import org.d3.module.chat.ChatRoom;
 import org.d3.module.user.bean.User;
 import org.d3.net.packet.InPacket;
+import org.d3.net.packet.Packets;
 import org.d3.net.packet.Protobufs;
 import org.d3.net.packet.protobuf.Game;
 import org.d3.net.packet.protobuf.Game.Chat;
@@ -41,9 +42,9 @@ public class EnterRoomProcessor  extends BaseProcessor{
 	}
 
 	@Override
-	public void doProcess(Session session, InPacket pkt) {
+	public void doProcess(Session session, InPacket ask) {
 		
-		byte[] data = (byte[]) pkt.getTuple();
+		byte[] data = (byte[]) ask.getTuple();
 		ChatInfo info = Protobufs.getChatInfo(data);
 		
 		int roomId;
@@ -55,19 +56,17 @@ public class EnterRoomProcessor  extends BaseProcessor{
 			return;
 		}
 		ChatRoom room = roomService.getRoomById(roomId);
-		
 		room.enterRoom(session);
 		
-		Chat ret = Game.Chat.newBuilder()
-				.setName(session.getPlayer().getName())
-				.setState("00")
-				.setInfo(ObjectConvert.Me().ojb2json(room))
-				.build();
-		byte module = (byte) pkt.getModule();
-		byte cmd = (byte) pkt.getCmd();
-		ByteBuf resp = Unpooled.wrappedBuffer(new byte[]{module, cmd}, ret.toByteArray());
+		Chat ret = Protobufs.makeChatPacket(session.getPlayer().getName(),
+											"", 
+											ObjectConvert.Me().ojb2json(room), 
+											"00");
+
+		ByteBuf resp = Packets.makeReplyPacket(ask.getModule(), ask.getCmd(), ret.toByteArray());
 //		session.sendMessage(new BinaryWebSocketFrame(resp));
-		room.boradcast(new BinaryWebSocketFrame(resp));
+		room.broadcast(resp);
+		
 	}
 
 	@Override

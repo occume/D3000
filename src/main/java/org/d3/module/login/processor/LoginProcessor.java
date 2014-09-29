@@ -9,6 +9,7 @@ import org.d3.module.BaseProcessor;
 import org.d3.module.user.bean.Player;
 import org.d3.module.user.bean.User;
 import org.d3.net.packet.InPacket;
+import org.d3.net.packet.Packets;
 import org.d3.net.packet.Protobufs;
 import org.d3.net.packet.protobuf.Game;
 import org.d3.net.packet.protobuf.Game.Login;
@@ -31,10 +32,9 @@ public class LoginProcessor extends BaseProcessor {
 	private PlayerService playerService;
 
 	@Override
-	public void doProcess(Session session, InPacket pkt) {
+	public void doProcess(Session session, InPacket ask) {
 		
-		byte[] data = (byte[]) pkt.getTuple();
-		User user = Protobufs.getLoginUser(data);
+		User user = (User) ask.getTuple();
 
 		if(playerService.auth()){
 			
@@ -44,9 +44,7 @@ public class LoginProcessor extends BaseProcessor {
 						.setName(user.getName())
 						.setState("00")
 						.build();
-			byte module = (byte) pkt.getModule();
-			byte cmd = (byte) pkt.getCmd();
-			ByteBuf resp = Unpooled.wrappedBuffer(new byte[]{module, cmd}, ret.toByteArray());
+			ByteBuf resp = Packets.makeReplyPacket(ask.getModule(), ask.getCmd(), ret.toByteArray());
 			session.sendMessage(new BinaryWebSocketFrame(resp));
 
 		}

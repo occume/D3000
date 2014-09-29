@@ -45,6 +45,10 @@ public class PlayerSession extends SessionSupport{
 		return channel;
 	}
 	
+	public void setChannel(Channel channel){
+		this.channel = channel;
+	}
+	
 	public void close(){
 		channel.close();
 		getRoom().leaveRoom(this);
@@ -68,6 +72,10 @@ public class PlayerSession extends SessionSupport{
 
 	public Channel channel() {
 		return channel;
+	}
+
+	public boolean isActive() {
+		return channel.isActive();
 	}
 
 }

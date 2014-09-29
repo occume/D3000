@@ -23,7 +23,7 @@ public class Sessions {
 		}
 		
 		SessionManager sessionManager = (SessionManager) D3Context.getBean("sessionManager");
-		sessionManager.putSession(session);
+		sessionManager.put(session);
 		return session;
 	}
 	

@@ -1,12 +1,21 @@
 package org.d3.module.chat;
 
 import java.util.concurrent.ConcurrentSkipListSet;
+
+import org.d3.module.Module;
 import org.d3.module.user.bean.Player;
+import org.d3.net.packet.Packets;
+import org.d3.net.packet.Protobufs;
+import org.d3.net.packet.protobuf.Game.Chat;
 import org.d3.net.session.Session;
+import org.d3.util.ObjectConvert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
+import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
 import io.netty.util.concurrent.GlobalEventExecutor;
 
 public class ChatRoom{
@@ -27,8 +36,14 @@ public class ChatRoom{
 		channels = new DefaultChannelGroup(name, GlobalEventExecutor.INSTANCE);
 	}
 	
-	public void boradcast(Object msg){
-		channels.writeAndFlush(msg);
+	public void broadcast(ByteBuf msg){
+		if(!channels.isEmpty()){
+			channels.writeAndFlush(wrap(msg));
+		}
+	}
+	
+	private BinaryWebSocketFrame wrap(ByteBuf msg){
+		return new BinaryWebSocketFrame(msg);
 	}
 
 	public int getId() {
@@ -80,6 +95,15 @@ public class ChatRoom{
 		channels.remove(session.channel());
 		number = channels.size();
 		players.remove(session.getPlayer());
+		
+		Chat ret = Protobufs.makeChatPacket(
+				session.getPlayer().getName(),
+				"", 
+				ObjectConvert.Me().ojb2json(this), 
+				"00");
+
+		ByteBuf resp = Packets.makeReplyPacket(Module.CHAT, ChatModule.LEAVE_ROOM, ret.toByteArray());
+		broadcast(resp);
 		
 		if(LOG.isDebugEnabled()){
 			LOG.debug(session.getPlayer().getName() + " leave room " + name + ";number = " + number);

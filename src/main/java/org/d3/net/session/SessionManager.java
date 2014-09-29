@@ -17,7 +17,7 @@ public class SessionManager {
 	
 	private static SessionManager manager;
 	
-	public static SessionManager getInstance(){
+	public static SessionManager instance(){
 		if(manager == null){
 			manager = (SessionManager) D3Context.getBean("sessionManager");
 		}
@@ -28,11 +28,22 @@ public class SessionManager {
 		return sessions.size();
 	}
 	
-	public Session getSession(String id){
+	public Session getById(String id){
 		return sessions.get(id);
 	}
 	
-	public void putSession(Session session){
+	public Session getByName(String name){
+		Session ret = null;
+		for(Session s: sessions.values()){
+			if(s.getPlayer().getName().equals(name)){
+				ret = s;
+				break;
+			}
+		}
+		return ret;
+	};
+	
+	public void put(Session session){
 		sessions.put(session.getId(), session);
 	}
 	

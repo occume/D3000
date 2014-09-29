@@ -13,6 +13,7 @@ import org.d3.module.chat.ChatModule;
 import org.d3.module.chat.ChatRoom;
 import org.d3.module.user.bean.User;
 import org.d3.net.packet.InPacket;
+import org.d3.net.packet.Packets;
 import org.d3.net.packet.Protobufs;
 import org.d3.net.packet.protobuf.Game;
 import org.d3.net.packet.protobuf.Game.Chat;
@@ -41,23 +42,21 @@ public class ChatProcessor  extends BaseProcessor{
 	}
 
 	@Override
-	public void doProcess(Session session, InPacket pkt) {
+	public void doProcess(Session session, InPacket ask) {
 		
-		byte[] data = (byte[]) pkt.getTuple();
+		byte[] data = (byte[]) ask.getTuple();
 		ChatInfo info = Protobufs.getChatInfo(data);
 
 		ChatRoom room = session.getRoom();
 		
-		Chat ret = Game.Chat.newBuilder()
-				.setName(session.getPlayer().getName())
-				.setState("00")
-				.setInfo(info.getMessage())
-				.build();
-		byte module = (byte) pkt.getModule();
-		byte cmd = (byte) pkt.getCmd();
-		ByteBuf resp = Unpooled.wrappedBuffer(new byte[]{module, cmd}, ret.toByteArray());
+		Chat ret = Protobufs.makeChatPacket(
+				session.getPlayer().getName(),
+				"", 
+				info.getMessage(), 
+				"00");
 
-		room.boradcast(new BinaryWebSocketFrame(resp));
+		ByteBuf resp = Packets.makeReplyPacket(ask.getModule(), ask.getCmd(), ret.toByteArray());
+		room.broadcast(resp);
 	}
 
 	@Override

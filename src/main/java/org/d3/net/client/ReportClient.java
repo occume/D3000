@@ -69,14 +69,14 @@ public class ReportClient implements Client{
 	private int tryCount = 0;
 	
 	/** 启动定时任务 */
-	 @Scheduled(cron = "0/5 * * * * *")
+//	 @Scheduled(cron = "0/5 * * * * *")
 	protected void startScheduleTask() {
 //		System.out.println("report heart " + channel);
 		if(channel == null || !channel.isActive())
 			return;
 		
 		Map<String, Integer> state = Maps.newHashMap();
-		int channelCount = SessionManager.getInstance().getChanneCount();
+		int channelCount = SessionManager.instance().getChanneCount();
 		state.put("channelCount", channelCount);
 		String myState = ObjectConvert.Me().ojb2json(state);
 		channel.writeAndFlush(myState);
