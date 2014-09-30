@@ -23,6 +23,14 @@ public class ProtobufEncoder extends MessageToMessageEncoder<ByteBuf>{
 		if(LOG.isDebugEnabled()){
 			LOG.debug(msg.toString());
 		}
+		/**
+		 * 如果不能写到客户端,有可能是在某个handler中出现了异常
+		 * 例如:
+		 * 	msg的引用计数 状态异常
+		 */
+		
+//		if(msg.refCnt() <= 1)
+			msg.retain();
 		out.add(new BinaryWebSocketFrame(msg));
 		
 	}

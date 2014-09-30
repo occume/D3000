@@ -43,9 +43,10 @@ public class LoginProcessor extends BaseProcessor {
 			Login ret = Game.Login.newBuilder()
 						.setName(user.getName())
 						.setState("00")
+						
 						.build();
 			ByteBuf resp = Packets.makeReplyPacket(ask.getModule(), ask.getCmd(), ret.toByteArray());
-			session.sendMessage(new BinaryWebSocketFrame(resp));
+			session.sendMessage(resp);
 
 		}
 		else{

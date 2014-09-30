@@ -49,7 +49,7 @@ public class EnterRoomProcessor  extends BaseProcessor{
 		
 		int roomId;
 		try{
-			roomId = Integer.valueOf(info.getMessage());
+			roomId = Integer.valueOf(info.getInfo());
 		}
 		catch(Exception e){
 			LOG.error(e.getMessage());
@@ -58,10 +58,12 @@ public class EnterRoomProcessor  extends BaseProcessor{
 		ChatRoom room = roomService.getRoomById(roomId);
 		room.enterRoom(session);
 		
-		Chat ret = Protobufs.makeChatPacket(session.getPlayer().getName(),
-											"", 
-											ObjectConvert.Me().ojb2json(room), 
-											"00");
+		Chat ret = Protobufs.makeOkChatPacket(
+					"ROOM",
+					session.getPlayer().getName(),
+					"", 
+					ObjectConvert.Me().ojb2json(room)
+				);
 
 		ByteBuf resp = Packets.makeReplyPacket(ask.getModule(), ask.getCmd(), ret.toByteArray());
 //		session.sendMessage(new BinaryWebSocketFrame(resp));

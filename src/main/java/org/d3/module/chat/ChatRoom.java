@@ -38,7 +38,7 @@ public class ChatRoom{
 	
 	public void broadcast(ByteBuf msg){
 		if(!channels.isEmpty()){
-			channels.writeAndFlush(wrap(msg));
+			channels.writeAndFlush(msg);
 		}
 	}
 	
@@ -96,11 +96,11 @@ public class ChatRoom{
 		number = channels.size();
 		players.remove(session.getPlayer());
 		
-		Chat ret = Protobufs.makeChatPacket(
+		Chat ret = Protobufs.makeOkChatPacket(
+				"ROOM",
 				session.getPlayer().getName(),
 				"", 
-				ObjectConvert.Me().ojb2json(this), 
-				"00");
+				ObjectConvert.Me().ojb2json(this));
 
 		ByteBuf resp = Packets.makeReplyPacket(Module.CHAT, ChatModule.LEAVE_ROOM, ret.toByteArray());
 		broadcast(resp);

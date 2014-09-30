@@ -2,17 +2,18 @@ package org.d3.module.chat;
 
 public class ChatInfo {
 	
+	private String type;
 	private String name;
 	private String target;
-	private String message;
+	private String info;
 	
 	public ChatInfo(){}
 	
-	public ChatInfo(String name, String target, String message) {
-		super();
+	public ChatInfo(String type, String name, String target, String message) {
+		this.type = type;
 		this.name = name;
 		this.target = target;
-		this.message = message;
+		this.info = message;
 	}
 	
 	public String getName() {
@@ -27,11 +28,21 @@ public class ChatInfo {
 	public void setTarget(String target) {
 		this.target = target;
 	}
-	public String getMessage() {
-		return message;
+
+	public String getInfo() {
+		return info;
 	}
-	public void setMessage(String message) {
-		this.message = message;
+
+	public void setInfo(String info) {
+		this.info = info;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 }

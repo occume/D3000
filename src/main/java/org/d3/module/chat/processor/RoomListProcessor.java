@@ -41,7 +41,7 @@ public class RoomListProcessor  extends BaseProcessor{
 		byte module = (byte) pkt.getModule();
 		byte cmd = (byte) pkt.getCmd();
 		ByteBuf resp = Unpooled.wrappedBuffer(new byte[]{module, cmd}, ret.toByteArray());
-		session.sendMessage(new BinaryWebSocketFrame(resp));
+		session.sendMessage(resp);
 	}
 
 	@Override

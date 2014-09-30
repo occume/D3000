@@ -1,6 +1,12 @@
 package org.d3.net.session;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelPromise;
+import io.netty.channel.DefaultChannelPromise;
+import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
 
 import org.d3.module.chat.ChatRoom;
 import org.d3.module.user.bean.Player;
@@ -24,9 +30,18 @@ public class PlayerSession extends SessionSupport{
 		System.out.println("session.onMessage()");
 	}
 	
-	public void sendMessage(Object pkt) {
-		if(channel.isActive())
+	public void sendMessage(ByteBuf pkt) {
+		if(channel.isActive()){
+//			ChannelPromise promise = new DefaultChannelPromise(channel);
+//			promise.addListener(new ChannelFutureListener() {
+//				
+//				public void operationComplete(ChannelFuture future) throws Exception {
+//					future.cause().printStackTrace();
+//				}
+//				
+//			});
 			channel.writeAndFlush(pkt);
+		}
 	}
 	
 	public boolean isOnline(){
@@ -51,7 +66,8 @@ public class PlayerSession extends SessionSupport{
 	
 	public void close(){
 		channel.close();
-		getRoom().leaveRoom(this);
+		if(getRoom() != null)
+			getRoom().leaveRoom(this);
 	}
 
 	public void setPlayer(Player player) {

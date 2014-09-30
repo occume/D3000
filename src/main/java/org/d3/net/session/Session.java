@@ -1,5 +1,6 @@
 package org.d3.net.session;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 
 import org.d3.module.chat.ChatRoom;
@@ -17,7 +18,7 @@ public interface Session {
 	
 	public void onMessage(Object pkt);
 	
-	public void sendMessage(Object pkt);
+	public void sendMessage(ByteBuf pkt);
 	
 	public void setLastAccessTime(long time);
 	

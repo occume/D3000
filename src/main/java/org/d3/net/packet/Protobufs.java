@@ -29,20 +29,28 @@ public class Protobufs {
 		ChatInfo info = null;
 		try {
 			Game.Chat chat = Game.Chat.parseFrom(data);
-			info = new ChatInfo(chat.getName(), chat.getTarget(), chat.getInfo());
+			info = new ChatInfo(chat.getType(), chat.getName(), chat.getTarget(), chat.getInfo());
 		} catch (InvalidProtocolBufferException e) {
 			LOG.error("parse chat info error: " + e.getMessage());
 		}
 		return info;
 	}
 	
-	public static Game.Chat makeChatPacket(String name, String target, String info, String state){
+	public static Game.Chat makeChatPacket(String type, String name, 
+			String target, String info, String state, String stateDesc){
 		Chat ret = Game.Chat.newBuilder()
+				.setType(type)
 				.setName(name)
 				.setState(state)
 				.setInfo(info)
 				.setTarget(target)
+				.setStateDesc(stateDesc)
 				.build();
 		return ret;
+	}
+	
+	public static Game.Chat makeOkChatPacket(String type, String name, 
+						String target, String info){
+		return makeChatPacket(type, name, target, info, "00", "");
 	}
 }
