@@ -31,15 +31,15 @@ public interface Module {
 		}
 		
 		public void dispatch(Charactor charactor, Packet pkt) {
-			int act = pkt.getAct_min();
-			
-			Processer processer = processers.get(act);
-			if(processer != null){
-				processer.process(charactor, pkt);
-			}
-			else{
-				
-			}
+//			int act = pkt.getAct_min();
+//			
+//			Processer processer = processers.get(act);
+//			if(processer != null){
+//				processer.process(charactor, pkt);
+//			}
+//			else{
+//				
+//			}
 		}
 	}
 	
@@ -53,9 +53,9 @@ public interface Module {
 			
 			processers.put((int)Packets.ROOM_LIST, new Processer() {
 				public void process(Charactor ps, Packet pkt) {
-					Collection<Room> rooms = roomService.getRoomList();
-					Packet pkt1 = Packets.newPacket(Packets.ROOM, Packets.ROOM_LIST, rooms);
-					ps.sendMessage(pkt1);
+//					Collection<Room> rooms = roomService.getRoomList();
+//					Packet pkt1 = Packets.newPacket(Packets.ROOM, Packets.ROOM_LIST, rooms);
+//					ps.sendMessage(pkt1);
 				}
 			});
 			
@@ -63,19 +63,19 @@ public interface Module {
 				public void process(Charactor charactor, Packet pkt) {
 					Map<String, String> rstMap = (Map<String, String>) pkt.getTuple();
 					String id = rstMap.get("id");
-					Room room = roomService.getRoomById(id);
+//					Room room = roomService.getRoomById(id);
 					
-					Packet ret = null;
-					if(room.joinRoom(charactor)){
-						charactor.setRoom(room);
-						ret = Packets.newPacket(Packets.ROOM, Packets.ROOM_JOIN_SUCCESS, room.getPlayers());
-						room.broadcast(ret);
-//						room.broadcast(Packets.newPacket(Packets.MAP_DATA, MapUtil.getDefaultMap()));
-					}
-					else{
-						ret = Packets.newPacket(Packets.ROOM, Packets.ROOM_JOIN_FAILURE);
-						charactor.sendMessage(ret);
-					}
+//					Packet ret = null;
+//					if(room.joinRoom(charactor)){
+//						charactor.setRoom(room);
+//						ret = Packets.newPacket(Packets.ROOM, Packets.ROOM_JOIN_SUCCESS, room.getPlayers());
+//						room.broadcast(ret);
+////						room.broadcast(Packets.newPacket(Packets.MAP_DATA, MapUtil.getDefaultMap()));
+//					}
+//					else{
+//						ret = Packets.newPacket(Packets.ROOM, Packets.ROOM_JOIN_FAILURE);
+//						charactor.sendMessage(ret);
+//					}
 				}
 			});
 			
@@ -86,8 +86,8 @@ public interface Module {
 						return;
 					charactor.getPlayer().setReady(true);
 					
-					Packet resp = Packets.newPacket(Packets.ROOM, Packets.ROOM_PREPARE, pkt.getTuple());
-					charactor.getRoom().broadcast(resp);
+//					Packet resp = Packets.newPacket(Packets.ROOM, Packets.ROOM_PREPARE, pkt.getTuple());
+//					charactor.getRoom().broadcast(resp);
 					charactor.getRoom().playerPrepare();
 					
 				}
@@ -107,8 +107,8 @@ public interface Module {
 			
 			processers.put((int)Packets.CHAT_TO_ALL, new Processer() {
 				public void process(Charactor charactor, Packet pkt) {
-					Packet resp = Packets.newPacket(Packets.CHAT, Packets.CHAT_TO_ALL, charactor.getId(), pkt.getTuple());
-					charactor.getRoom().broadcast(resp);
+//					Packet resp = Packets.newPacket(Packets.CHAT, Packets.CHAT_TO_ALL, charactor.getId(), pkt.getTuple());
+//					charactor.getRoom().broadcast(resp);
 				}
 			});
 			
@@ -129,10 +129,10 @@ public interface Module {
 			processers.put((int)Packets.INFO_MOVE_TURRET, new Processer() {
 				public void process(Charactor ps, Packet pkt) {
 					
-					Packet resp = Packets.newPacket(Packets.INFO,
-							Packets.INFO_MOVE_TURRET, "", pkt.getTuple());
-					
-					ps.getRoom().broadcast(resp);
+//					Packet resp = Packets.newPacket(Packets.INFO,
+//							Packets.INFO_MOVE_TURRET, "", pkt.getTuple());
+//					
+//					ps.getRoom().broadcast(resp);
 					
 				}
 			});
@@ -140,10 +140,10 @@ public interface Module {
 			processers.put((int)Packets.INFO_BUILD_TURRET, new Processer() {
 				public void process(Charactor charactor, Packet pkt) {
 					
-					Packet resp = Packets.newPacket(Packets.INFO, 
-							Packets.INFO_BUILD_TURRET, charactor.getId(), pkt.getTuple());
-					
-					charactor.getRoom().broadcast(resp);
+//					Packet resp = Packets.newPacket(Packets.INFO, 
+//							Packets.INFO_BUILD_TURRET, charactor.getId(), pkt.getTuple());
+//					
+//					charactor.getRoom().broadcast(resp);
 					
 				}
 			});
@@ -173,14 +173,14 @@ public interface Module {
 						int afterHurt = m.getCurrLife() - hurt;
 						m.setCurrLife(afterHurt);
 						
-						if(afterHurt <= 0){
-							resp = Packets.newPacket(Packets.MONSTER, 
-									Packets.MONSTER_OVER, playerId, pkt.getTuple());
-						}
-						else{
-							resp = Packets.newPacket(Packets.MONSTER, 
-									Packets.MONSTER_DECREMENT_LIFE, playerId, pkt.getTuple());
-						}
+//						if(afterHurt <= 0){
+//							resp = Packets.newPacket(Packets.MONSTER, 
+//									Packets.MONSTER_OVER, playerId, pkt.getTuple());
+//						}
+//						else{
+//							resp = Packets.newPacket(Packets.MONSTER, 
+//									Packets.MONSTER_DECREMENT_LIFE, playerId, pkt.getTuple());
+//						}
 					}
 					
 					room.broadcast(resp);
@@ -210,9 +210,9 @@ public interface Module {
 					tuple.add(monsterId);
 					tuple.add("OUT_OF_MAP");
 					
-					Packet resp = Packets.newPacket(Packets.MONSTER, 
-							Packets.MONSTER_OVER, charactor.getId(), tuple);
-					charactor.getRoom().broadcast(resp);
+//					Packet resp = Packets.newPacket(Packets.MONSTER, 
+//							Packets.MONSTER_OVER, charactor.getId(), tuple);
+//					charactor.getRoom().broadcast(resp);
 				}
 			});
 			

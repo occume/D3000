@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.d3.net.packet.BasePacket;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,12 +20,18 @@ public class TextWebsocketDecoder extends MessageToMessageDecoder<TextWebSocketF
 
 	@Autowired
 	private ObjectMapper jackson;
+	
+	private static Logger LOG = LoggerFactory.getLogger(TextWebsocketDecoder.class);
 	@Override
 	protected void decode(ChannelHandlerContext ctx, TextWebSocketFrame msg,
-			List<Object> out) throws Exception {
+			List<Object> out){
 		String data = msg.text();
-//		System.out.println(data);
-		BasePacket pkt = jackson.readValue(data, BasePacket.class);
+		BasePacket pkt = null;
+		try {
+			pkt = jackson.readValue(data, BasePacket.class);
+		} catch (Exception e) {
+			LOG.error("error: " + e.getMessage());
+		}
 		out.add(pkt);
 	}
 

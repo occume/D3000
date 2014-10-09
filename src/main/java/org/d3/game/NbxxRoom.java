@@ -34,19 +34,19 @@ public class NbxxRoom extends BaseRoom {
 	private ScheduledFuture future;
 	
 	public void startGame() {
-		sendMassage(Packets.newPacket(Packets.ROOM, Packets.ROOM_START_GAME, null));
-		
-		future = scheduledService.scheduleAtFixedRate(new Runnable() {
-			public void run() {
-				Monster m = new Monster();
-				monsters.add(m);
-				Packet pkt = Packets.newPacket(
-						Packets.ROOM,
-						Packets.ROOM_MAKE_MONSTER, 
-						"ALL", m);
-				broadcast(pkt);
-			}
-		}, 5, 3, TimeUnit.SECONDS);
+//		sendMassage(Packets.newPacket(Packets.ROOM, Packets.ROOM_START_GAME, null));
+//		
+//		future = scheduledService.scheduleAtFixedRate(new Runnable() {
+//			public void run() {
+//				Monster m = new Monster();
+//				monsters.add(m);
+//				Packet pkt = Packets.newPacket(
+//						Packets.ROOM,
+//						Packets.ROOM_MAKE_MONSTER,
+//						"ALL", m);
+//				broadcast(pkt);
+//			}
+//		}, 5, 3, TimeUnit.SECONDS);
 		
 	}
 	

@@ -1,6 +1,7 @@
 package org.d3.net;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -45,6 +46,8 @@ public class TcpServer implements Server {
 			})
 			 .childHandler(new TcpServerChannelInitializer())
 			 .option(ChannelOption.SO_BACKLOG, 128)
+			 .option(ChannelOption.TCP_NODELAY, true)
+			 .option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
              .childOption(ChannelOption.SO_KEEPALIVE, true);
 			
 			Channel serverChannel = b.bind(10086).sync().channel();

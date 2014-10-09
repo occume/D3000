@@ -3,10 +3,10 @@ package org.d3.core.transfer;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import org.agilewiki.jactor2.core.blades.NonBlockingBladeBase;
-import org.agilewiki.jactor2.core.requests.AOp;
-import org.agilewiki.jactor2.core.requests.AsyncResponseProcessor;
-import org.agilewiki.jactor2.core.requests.impl.AsyncRequestImpl;
+//import org.agilewiki.jactor2.core.blades.NonBlockingBladeBase;
+//import org.agilewiki.jactor2.core.requests.AOp;
+//import org.agilewiki.jactor2.core.requests.AsyncResponseProcessor;
+//import org.agilewiki.jactor2.core.requests.impl.AsyncRequestImpl;
 import org.d3.util.Point;
 import org.d3.util.astar.LLK;
 import org.d3.net.packet.Packet;
@@ -15,7 +15,8 @@ import org.d3.net.packet.Packets;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-public class Dispacher extends NonBlockingBladeBase {
+//public class Dispacher extends NonBlockingBladeBase {
+public class Dispacher {
 
 	private Map<Integer, Processer>  processers;
 	private Charactor charactor;
@@ -49,17 +50,17 @@ public class Dispacher extends NonBlockingBladeBase {
 					lp.addLast(end);
 				}
 				
-				Packet resp = Packets.newPacket(Packets.SEEK_PAHT, lp);
-				charactor.sendMessage(resp);
+//				Packet resp = Packets.newPacket(Packets.SEEK_PAHT, lp);
+//				charactor.sendMessage(resp);
 			}
 		});
 		
 		processers.put((int)Packets.SELECT_ELEM, new Processer(){
 			public void process(Charactor charactor, Packet pkt) {
 				
-				String tile = pkt.getTuple().toString();
-				Packet resp = Packets.newPacket(Packets.SELECT_ELEM, tile);
-				charactor.getRoom().broadcast(resp);
+//				String tile = pkt.getTuple().toString();
+//				Packet resp = Packets.newPacket(Packets.SELECT_ELEM, tile);
+//				charactor.getRoom().broadcast(resp);
 				
 			}
 		});
@@ -105,32 +106,32 @@ public class Dispacher extends NonBlockingBladeBase {
 		return ret;
 	}
 	
-	public AOp<Packet> onMessage(final Packet pkt){
-		return new AOp<Packet>("transfer-onMessage", getReactor()) {
-
-			public void processAsyncOperation(
-					AsyncRequestImpl _asyncRequestImpl,
-					AsyncResponseProcessor<Packet> _asyncResponseProcessor)
-					throws Exception {
-				
-				dispach(pkt);
-				
-				_asyncResponseProcessor.processAsyncResponse(null);
-			}
-		};
-	}
+//	public AOp<Packet> onMessage(final Packet pkt){
+//		return new AOp<Packet>("transfer-onMessage", getReactor()) {
+//
+//			public void processAsyncOperation(
+//					AsyncRequestImpl _asyncRequestImpl,
+//					AsyncResponseProcessor<Packet> _asyncResponseProcessor)
+//					throws Exception {
+//				
+//				dispach(pkt);
+//				
+//				_asyncResponseProcessor.processAsyncResponse(null);
+//			}
+//		};
+//	}
 	
 	private void dispach(Packet pkt){
-		int act = pkt.getAct();
+//		int act = pkt.getAct();
 		
-		Processer processer = processers.get(act);
-		if(processer != null){
-			processer.process(charactor, pkt);
-		}
-		else{
-			Module unit = charactor.getGame().getModule(act);
-			unit.dispatch(charactor, pkt);
-		}
+//		Processer processer = processers.get(act);
+//		if(processer != null){
+//			processer.process(charactor, pkt);
+//		}
+//		else{
+//			Module unit = charactor.getGame().getModule(act);
+//			unit.dispatch(charactor, pkt);
+//		}
 	}
 
 }

@@ -1,6 +1,5 @@
 package org.d3;
 
-import org.agilewiki.jactor2.core.impl.Plant;
 import org.d3.launch.Bootstrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

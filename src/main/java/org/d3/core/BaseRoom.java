@@ -7,8 +7,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.agilewiki.jactor2.core.blades.pubSub.RequestBus;
-import org.agilewiki.jactor2.core.reactors.NonBlockingReactor;
+//import org.agilewiki.jactor2.core.blades.pubSub.RequestBus;
+//import org.agilewiki.jactor2.core.reactors.NonBlockingReactor;
 import org.d3.Room;
 import org.d3.core.transfer.Charactor;
 import org.d3.game.bean.Player;
@@ -22,20 +22,20 @@ public abstract class BaseRoom  implements Room {
 	
 	private String id;
 	private String name;
-	NonBlockingReactor _reactor;
-	RequestBus<Packet> requestBus;
+//	NonBlockingReactor _reactor;
+//	RequestBus<Packet> requestBus;
 	
 	public BaseRoom(String id, String name){
 		this.id = id;
 		this.name = name;
 		players = Maps.newConcurrentMap();
 		
-		try {
-			_reactor = new NonBlockingReactor();
-			requestBus = new RequestBus<Packet>(_reactor);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		try {
+//			_reactor = new NonBlockingReactor();
+//			requestBus = new RequestBus<Packet>(_reactor);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	public void broadcast(Packet pkt) {
@@ -78,11 +78,11 @@ public abstract class BaseRoom  implements Room {
 	
 
 	public void sendMassage(Packet pkt) {
-		try {
-			requestBus.sendsContentAOp(pkt).signal();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		try {
+//			requestBus.sendsContentAOp(pkt).signal();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 	}
 	
 	protected abstract int getRoomSize();
@@ -102,7 +102,7 @@ public abstract class BaseRoom  implements Room {
 		player.setSeat(seat);
 		players.put(charactor.getId(), charactor);
 
-		charactor.register(requestBus, _reactor);
+//		charactor.register(requestBus, _reactor);
 		return true;
 	}
 	
@@ -112,8 +112,8 @@ public abstract class BaseRoom  implements Room {
 		
 		players.remove(charactor.getId());
 		
-		Packet ret = Packets.newPacket(Packets.ROOM, Packets.ROOM_LEAVE, getPlayers());
-		broadcast(ret);
+//		Packet ret = Packets.newPacket(Packets.ROOM, Packets.ROOM_LEAVE, getPlayers());
+//		broadcast(ret);
 		onLeaveRoom(player);
 	}
 	

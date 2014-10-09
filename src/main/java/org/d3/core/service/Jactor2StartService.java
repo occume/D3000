@@ -1,7 +1,5 @@
 package org.d3.core.service;
 
-import org.agilewiki.jactor2.core.impl.Plant;
-import org.agilewiki.jactor2.core.impl.mtPlant.PlantConfiguration;
 import org.springframework.stereotype.Component;
 
 import com.google.common.util.concurrent.AbstractService;
@@ -34,11 +32,11 @@ public class Jactor2StartService extends AbstractService {
 
 	@Override
 	protected void doStop() {
-		try {
-			Plant.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		try {
+//			Plant.close();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	

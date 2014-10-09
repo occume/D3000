@@ -40,6 +40,7 @@ public class PlayerSession extends SessionSupport{
 //				}
 //				
 //			});
+			if(channel.isWritable())
 			channel.writeAndFlush(pkt);
 		}
 	}

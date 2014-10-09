@@ -73,7 +73,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.12</version>
 		</dependency>
-		
+<!-- 	
 		<dependency>
             <groupId>org.agilewiki.jactor2</groupId>
             <artifactId>jactor2-core</artifactId>
@@ -84,7 +84,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
             <artifactId>jactor2-coreMt</artifactId>
             <version>0.10.0</version>
         </dependency>
-       
+ -->	       
 		<dependency>   
 	      <groupId>dom4j</groupId>    
 	      <artifactId>dom4j</artifactId>    
