@@ -19,6 +19,7 @@ import org.d3.net.packet.protobuf.Game;
 import org.d3.net.packet.protobuf.Game.Chat;
 import org.d3.net.session.Session;
 import org.d3.net.session.SessionManager;
+import org.d3.std.Stopwatch;
 import org.d3.util.ObjectConvert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,7 +42,8 @@ public class ChatProcessor  extends BaseProcessor{
 		// TODO Auto-generated method stub
 		
 	}
-
+	int count = 0;
+	Stopwatch sw = null;
 	@Override
 	public void doProcess(Session session, InPacket ask) {
 		
@@ -60,7 +62,21 @@ public class ChatProcessor  extends BaseProcessor{
 					info.getInfo());
 
 			ByteBuf resp = Packets.makeReplyPacket(ask.getModule(), ask.getCmd(), ret.toByteArray());
-			room.broadcast(resp);
+			++count;
+			if(count == 1){
+				sw = Stopwatch.newStopwatch();
+			}
+			if(count % 10000 == 0){
+				long colisped = sw.longTime();
+				System.out.println(colisped);
+				System.out.println("count = " + count);
+				System.out.println(info.getInfo());
+				count = 0;
+			}
+//			for(int i = 0; i < 10000; i++){
+//				room.broadcast(resp);
+//				resp.retain();
+//			}
 		}
 		else if(type.equals("ALL")){
 			

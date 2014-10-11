@@ -38,7 +38,7 @@ public class PacketHandler extends SimpleChannelInboundHandler<InPacket> {
 	 */
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
-
+		
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class PacketHandler extends SimpleChannelInboundHandler<InPacket> {
 		if(ask.getModule() == Module.LOGIN){
 			byte[] data = (byte[]) ask.getTuple();
 			User user = Protobufs.getLoginUser(data);
-			Session session = SessionManager.instance().getByName(user.getName());
+			Session session = null;// = SessionManager.instance().getByName(user.getName());
 			if(session != null){
 				if(session.isActive()){
 					LOG.error("repeat login! " + user.getName() + " is online now!");

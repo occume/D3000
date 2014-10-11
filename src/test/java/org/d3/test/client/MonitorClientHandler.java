@@ -17,7 +17,7 @@ public class MonitorClientHandler extends SimpleChannelInboundHandler<String>{
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		ctx.channel().writeAndFlush("aa");
-		ctx.executor().
+//		ctx.executor()
 	}
 
 	@Override

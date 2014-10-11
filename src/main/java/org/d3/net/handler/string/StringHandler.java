@@ -22,6 +22,4 @@ public class StringHandler extends SimpleChannelInboundHandler<String> {
 		ctx.close();
 	}
 	
-	
-
 }

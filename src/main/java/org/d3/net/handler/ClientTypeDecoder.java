@@ -36,7 +36,7 @@ public class ClientTypeDecoder extends ByteToMessageDecoder {
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in,
 			List<Object> out) throws Exception {
-		
+//		System.out.println(in);
 		int m1 = in.readByte();
 		int m2 = in.readByte();
 		in.readerIndex(0);
