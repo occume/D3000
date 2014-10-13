@@ -52,6 +52,10 @@ public class SessionManager {
 		return sessions.get(key);
 	}
 	
+	public void removeSession(Session session){
+		sessions.remove(session.getId());
+	}
+	
 	/** session 清理 */
 	@Scheduled(cron = "0/5 * * * * *")
 	protected void startScheduleTask() {

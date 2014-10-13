@@ -82,6 +82,7 @@ public class ChatProcessor  extends BaseProcessor{
 			
 		}
 		else{
+
 			Session targetSession = SessionManager.instance().getByName(info.getTarget());
 			Chat ret = Protobufs.makeOkChatPacket(
 					type,

@@ -86,8 +86,10 @@ public class PacketHandler extends SimpleChannelInboundHandler<InPacket> {
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
 		super.channelInactive(ctx);
 		System.out.println("inactive");
-		if(session != null)
+		if(session != null){
 			session.close();
+			SessionManager.instance().removeSession(session);
+		}
 //		PlayerSession playerSession = (PlayerSession) session;
 //		if(charactor.getRoom() != null){
 //			charactor.getRoom().leaveRoom(charactor);
