@@ -93,6 +93,10 @@ public class ChatProcessor  extends BaseProcessor{
 			ByteBuf resp = Packets.makeReplyPacket(ask.getModule(), ask.getCmd(), ret.toByteArray());
 			targetSession.sendMessage(resp);
 			session.sendMessage(resp.copy());
+//			for(int i = 0; i < 100; i++){
+//				session.channel().write(resp.copy());
+//			}
+//			session.channel().flush();
 		}
 	}
 
