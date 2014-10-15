@@ -1,9 +1,10 @@
-package org.d3.module.user.bean;
+package org.d3.core.mybatis.domain;
 
 public class User {
 	
-	private String name;
-	private String password;
+	private long	id;
+	private String 	name;
+	private String 	password;
 	
 	public User(){}
 	
@@ -11,6 +12,14 @@ public class User {
 		super();
 		this.name = name;
 		this.password = password;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -28,7 +37,8 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [name=" + name + ", password=" + password + "]";
+		return "User [id=" + id + ", name=" + name + ", password=" + password
+				+ "]";
 	}
-	
+
 }

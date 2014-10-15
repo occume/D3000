@@ -1,10 +1,11 @@
-package org.d3.module.login.processor;
+package org.d3.module.user.processor;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
 
 import org.d3.core.mybatis.domain.User;
+import org.d3.core.service.UserService;
 import org.d3.logger.D3Log;
 import org.d3.module.BaseProcessor;
 import org.d3.module.user.bean.Player;
@@ -21,44 +22,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LoginProcessor extends BaseProcessor {
+public class LookUpUserProcessor extends BaseProcessor {
 	
-	public LoginProcessor() throws Exception{
+	public LookUpUserProcessor() throws Exception{
 		super();
 	}
 	
-	private static Logger LOG = LoggerFactory.getLogger(LoginProcessor.class);
+	private static Logger LOG = LoggerFactory.getLogger(LookUpUserProcessor.class);
 	@Autowired
-	private PlayerService playerService;
+	private UserService userService;
 
 	@Override
 	public void doProcess(Session session, InPacket ask) {
 		
-		User user = (User) ask.getTuple();
-
-		if(playerService.auth()){
-			
-			session.setPlayer(new Player(user.getName(), user.getPassword()));
-			
-			Login ret = Game.Login.newBuilder()
-						.setName(user.getName())
-						.setState("00")
-						
-						.build();
-			ByteBuf resp = Packets.makeReplyPacket(ask.getModule(), ask.getCmd(), ret.toByteArray());
-			session.sendMessage(resp);
-
-		}
-		else{
-			LOG.debug(D3Log.D3_LOG_DEBUG + "User auth fail: " + user);
-			session.close();
-		}
+		User user = userService.getUserByName("");
 		
 	}
 
 	@Override
 	public String getModuleName() {
-		return "loginModule";
+		return "userModule";
 	}
 
 	@Override
@@ -68,7 +51,7 @@ public class LoginProcessor extends BaseProcessor {
 
 	@Override
 	public String getDescription() {
-		return "LoginProcessor";
+		return "LookUpUserProcessor";
 	}
 	
 }

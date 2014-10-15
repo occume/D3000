@@ -16,10 +16,47 @@
 		@Required and @Autowired, as well as JSR 250's @Resource. -->
 	<context:annotation-config />
 	<task:annotation-driven/>
-	<context:component-scan base-package="org.d3,com.yayo" />
+	<context:component-scan base-package="org.d3,org.jindong.service" />
 	
 	<bean id="jackson" class="org.codehaus.jackson.map.ObjectMapper" />
 	<bean id="stringDecoder" class="io.netty.handler.codec.string.StringDecoder" />
 	<bean id="stringEncoder" class="io.netty.handler.codec.string.StringEncoder" />
 	
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+	 	<property name="driverClass"><value>org.gjt.mm.mysql.Driver</value></property>
+	 	<property name="initialPoolSize"><value>1</value></property>
+	 	<property name="maxPoolSize"><value>10</value></property>
+		<property name="minPoolSize"><value>2</value></property>
+		<property name="autoCommitOnClose"><value>true</value></property>
+		<property name="maxStatements"><value>50</value></property>
+		<property name="maxIdleTime" value="1800"/>
+		<property name="checkoutTimeout" value="90000"/>
+		<property name="idleConnectionTestPeriod"><value>600</value></property>
+		<property name="jdbcUrl"><value>jdbc:mysql://localhost:3306/test</value></property>
+		<property name="user"><value>root</value></property>
+		<property name="password"><value>5651403</value></property>
+	 </bean>
+
+    <!-- transaction manager, use JtaTransactionManager for global tx -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <!-- enable transaction demarcation with annotations -->
+    <tx:annotation-driven />
+
+     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="typeAliasesPackage" value="org.d3.core.mybatis.domain" />
+    </bean>
+
+	<!-- scan for mappers and let them be autowired 
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="org.d3.core.mybatis.mapper" />
+    </bean>-->
+
+	<bean id="accountMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	  <property name="mapperInterface" value="org.d3.core.mybatis.mapper.AccountMapper" />
+	  <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
 </beans>

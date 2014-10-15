@@ -7,6 +7,7 @@ public interface Module extends Registry, Registerable {
 	
 	public static final int LOGIN 	= 1;
 	public static final int CHAT 	= 2;
+	public static final int USER 	= 3;
 	
 	public String getDescription();
 	

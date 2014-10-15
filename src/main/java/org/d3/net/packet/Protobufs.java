@@ -1,7 +1,7 @@
 package org.d3.net.packet;
 
+import org.d3.core.mybatis.domain.User;
 import org.d3.module.chat.ChatInfo;
-import org.d3.module.user.bean.User;
 import org.d3.net.packet.protobuf.Game;
 import org.d3.net.packet.protobuf.Game.Chat;
 import org.d3.util.ObjectConvert;

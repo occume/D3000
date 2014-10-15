@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.jindong.persistence.TaskListMapper">
+
+  <cache />
+
+
+
+  <select id="getTaskList" parameterType="int" resultType="TaskList">
+    SELECT
+          *
+    FROM t_flight_task_list_detail
+    WHERE id = #{id}
+  </select>
+
+  
+
+  <insert id="insertTaskList" parameterType="TaskList">
+    INSERT INTO t_flight_task_list_detail
+      (fromCity, fromCityCN, toCity, toCityCN)
+    VALUES
+      (#{fromCity}, #{fromCityCN}, #{toCity}, #{toCityCN})
+  </insert>
+
+  <!--  
+  TODO MyBatis 3 does not map booleans to integers
+  <update id="updateProfile" parameterType="Account">
+    UPDATE PROFILE SET
+      LANGPREF = #{languagePreference},
+      FAVCATEGORY = #{favouriteCategoryId},
+      MYLISTOPT = #{listOption},
+      BANNEROPT = #{bannerOption}
+    WHERE USERID = #{username}
+  </update>
+  -->
+
+ 
+
+  <!--  
+  TODO MyBatis 3 does not map booleans to integers
+  <insert id="insertProfile" parameterType="Account">
+    INSERT INTO PROFILE (LANGPREF, FAVCATEGORY, MYLISTOPT, BANNEROPT, USERID)
+    VALUES (#{languagePreference}, #{favouriteCategoryId}, #{listOption}, #{bannerOption}, #{username})
+  </insert>
+  -->
+
+
+</mapper>

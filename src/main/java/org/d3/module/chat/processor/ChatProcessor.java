@@ -11,7 +11,6 @@ import org.d3.module.BaseProcessor;
 import org.d3.module.chat.ChatInfo;
 import org.d3.module.chat.ChatModule;
 import org.d3.module.chat.ChatRoom;
-import org.d3.module.user.bean.User;
 import org.d3.net.packet.InPacket;
 import org.d3.net.packet.Packets;
 import org.d3.net.packet.Protobufs;
@@ -87,7 +86,7 @@ public class ChatProcessor  extends BaseProcessor{
 			Chat ret = Protobufs.makeOkChatPacket(
 					type,
 					session.getPlayer().getName(),
-					info.getTarget(), 
+					info.getTarget(),
 					info.getInfo());
 
 			ByteBuf resp = Packets.makeReplyPacket(ask.getModule(), ask.getCmd(), ret.toByteArray());
