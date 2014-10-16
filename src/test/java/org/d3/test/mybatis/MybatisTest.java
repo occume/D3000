@@ -2,7 +2,10 @@ package org.d3.test.mybatis;
 
 import org.d3.D3SpringConfig;
 import org.d3.core.mybatis.domain.Account;
-import org.d3.core.mybatis.service.AccountService;
+import org.d3.core.mybatis.domain.User;
+import org.d3.core.mybatis.service.AccountDao;
+import org.d3.core.mybatis.service.UserService;
+import org.d3.std.Stopwatch;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -18,9 +21,27 @@ public class MybatisTest {
 	}
 	
 	@Test
+	public void addUser(){
+		
+		UserService userService = (UserService) ctx.getBean("userService");
+		
+		Stopwatch sw = Stopwatch.newStopwatch();
+		for(int i = 0; i < 10000; i++){
+			
+			User user = new User();
+			user.setName("d3-" + i);
+			user.setPassword("123");
+			user.setEmail("d3-"+ i +"@d3.com");
+			
+			userService.addUser(user);
+		}
+		System.out.println("it cost " + sw.longTime());
+	}
+	
+	@Test
 	public void f() {
 
-		AccountService accountServie = (AccountService) ctx.getBean("accountService");
+		AccountDao accountServie = (AccountDao) ctx.getBean("accountService");
 		Account account = new Account();
 		account.setUsername("ccoo");
 		account.setPassword("456");
@@ -32,7 +53,7 @@ public class MybatisTest {
 	@Test
 	public void g() {
 
-		AccountService accountServie = (AccountService) ctx.getBean("accountService");
+		AccountDao accountServie = (AccountDao) ctx.getBean("accountService");
 //		Account account = new Account();
 //		account.setUsername("foo");
 //		account.setPassword("123");

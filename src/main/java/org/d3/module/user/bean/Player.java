@@ -4,17 +4,14 @@ public class Player implements Comparable{
 	
 	private long 	id;
 	private String 	name;
-	private String 	password;
 	private int 	title;
 	private int		icon;
 	private int		sex;
 	
 	public Player(){}
 	
-	public Player(String name, String password) {
-		super();
+	public Player(String name) {
 		this.name = name;
-		this.password = password;
 	}
 
 	public long getId() {
@@ -28,12 +25,6 @@ public class Player implements Comparable{
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
 	}
 	public int getTitle() {
 		return title;

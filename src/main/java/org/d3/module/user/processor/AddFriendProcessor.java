@@ -29,13 +29,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LookUpUserProcessor extends BaseProcessor {
+public class AddFriendProcessor extends BaseProcessor {
 	
-	public LookUpUserProcessor() throws Exception{
+	public AddFriendProcessor() throws Exception{
 		super();
 	}
 	
-	private static Logger LOG = LoggerFactory.getLogger(LookUpUserProcessor.class);
+	private static Logger LOG = LoggerFactory.getLogger(AddFriendProcessor.class);
 	@Autowired
 	private UserService userService;
 
@@ -47,27 +47,57 @@ public class LookUpUserProcessor extends BaseProcessor {
 		
 		
 		int type = cmd.getType();
-		Object result = null;
-		
 		switch(type){
 			case 1:
-				result = lookupUserByName(cmd.getName());
+				askAddFriend(cmd, ask);
 				break;
 			case 2:
-				result = SessionManager.instance().randomUsers();
+				agreeAddFriend(cmd, ask, session);
+				break;
 		}
-		
-		Chat ret = Protobufs.makeOkChatPacket(
-			"0",
-			"",
-			"", 
-			ObjectConvert.Me().ojb2json(result)
-		);
-
-		ByteBuf resp = Packets.makeReplyPacket(ask.getModule(), ask.getCmd(), ret.toByteArray());
-		session.sendMessage(resp);
 	}
 	
+	private void askAddFriend(UserCmd cmd, InPacket ask) {
+		
+		User target = lookupUserByName(cmd.getTarget());
+		Session targetSession = SessionManager.instance().getByName(target.getName());
+		
+		if(!targetSession.isActive()){
+			//缓存消息
+		}
+		else{
+			Chat ret = Protobufs.makeOkChatPacket(
+				"1",
+				cmd.getName(),
+				cmd.getTarget(), 
+				""
+			);
+
+			ByteBuf resp = Packets.makeReplyPacket(ask.getModule(), ask.getCmd(), ret.toByteArray());
+			targetSession.sendMessage(resp);
+		}
+	}
+	
+	private void agreeAddFriend(UserCmd cmd, InPacket ask, Session session){
+		User target = lookupUserByName(cmd.getTarget());
+		Session targetSession = SessionManager.instance().getByName(target.getName());
+		if(!targetSession.isActive()){
+			//缓存消息
+		}
+		else{
+			Chat ret = Protobufs.makeOkChatPacket(
+				"2",
+				cmd.getName(),
+				cmd.getTarget(), 
+				""
+			);
+
+			ByteBuf resp = Packets.makeReplyPacket(ask.getModule(), ask.getCmd(), ret.toByteArray());
+			session.sendMessage(resp);
+			targetSession.sendMessage(resp.copy());
+		}
+	}
+
 	private User lookupUserByName(String name){
 		User user = userService.getByName(name);
 		return user;
@@ -80,12 +110,12 @@ public class LookUpUserProcessor extends BaseProcessor {
 
 	@Override
 	public int getType() {
-		return UserModule.LOOK_UP;
+		return UserModule.ADD_FRIEND;
 	}
 
 	@Override
 	public String getDescription() {
-		return "LookUpUserProcessor";
+		return "AddFriendProcessor";
 	}
 	
 }

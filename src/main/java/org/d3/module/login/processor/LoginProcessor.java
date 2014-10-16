@@ -5,6 +5,7 @@ import io.netty.buffer.Unpooled;
 import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
 
 import org.d3.core.mybatis.domain.User;
+import org.d3.core.mybatis.service.UserService;
 import org.d3.logger.D3Log;
 import org.d3.module.BaseProcessor;
 import org.d3.module.user.bean.Player;
@@ -29,16 +30,17 @@ public class LoginProcessor extends BaseProcessor {
 	
 	private static Logger LOG = LoggerFactory.getLogger(LoginProcessor.class);
 	@Autowired
-	private PlayerService playerService;
+	private UserService userService;
 
 	@Override
 	public void doProcess(Session session, InPacket ask) {
 		
 		User user = (User) ask.getTuple();
 
-		if(playerService.auth()){
+		if(userService.auth(user)){
 			
-			session.setPlayer(new Player(user.getName(), user.getPassword()));
+//			session.setPlayer(new Player(user.getName()));
+			session.setUser(user);
 			
 			Login ret = Game.Login.newBuilder()
 						.setName(user.getName())

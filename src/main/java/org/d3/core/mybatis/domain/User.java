@@ -1,10 +1,14 @@
 package org.d3.core.mybatis.domain;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable{
 	
+	private static final long serialVersionUID = 4184871401453031406L;
 	private long	id;
 	private String 	name;
 	private String 	password;
+	private String 	email;
 	
 	public User(){}
 	
@@ -35,10 +39,19 @@ public class User {
 		this.password = password;
 	}
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", password=" + password
-				+ "]";
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public User(long id, String name, String email) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.email = email;
 	}
 
 }

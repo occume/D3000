@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.d3.core.mybatis.mapper.UserMapper">
+
+  <cache />
+
+  <select id="getById" parameterType="int" resultType="User">
+    SELECT * FROM d3_user WHERE id = #{id}
+  </select>
+  
+  <select id="getByName" parameterType="string" resultType="User">
+    SELECT * FROM d3_user WHERE name = #{name}
+  </select>
+  
+  <select id="auth" parameterType="User" resultType="User">
+    SELECT * FROM d3_user WHERE name = #{name} and password = #{password}
+  </select>
+
+  <insert id="addUser" parameterType="User">
+    INSERT INTO d3_user
+      (name, PASSWORD, EMAIL)
+    VALUES
+      (#{name}, #{password}, #{email})
+  </insert>
+
+  <!--  
+  TODO MyBatis 3 does not map booleans to integers
+  <update id="updateProfile" parameterType="Account">
+    UPDATE PROFILE SET
+      LANGPREF = #{languagePreference},
+      FAVCATEGORY = #{favouriteCategoryId},
+      MYLISTOPT = #{listOption},
+      BANNEROPT = #{bannerOption}
+    WHERE USERID = #{username}
+  </update>
+  -->
+
+ 
+
+  <!--  
+  TODO MyBatis 3 does not map booleans to integers
+  <insert id="insertProfile" parameterType="Account">
+    INSERT INTO PROFILE (LANGPREF, FAVCATEGORY, MYLISTOPT, BANNEROPT, USERID)
+    VALUES (#{languagePreference}, #{favouriteCategoryId}, #{listOption}, #{bannerOption}, #{username})
+  </insert>
+  -->
+
+
+</mapper>

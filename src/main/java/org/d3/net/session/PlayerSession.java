@@ -8,6 +8,7 @@ import io.netty.channel.ChannelPromise;
 import io.netty.channel.DefaultChannelPromise;
 import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
 
+import org.d3.core.mybatis.domain.User;
 import org.d3.module.chat.ChatRoom;
 import org.d3.module.user.bean.Player;
 
@@ -16,6 +17,8 @@ public class PlayerSession extends SessionSupport{
 	private Channel 	channel;
 	
 	private Player player;
+	
+	private User user;
 	
 	private ChatRoom room;
 	
@@ -93,6 +96,16 @@ public class PlayerSession extends SessionSupport{
 
 	public boolean isActive() {
 		return channel.isActive();
+	}
+
+	@Override
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	@Override
+	public User getUser() {
+		return user;
 	}
 
 }

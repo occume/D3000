@@ -2,6 +2,7 @@ package org.d3.net.packet;
 
 import org.d3.core.mybatis.domain.User;
 import org.d3.module.chat.ChatInfo;
+import org.d3.module.user.UserCmd;
 import org.d3.net.packet.protobuf.Game;
 import org.d3.net.packet.protobuf.Game.Chat;
 import org.d3.util.ObjectConvert;
@@ -35,6 +36,17 @@ public class Protobufs {
 		}
 		return info;
 	}
+	
+	public static UserCmd getUserCmd(byte[] data){
+		UserCmd cmd = null;
+		try {
+			Game.Chat chat = Game.Chat.parseFrom(data);
+			cmd = new UserCmd(Integer.valueOf(chat.getType()), chat.getName(), chat.getTarget(), chat.getInfo());
+		} catch (InvalidProtocolBufferException e) {
+			LOG.error("parse chat info error: " + e.getMessage());
+		}
+		return cmd;
+	};
 	
 	public static Game.Chat makeChatPacket(String type, String name, 
 			String target, String info, String state, String stateDesc){
