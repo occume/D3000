@@ -25,27 +25,16 @@
       (#{name}, #{password}, #{email})
   </insert>
 
-  <!--  
-  TODO MyBatis 3 does not map booleans to integers
-  <update id="updateProfile" parameterType="Account">
-    UPDATE PROFILE SET
-      LANGPREF = #{languagePreference},
-      FAVCATEGORY = #{favouriteCategoryId},
-      MYLISTOPT = #{listOption},
-      BANNEROPT = #{bannerOption}
-    WHERE USERID = #{username}
-  </update>
-  -->
-
+	<insert id="addFriend">
+    	INSERT INTO d3_user_relation
+      	(uid_1, uid_2, type)
+    	VALUES
+      	(#{uid1}, #{uid2}, #{type})
+	</insert>
+	
+	<select id="getFriendsById" resultType="User">
+		SELECT * FROM d3_user WHERE id in
+			(SELECT * FROM d3_user_relation WHERE uid_1 = #{id} or uid_2 = #{id})
+	</select>
  
-
-  <!--  
-  TODO MyBatis 3 does not map booleans to integers
-  <insert id="insertProfile" parameterType="Account">
-    INSERT INTO PROFILE (LANGPREF, FAVCATEGORY, MYLISTOPT, BANNEROPT, USERID)
-    VALUES (#{languagePreference}, #{favouriteCategoryId}, #{listOption}, #{bannerOption}, #{username})
-  </insert>
-  -->
-
-
 </mapper>

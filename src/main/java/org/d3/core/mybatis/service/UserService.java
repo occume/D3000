@@ -1,5 +1,7 @@
 package org.d3.core.mybatis.service;
 
+import java.util.List;
+
 import org.codehaus.jackson.map.util.BeanUtil;
 import org.d3.core.mybatis.domain.User;
 import org.d3.core.mybatis.mapper.UserMapper;
@@ -33,6 +35,7 @@ public class UserService {
   }
   
   public boolean auth(User user){
+	  System.out.println(user);
 	  
 	  try{
 		  User ret = userMapper.auth(user);
@@ -45,6 +48,15 @@ public class UserService {
 		  LOG.error("error occu when auth; " + e.getMessage());
 	  }
 	  return false;
+  }
+  
+  @Transactional
+  public void addFriend(int uid1, int uid2, int type){
+	  userMapper.addFriend(uid1, uid2, type);
+  }
+  
+  public List<User> getFriendsById(int id){
+	  return userMapper.getFriendsById(id);
   }
   
 }

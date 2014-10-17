@@ -1,43 +1,40 @@
 package org.d3.module.user.processor;
 
-import java.util.Collection;
-
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
-import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
 
+import org.d3.core.mybatis.domain.Message;
 import org.d3.core.mybatis.domain.User;
+import org.d3.core.mybatis.service.MessageService;
 import org.d3.core.mybatis.service.UserService;
-import org.d3.logger.D3Log;
 import org.d3.module.BaseProcessor;
+import org.d3.module.user.MessageType;
 import org.d3.module.user.UserCmd;
 import org.d3.module.user.UserModule;
-import org.d3.module.user.bean.Player;
+import org.d3.module.user.UserRelationType;
 import org.d3.net.packet.InPacket;
 import org.d3.net.packet.Packets;
 import org.d3.net.packet.Protobufs;
-import org.d3.net.packet.protobuf.Game;
 import org.d3.net.packet.protobuf.Game.Chat;
-import org.d3.net.packet.protobuf.Game.Login;
 import org.d3.net.session.Session;
 import org.d3.net.session.SessionManager;
-import org.d3.persist.PlayerService;
-import org.d3.util.ObjectConvert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AddFriendProcessor extends BaseProcessor {
+public class MessageProcessor extends BaseProcessor {
 	
-	public AddFriendProcessor() throws Exception{
+	public MessageProcessor() throws Exception{
 		super();
 	}
 	
-	private static Logger LOG = LoggerFactory.getLogger(AddFriendProcessor.class);
+	private static Logger LOG = LoggerFactory.getLogger(MessageProcessor.class);
+	
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private MessageService messageService;
 
 	@Override
 	public void doProcess(Session session, InPacket ask) {
@@ -45,31 +42,37 @@ public class AddFriendProcessor extends BaseProcessor {
 		byte[] data = (byte[]) ask.getTuple();
 		UserCmd cmd = Protobufs.getUserCmd(data);
 		
-		
 		int type = cmd.getType();
 		switch(type){
-			case 1:
-				askAddFriend(cmd, ask);
+			case MessageType.ASK_ADD_FRIEND:
+				askAddFriend(cmd, ask, session);
 				break;
-			case 2:
+			case MessageType.AGREE_ADD_FRIEND:
 				agreeAddFriend(cmd, ask, session);
 				break;
 		}
 	}
 	
-	private void askAddFriend(UserCmd cmd, InPacket ask) {
+	private void askAddFriend(UserCmd cmd, InPacket ask, Session session) {
 		
 		User target = lookupUserByName(cmd.getTarget());
 		Session targetSession = SessionManager.instance().getByName(target.getName());
+		
+		Message message = new Message();
+		message.setUid1(session.getUser().getId());
+		message.setUid2(targetSession.getUser().getId());
+		message.setType(MessageType.ASK_ADD_FRIEND);
+		
+		messageService.addMessage(message);
 		
 		if(!targetSession.isActive()){
 			//缓存消息
 		}
 		else{
 			Chat ret = Protobufs.makeOkChatPacket(
-				"1",
+				"" + MessageType.ASK_ADD_FRIEND,
 				cmd.getName(),
-				cmd.getTarget(), 
+				cmd.getTarget(),
 				""
 			);
 
@@ -79,14 +82,20 @@ public class AddFriendProcessor extends BaseProcessor {
 	}
 	
 	private void agreeAddFriend(UserCmd cmd, InPacket ask, Session session){
+		
 		User target = lookupUserByName(cmd.getTarget());
 		Session targetSession = SessionManager.instance().getByName(target.getName());
+		
+		userService.addFriend(session.getUser().getId(),
+					targetSession.getUser().getId(), 
+					UserRelationType.FRIEND);
+		
 		if(!targetSession.isActive()){
 			//缓存消息
 		}
 		else{
 			Chat ret = Protobufs.makeOkChatPacket(
-				"2",
+					"" + MessageType.AGREE_ADD_FRIEND,
 				cmd.getName(),
 				cmd.getTarget(), 
 				""
@@ -110,12 +119,12 @@ public class AddFriendProcessor extends BaseProcessor {
 
 	@Override
 	public int getType() {
-		return UserModule.ADD_FRIEND;
+		return UserModule.MESSAGE;
 	}
 
 	@Override
 	public String getDescription() {
-		return "AddFriendProcessor";
+		return "MessageProcessor";
 	}
 	
 }

@@ -12,7 +12,8 @@ public class UserModule extends BaseModule{
 	private static Logger LOG = LoggerFactory.getLogger(UserModule.class);
 	
 	public static final int LOOK_UP = 2;
-	public static final int ADD_FRIEND = 3;
+	public static final int MESSAGE = 3;
+	public static final int FRIEND_LIST = 4;
 
 	public String getDescription() {
 		return "Module for User";

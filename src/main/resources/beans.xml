@@ -32,8 +32,8 @@
 		<property name="maxIdleTime" value="1800"/>
 		<property name="checkoutTimeout" value="90000"/>
 		<property name="idleConnectionTestPeriod"><value>600</value></property>
-		<property name="jdbcUrl"><value>jdbc:mysql://localhost:3306/d3_game</value></property>
-		<property name="user"><value>root</value></property>
+		<property name="jdbcUrl"><value>jdbc:mysql://d3gameserver.mysql.rds.aliyuncs.com:3306/d3_game</value></property>
+		<property name="user"><value>occume</value></property>
 		<property name="password"><value>5651403</value></property>
 	 </bean>
 
@@ -55,8 +55,8 @@
         <property name="basePackage" value="org.d3.core.mybatis.mapper" />
     </bean>-->
 
-	<bean id="accountMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-	  <property name="mapperInterface" value="org.d3.core.mybatis.mapper.AccountMapper" />
+	<bean id="messageMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	  <property name="mapperInterface" value="org.d3.core.mybatis.mapper.MessageMapper" />
 	  <property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</bean>
 	

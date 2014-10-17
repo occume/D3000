@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.d3.core.mybatis.mapper.MessageMapper">
+
+  <cache />
+
+  <select id="getByUid2" parameterType="int" resultType="Message">
+    SELECT * FROM d3_message WHERE uid2 = #{uid2}
+  </select>
+  
+  <select id="getByUid1" parameterType="int" resultType="Message">
+    SELECT * FROM d3_message WHERE uid1 = #{uid1}
+  </select>
+
+  <insert id="addMessage" parameterType="Message">
+    INSERT INTO d3_message
+      (type, uid1, uid2, readed, result, info, happen_time, last_modify_time)
+    VALUES
+      (#{type},#{uid1}, #{uid2}, #{readed}, #{result}, #{info}, #{happenTime}, #{lastModifyTime})
+  </insert>
+
+  <!--  
+  TODO MyBatis 3 does not map booleans to integers
+  <update id="updateProfile" parameterType="Account">
+    UPDATE PROFILE SET
+      LANGPREF = #{languagePreference},
+      FAVCATEGORY = #{favouriteCategoryId},
+      MYLISTOPT = #{listOption},
+      BANNEROPT = #{bannerOption}
+    WHERE USERID = #{username}
+  </update>
+  -->
+
+ 
+
+  <!--  
+  TODO MyBatis 3 does not map booleans to integers
+  <insert id="insertProfile" parameterType="Account">
+    INSERT INTO PROFILE (LANGPREF, FAVCATEGORY, MYLISTOPT, BANNEROPT, USERID)
+    VALUES (#{languagePreference}, #{favouriteCategoryId}, #{listOption}, #{bannerOption}, #{username})
+  </insert>
+  -->
+
+
+</mapper>

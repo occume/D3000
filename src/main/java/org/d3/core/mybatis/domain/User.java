@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class User implements Serializable{
 	
 	private static final long serialVersionUID = 4184871401453031406L;
-	private long	id;
+	private int	id;
 	private String 	name;
 	private String 	password;
 	private String 	email;
@@ -18,11 +18,11 @@ public class User implements Serializable{
 		this.password = password;
 	}
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -47,11 +47,24 @@ public class User implements Serializable{
 		this.email = email;
 	}
 
-	public User(long id, String name, String email) {
-		super();
+	public User(int id, String name, String email) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
+	}
+
+	public User(int id, String name, String password, String email) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.password = password;
+		this.email = email;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", password=" + password
+				+ ", email=" + email + "]";
 	}
 
 }
