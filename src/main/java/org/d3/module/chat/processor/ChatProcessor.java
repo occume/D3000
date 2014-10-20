@@ -85,7 +85,7 @@ public class ChatProcessor  extends BaseProcessor{
 			Session targetSession = SessionManager.instance().getByName(info.getTarget());
 			Chat ret = Protobufs.makeOkChatPacket(
 					type,
-					session.getPlayer().getName(),
+					session.getUser().getName(),
 					info.getTarget(),
 					info.getInfo());
 

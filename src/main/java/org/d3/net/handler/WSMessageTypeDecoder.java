@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.DefaultEventLoopGroup;
+import io.netty.channel.EventLoopGroup;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
@@ -22,7 +23,7 @@ import io.netty.handler.timeout.IdleStateHandler;
 @Component
 @Sharable
 public class WSMessageTypeDecoder extends SimpleChannelInboundHandler<WebSocketFrame> {
-	
+	EventLoopGroup handlerEventLoopGroup = new DefaultEventLoopGroup(100, new NamedThreadFactory("D3-Packet_Handler"));
 	@Override
 	protected void messageReceived(ChannelHandlerContext ctx,
 			WebSocketFrame msg) throws Exception {
@@ -45,7 +46,7 @@ public class WSMessageTypeDecoder extends SimpleChannelInboundHandler<WebSocketF
 		}
 		PacketHandler packetHandler = (PacketHandler) D3Context.getBean("packetHandler");
 		
-		pipeline.addLast(new DefaultEventLoopGroup(100, new NamedThreadFactory("D3-Packet_Handler")), "packetHandler", packetHandler);
+		pipeline.addLast(handlerEventLoopGroup, "packetHandler", packetHandler);
 		pipeline.remove(this);
 		msg.retain();
 		ctx.fireChannelRead(msg);

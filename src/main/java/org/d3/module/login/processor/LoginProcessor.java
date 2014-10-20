@@ -58,7 +58,6 @@ public class LoginProcessor extends BaseProcessor {
 			int id = session.getUser().getId();
 			List<User> friends = userService.getFriendsById(id);
 			
-			
 			Chat chat = Protobufs.makeOkChatPacket("", "", "", ObjectConvert.Me().ojb2json(friends));
 			
 			resp = Packets.makeReplyPacket(Module.USER, UserModule.FRIEND_LIST, chat.toByteArray());

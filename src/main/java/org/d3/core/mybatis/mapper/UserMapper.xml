@@ -34,10 +34,9 @@
 	
 	<select id="getFriendsById" resultType="User">
 		SELECT * FROM d3_user WHERE id in
-			(SELECT * FROM d3_user_relation WHERE uid_1 = #{id} or uid_2 = #{id})
-			SELECT t1.uid_2 FROM d3_user_relation t1 WHERE t1.uid_1=1
+			(SELECT t1.uid_2 FROM d3_user_relation t1 WHERE t1.uid_1 = #{id}
 			UNION
-			SELECT t2.uid_1  FROM d3_user_relation t2 WHERE t2.uid_2=1
+			SELECT t2.uid_1  FROM d3_user_relation t2 WHERE t2.uid_2 = #{id})
 	</select>
  
 </mapper>
