@@ -1,6 +1,7 @@
 package org.d3.module.chat;
 
 import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.d3.module.Module;
 import org.d3.module.user.bean.Player;
@@ -23,6 +24,8 @@ public class ChatRoom{
 	private int id;
 	private String name;
 	private int number;
+	private AtomicInteger seats;
+	private int seatLimit;
 	
 	private final transient ChannelGroup channels;
 	private ConcurrentSkipListSet<Player> players = new ConcurrentSkipListSet<Player>();
@@ -30,9 +33,10 @@ public class ChatRoom{
 	private static Logger LOG = LoggerFactory.getLogger(ChatRoom.class);
 	
 	public ChatRoom(int id, String name) {
-		super();
 		this.id = id;
 		this.name = name;
+		seats = new AtomicInteger(0);
+		seatLimit = 10;
 		channels = new DefaultChannelGroup(name, GlobalEventExecutor.INSTANCE);
 	}
 	
@@ -77,36 +81,68 @@ public class ChatRoom{
 	public void setPlayers(ConcurrentSkipListSet<Player> players) {
 		this.players = players;
 	}
-
-	public synchronized void enterRoom(Session session){
-		
-		session.setRoom(this);
-		channels.add(session.channel());
-		number = channels.size();
-		players.add(session.getPlayer());
-		
-		if(LOG.isDebugEnabled()){
-			LOG.debug(session.getPlayer().getName() + " enter room " + name + ";number = " + number);
+	
+	private boolean getSeat(){
+		for(;;){
+			int value = seats.get();
+			if(value == seatLimit){
+				return false;
+			}
+			else{
+				int newValue = value + 1;
+				if(seats.compareAndSet(value, newValue)){
+					return true;
+				}
+			}
 		}
 	}
 	
-	public synchronized void leaveRoom(Session session){
-		
-		channels.remove(session.channel());
-		number = channels.size();
-		players.remove(session.getPlayer());
-		
-		Chat ret = Protobufs.makeOkChatPacket(
-				"ROOM",
-				session.getPlayer().getName(),
-				"", 
-				ObjectConvert.Me().ojb2json(this));
+	private boolean releaseSeat(){
+		for(;;){
+			int value = seats.get();
+			if(value == seatLimit){
+				return false;
+			}
+			else{
+				int newValue = value - 1;
+				if(seats.compareAndSet(value, newValue)){
+					return true;
+				}
+			}
+		}
+	}
 
-		ByteBuf resp = Packets.makeReplyPacket(Module.CHAT, ChatModule.LEAVE_ROOM, ret.toByteArray());
-		broadcast(resp);
-		
-		if(LOG.isDebugEnabled()){
-			LOG.debug(session.getPlayer().getName() + " leave room " + name + ";number = " + number);
+	public void enterRoom(Session session){
+		if(getSeat()){
+			session.setRoom(this);
+			channels.add(session.channel());
+			number = channels.size();
+			players.add(session.getPlayer());
+			
+			if(LOG.isDebugEnabled()){
+				LOG.debug(session.getPlayer().getName() + " enter room " + name + ";number = " + number);
+			}
+		}
+	}
+	
+	public void leaveRoom(Session session){
+		if(releaseSeat()){
+			channels.remove(session.channel());
+			number = channels.size();
+			players.remove(session.getPlayer());
+			
+			Chat ret = Protobufs.makeOkChatPacket(
+					"ROOM",
+					session.getPlayer().getName(),
+					"", 
+					ObjectConvert.Me().ojb2json(this));
+	
+			ByteBuf resp = Packets.makeReplyPacket(Module.CHAT, ChatModule.LEAVE_ROOM, ret.toByteArray());
+			broadcast(resp);
+			
+			if(LOG.isDebugEnabled()){
+				LOG.debug(session.getPlayer().getName() + " leave room " + name + ";number = " + number);
+			}
 		}
 	}
 }

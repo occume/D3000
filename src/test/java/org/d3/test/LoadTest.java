@@ -2,6 +2,8 @@ package org.d3.test;
 
 import java.util.concurrent.TimeUnit;
 
+import org.d3.std.Generator;
+import org.d3.std.StdArrayIO;
 import org.d3.std.Stopwatch;
 
 import io.netty.bootstrap.Bootstrap;
@@ -21,7 +23,7 @@ public class LoadTest {
 	
 	public static void main(String...strings){
 	
-		for(int i = 0; i < 10; i++){
+		for(int i = 0; i < 1; i++){
 			new Thread(new Runnable() {
 				public void run() {
 					try {
@@ -46,7 +48,7 @@ class Client{
 		b.group(worker)
 		 .channel(NioSocketChannel.class)
 		 .option(ChannelOption.SO_KEEPALIVE, true)
-		 .option(ChannelOption.TCP_NODELAY, false)
+		 .option(ChannelOption.TCP_NODELAY, true)
 		 .option(ChannelOption.SO_SNDBUF, 1024)
 		 .handler(new ChannelInitializer<SocketChannel>() {
 
@@ -54,33 +56,30 @@ class Client{
 			protected void initChannel(SocketChannel ch) throws Exception {
 				
 //				ch.pipeline().addLast(new CometorClientHandler());
-				ch.pipeline().addLast(new StringEncoder());
+//				ch.pipeline().addLast(new StringEncoder());
 			}
 			
 		});
 		
 		Channel c = b.connect("127.0.0.1", 8080).sync().channel();
 		 final Stopwatch sw = Stopwatch.newStopwatch();
-		for(int i = 0; i < 20000; i++){
+		for(int i = 0; i < 100000; i++){
 //			if(c != null && c.isActive())
 //				c.writeAndFlush("hi, this is a test!");
 //			
 //			TimeUnit.MILLISECONDS.sleep(100000);
-			if(c.isWritable()){
-				ChannelFuture f = c.writeAndFlush("hi, this is a msg " + i);
-//				if(i == 9999){
-//				f.addListener(new FutureListener<Object>() {
-//
-//					public void operationComplete(Future future)
-//							throws Exception {
-//						future.get();
-////						System.out.println(sw.longTime());
-//					}
-//				});
-//				}
-			}
-			Thread.sleep(1);
+//			if(c.isWritable()){
+
+				byte[] body = Generator.byteArray(100000);
+				int length = body.length;
+//				if(c.isWritable())
+				c.writeAndFlush(c.alloc().buffer().writeInt(length).writeBytes(body));
+//			}
+//			Thread.sleep(1);
 		}
+		byte[] body = ("over").getBytes();
+		int length = body.length;
+		c.writeAndFlush(c.alloc().buffer().writeInt(length).writeBytes(body));
 	}
 	
 }
