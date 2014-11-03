@@ -23,7 +23,7 @@ public class LoadTest {
 	
 	public static void main(String...strings){
 	
-		for(int i = 0; i < 1; i++){
+		for(int i = 0; i < 10; i++){
 			new Thread(new Runnable() {
 				public void run() {
 					try {
@@ -56,30 +56,32 @@ class Client{
 			protected void initChannel(SocketChannel ch) throws Exception {
 				
 //				ch.pipeline().addLast(new CometorClientHandler());
-//				ch.pipeline().addLast(new StringEncoder());
+				ch.pipeline().addLast(new StringEncoder());
 			}
 			
 		});
 		
-		Channel c = b.connect("127.0.0.1", 8080).sync().channel();
+		Channel c = b.connect("127.0.0.1", 10086).sync().channel();
 		 final Stopwatch sw = Stopwatch.newStopwatch();
-		for(int i = 0; i < 100000; i++){
+		for(int i = 0; i < 1000; i++){
 //			if(c != null && c.isActive())
-//				c.writeAndFlush("hi, this is a test!");
+				String name = "loadTest" + i;
+				byte[] body = name.getBytes();
+				int length = body.length;
+				c.writeAndFlush(c.alloc().buffer().writeInt(length).writeBytes(body));
 //			
 //			TimeUnit.MILLISECONDS.sleep(100000);
 //			if(c.isWritable()){
 
-				byte[] body = Generator.byteArray(100000);
-				int length = body.length;
-//				if(c.isWritable())
-				c.writeAndFlush(c.alloc().buffer().writeInt(length).writeBytes(body));
+//				byte[] body = Generator.byteArray(100000);
+//				int length = body.length;
+//				c.writeAndFlush(c.alloc().buffer().writeInt(length).writeBytes(body));
 //			}
 //			Thread.sleep(1);
 		}
-		byte[] body = ("over").getBytes();
-		int length = body.length;
-		c.writeAndFlush(c.alloc().buffer().writeInt(length).writeBytes(body));
+//		byte[] body = ("over").getBytes();
+//		int length = body.length;
+//		c.writeAndFlush(c.alloc().buffer().writeInt(length).writeBytes(body));
 	}
 	
 }

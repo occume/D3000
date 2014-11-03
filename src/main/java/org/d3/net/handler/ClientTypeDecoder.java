@@ -5,6 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.annotation.Resource;
 
+import org.d3.net.handler.string.FixedLengthMessageHandler;
 import org.d3.net.handler.string.StringHandler;
 import org.d3.net.manage.World;
 import org.d3.util.ProtocolUtil;
@@ -17,6 +18,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
 import io.netty.handler.codec.ByteToMessageDecoder;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpRequestDecoder;
 import io.netty.handler.codec.http.HttpResponseEncoder;
@@ -32,6 +34,7 @@ public class ClientTypeDecoder extends ByteToMessageDecoder {
 	
 	@Resource
 	private WSMessageTypeDecoder msgTypeDecoder;
+	final FixedLengthMessageHandler f = new FixedLengthMessageHandler();
 	
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in,
@@ -57,12 +60,14 @@ public class ClientTypeDecoder extends ByteToMessageDecoder {
 	        pipeline.remove(this);
 		}
 		else{
-			pipeline.addLast("string-decoder", new StringDecoder());
-			pipeline.addLast("string-encoder", new StringEncoder());
-			pipeline.addLast("string-handler", new StringHandler());
+//			pipeline.addLast("string-decoder", new StringDecoder());
+//			pipeline.addLast("string-encoder", new StringEncoder());
+//			pipeline.addLast("string-handler", new StringHandler());
+			pipeline.addLast(new LengthFieldBasedFrameDecoder(6553600, 0, 4, 0, 4));
+			pipeline.addLast(f);
 			
-			World.ALL.add(ctx.channel());
-			System.out.println(ctx.channel());
+//			World.ALL.add(ctx.channel());
+//			System.out.println(ctx.channel());
 			pipeline.remove(this);
 //			LOG.error("invalid protocol");
 //			ctx.writeAndFlush(1);
