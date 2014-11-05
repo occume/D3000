@@ -24,7 +24,15 @@
     VALUES
       (#{name}, #{password}, #{email})
   </insert>
-
+  
+  <insert id="batchAddUser" parameterType="java.util.List">  
+    INSERT INTO d3_user (name, PASSWORD, EMAIL)  
+    VALUES   
+    <foreach collection="list" item="item" index="index" separator="," >  
+        (#{item.name},#{item.password},#{item.email})  
+    </foreach>  
+  </insert>  
+  
 	<insert id="addFriend">
     	INSERT INTO d3_user_relation
       	(uid_1, uid_2, type)

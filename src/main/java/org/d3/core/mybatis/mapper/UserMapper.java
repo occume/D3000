@@ -15,6 +15,8 @@ public interface UserMapper {
   
   User auth(User user);
   
+  void batchAddUser(@Param("list")List<User> users); 
+  
   void addFriend(@Param(value="uid1")int uid1, 
 		  		 @Param(value="uid2")int uid2, 
 		  		 @Param(value="type")int type);

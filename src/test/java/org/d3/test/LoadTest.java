@@ -23,7 +23,7 @@ public class LoadTest {
 	
 	public static void main(String...strings){
 	
-		for(int i = 0; i < 10; i++){
+		for(int i = 0; i < 100; i++){
 			new Thread(new Runnable() {
 				public void run() {
 					try {
@@ -47,9 +47,9 @@ class Client{
 		Bootstrap b = new Bootstrap();
 		b.group(worker)
 		 .channel(NioSocketChannel.class)
-		 .option(ChannelOption.SO_KEEPALIVE, true)
 		 .option(ChannelOption.TCP_NODELAY, true)
-		 .option(ChannelOption.SO_SNDBUF, 1024)
+		 .option(ChannelOption.SO_SNDBUF, 1)
+		 
 		 .handler(new ChannelInitializer<SocketChannel>() {
 
 			@Override
@@ -62,8 +62,10 @@ class Client{
 		});
 		
 		Channel c = b.connect("127.0.0.1", 10086).sync().channel();
+//		c.writeAndFlush("11");
+//		Thread.sleep(10);
 		 final Stopwatch sw = Stopwatch.newStopwatch();
-		for(int i = 0; i < 1000; i++){
+		for(int i = 0; i < 10001; i++){
 //			if(c != null && c.isActive())
 				String name = "loadTest" + i;
 				byte[] body = name.getBytes();
@@ -77,7 +79,7 @@ class Client{
 //				int length = body.length;
 //				c.writeAndFlush(c.alloc().buffer().writeInt(length).writeBytes(body));
 //			}
-//			Thread.sleep(1);
+//			Thread.sleep(100);
 		}
 //		byte[] body = ("over").getBytes();
 //		int length = body.length;

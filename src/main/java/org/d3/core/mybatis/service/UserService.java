@@ -23,6 +23,10 @@ public class UserService {
   public void addUser(User user) {
 	  userMapper.addUser(user);
   }
+  @Transactional
+  public void batchAddUser(List<User> users){
+	  userMapper.batchAddUser(users);
+  }
   
 //  @ReadThroughSingleCache(namespace = "occume", expiration = 3600)
   public User getById(int id) {

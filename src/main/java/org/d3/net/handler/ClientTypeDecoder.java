@@ -34,12 +34,13 @@ public class ClientTypeDecoder extends ByteToMessageDecoder {
 	
 	@Resource
 	private WSMessageTypeDecoder msgTypeDecoder;
-	final FixedLengthMessageHandler f = new FixedLengthMessageHandler();
+	@Resource
+	private FixedLengthMessageHandler f;
 	
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in,
 			List<Object> out) throws Exception {
-//		System.out.println(in);
+//		System.out.println(ctx.channel().remoteAddress());
 //		for(int i = 0; i < 100; i++){
 //			ctx.channel().write(ctx.alloc().buffer().writeByte(i));
 //		}
@@ -49,6 +50,7 @@ public class ClientTypeDecoder extends ByteToMessageDecoder {
 		in.readerIndex(0);
 		
 		ChannelPipeline pipeline = ctx.pipeline();
+//		System.out.println(pipeline);
 		if(ProtocolUtil.isHttp(m1, m2)){
 			
 			pipeline.addLast("decoder", new HttpRequestDecoder());
@@ -67,7 +69,7 @@ public class ClientTypeDecoder extends ByteToMessageDecoder {
 			pipeline.addLast(f);
 			
 //			World.ALL.add(ctx.channel());
-//			System.out.println(ctx.channel());
+//			System.out.println(pipeline);
 			pipeline.remove(this);
 //			LOG.error("invalid protocol");
 //			ctx.writeAndFlush(1);
@@ -78,8 +80,9 @@ public class ClientTypeDecoder extends ByteToMessageDecoder {
 	static AtomicInteger clientCount = new AtomicInteger(1);
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
-		System.out.print(clientCount.getAndIncrement() + " >> ");
-		System.out.println(ctx.channel().remoteAddress());
+//		System.out.print(clientCount.getAndIncrement() + " >> ");
+//		System.out.println(ctx.channel().remoteAddress());
+		System.out.println(f);
 		ctx.fireChannelActive();
 	}
 
