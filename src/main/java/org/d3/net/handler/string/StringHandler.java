@@ -16,9 +16,9 @@ public class StringHandler extends SimpleChannelInboundHandler<String> {
 			throws Exception {
 //		String resp = "FROM:[" + ctx.channel().remoteAddress() + "]; TO:[ALL]";
 //		World.MSG_COUNT.incrementAndGet();
-		UserService us = (UserService) D3Context.getBean("userService");
-		User user = new User(msg, msg);
-		us.addUser(user);
+//		UserService us = (UserService) D3Context.getBean("userService");
+//		User user = new User(msg, msg);
+//		us.addUser(user);
 //		World.ALL.writeAndFlush(resp);
 	}
 

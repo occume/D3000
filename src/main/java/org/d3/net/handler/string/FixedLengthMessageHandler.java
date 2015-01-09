@@ -74,12 +74,12 @@ public class FixedLengthMessageHandler extends SimpleChannelInboundHandler<ByteB
 		
 		synchronized(users){
 		users.add(user);
-		if(users.size() == 1000){
-			us.batchAddUser(users);
-			users.clear();
+//		if(users.size() == 1000){
+//			us.batchAddUser(users);
+//			users.clear();
+//		}
 		}
-		}
-		if(count.compareAndSet(1000000, 0)){
+		if(count.compareAndSet(100000, 0)){
 			System.out.println(ctx.channel().getClass() + " " + sw.longTime());
 			System.out.println(msg.toString(Charset.defaultCharset()));
 			System.out.println("total: " + totalCount);

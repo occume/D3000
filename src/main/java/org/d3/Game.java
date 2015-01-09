@@ -1,6 +1,6 @@
 package org.d3;
 
-import org.d3.core.transfer.Module;
+//import org.d3.core.transfer.Module;
 
 public interface Game extends LifeCycle{
 	
@@ -8,5 +8,5 @@ public interface Game extends LifeCycle{
 	
 	Room createRoom();
 	
-	Module getModule(int key);
+//	Module getModule(int key);
 }

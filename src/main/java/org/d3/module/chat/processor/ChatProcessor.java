@@ -83,6 +83,10 @@ public class ChatProcessor  extends BaseProcessor{
 		else{
 
 			Session targetSession = SessionManager.instance().getByName(info.getTarget());
+			if(targetSession == null){
+				System.out.println("not online");
+			}
+			else{
 			Chat ret = Protobufs.makeOkChatPacket(
 					type,
 					session.getUser().getName(),
@@ -96,6 +100,7 @@ public class ChatProcessor  extends BaseProcessor{
 //				session.channel().write(resp.copy());
 //			}
 //			session.channel().flush();
+			}
 		}
 	}
 

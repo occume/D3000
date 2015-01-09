@@ -1,5 +1,6 @@
 package org.d3.game;
 
+import java.util.Collection;
 import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ScheduledFuture;
@@ -86,5 +87,11 @@ public class NbxxRoom extends BaseRoom {
 			}
 		}
 		return -1;
+	}
+
+	@Override
+	public Collection<Player> getPlayers() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

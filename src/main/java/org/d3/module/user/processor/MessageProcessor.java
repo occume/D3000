@@ -6,10 +6,9 @@ import org.d3.core.mybatis.domain.Message;
 import org.d3.core.mybatis.domain.User;
 import org.d3.core.mybatis.service.MessageService;
 import org.d3.core.mybatis.service.UserService;
-import org.d3.module.BaseProcessor;
+import org.d3.module.Processor;
 import org.d3.module.user.MessageType;
 import org.d3.module.user.UserCmd;
-import org.d3.module.user.UserModule;
 import org.d3.module.user.UserRelationType;
 import org.d3.net.packet.InPacket;
 import org.d3.net.packet.Packets;
@@ -23,21 +22,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MessageProcessor extends BaseProcessor {
-	
-	public MessageProcessor() throws Exception{
-		super();
-	}
+public class MessageProcessor implements Processor {
 	
 	private static Logger LOG = LoggerFactory.getLogger(MessageProcessor.class);
 	
 	@Autowired
-	private UserService userService;
+	private UserService userDao;
 	@Autowired
 	private MessageService messageService;
 
 	@Override
-	public void doProcess(Session session, InPacket ask) {
+	public void process(Session session, InPacket ask) {
 		
 		byte[] data = (byte[]) ask.getTuple();
 		UserCmd cmd = Protobufs.getUserCmd(data);
@@ -86,7 +81,7 @@ public class MessageProcessor extends BaseProcessor {
 		User target = lookupUserByName(cmd.getTarget());
 		Session targetSession = SessionManager.instance().getByName(target.getName());
 		
-		userService.addFriend(session.getUser().getId(),
+		userDao.addFriend(session.getUser().getId(),
 					targetSession.getUser().getId(), 
 					UserRelationType.FRIEND);
 		
@@ -108,23 +103,8 @@ public class MessageProcessor extends BaseProcessor {
 	}
 
 	private User lookupUserByName(String name){
-		User user = userService.getByName(name);
+		User user = userDao.getByName(name);
 		return user;
 	}
 
-	@Override
-	public String getModuleName() {
-		return "userModule";
-	}
-
-	@Override
-	public int getType() {
-		return UserModule.MESSAGE;
-	}
-
-	@Override
-	public String getDescription() {
-		return "MessageProcessor";
-	}
-	
 }

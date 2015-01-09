@@ -10,7 +10,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 //import org.agilewiki.jactor2.core.blades.pubSub.RequestBus;
 //import org.agilewiki.jactor2.core.reactors.NonBlockingReactor;
 import org.d3.Room;
-import org.d3.core.transfer.Charactor;
 import org.d3.game.bean.Player;
 import org.d3.net.packet.Packet;
 import org.d3.net.packet.Packets;
@@ -28,7 +27,7 @@ public abstract class BaseRoom  implements Room {
 	public BaseRoom(String id, String name){
 		this.id = id;
 		this.name = name;
-		players = Maps.newConcurrentMap();
+//		players = Maps.newConcurrentMap();
 		
 //		try {
 //			_reactor = new NonBlockingReactor();
@@ -46,11 +45,11 @@ public abstract class BaseRoom  implements Room {
 		int currReadyCount = readyCount.incrementAndGet();
 		System.out.println("ready-----------");
 		System.out.println(currReadyCount);
-		System.out.println(getPlayerCount());
+//		System.out.println(getPlayerCount());
 		synchronized (this) {
-			if(currReadyCount == getPlayerCount()){
-				startGame();
-			}
+//			if(currReadyCount == getPlayerCount()){
+//				startGame();
+//			}
 		}
 	}
 
@@ -59,7 +58,7 @@ public abstract class BaseRoom  implements Room {
 		int currReadyCount = readyCount.decrementAndGet();
 		System.out.println("unready-----------");
 		System.out.println(currReadyCount);
-		System.out.println(getPlayerCount());
+//		System.out.println(getPlayerCount());
 		synchronized (this) {
 			if(currReadyCount == 0){
 				stopGame();
@@ -68,7 +67,7 @@ public abstract class BaseRoom  implements Room {
 		
 	}
 	
-	private ConcurrentMap<String, Charactor> players;
+//	private ConcurrentMap<String, Charactor> players;
 	
 	private int size = 0;
 	protected int MONSTER_COUNT =20;
@@ -89,51 +88,51 @@ public abstract class BaseRoom  implements Room {
 	protected abstract void onLeaveRoom(Player player);
 	protected abstract int freeSeat();
 	
-	public boolean joinRoom(final Charactor charactor){
-		synchronized (this) {
-			if(size > getRoomSize()){
-				return false;
-			}
-			size++;
-		}
-		int seat = freeSeat();
-		System.out.println("seat = " + seat);
-		Player player = charactor.getPlayer();
-		player.setSeat(seat);
-		players.put(charactor.getId(), charactor);
+//	public boolean joinRoom(final Charactor charactor){
+//		synchronized (this) {
+//			if(size > getRoomSize()){
+//				return false;
+//			}
+//			size++;
+//		}
+//		int seat = freeSeat();
+//		System.out.println("seat = " + seat);
+//		Player player = charactor.getPlayer();
+//		player.setSeat(seat);
+//		players.put(charactor.getId(), charactor);
+//
+////		charactor.register(requestBus, _reactor);
+//		return true;
+//	}
+	
+//	public void leaveRoom(Charactor charactor){
+//		size--;
+//		Player player = charactor.getPlayer();
+//		
+//		players.remove(charactor.getId());
+//		
+////		Packet ret = Packets.newPacket(Packets.ROOM, Packets.ROOM_LEAVE, getPlayers());
+////		broadcast(ret);
+//		onLeaveRoom(player);
+//	}
+	
+	
+//	public Collection<Player> getPlayers(){
+//		ArrayList<Player> ret = Lists.newArrayList();
+//		for(Charactor c: players.values()){
+//			ret.add(c.getPlayer());
+//		}
+//		return ret;
+//	}
+	
+//	public void close(){
+//		players.clear();
+//		players = null;
+//	}
 
-//		charactor.register(requestBus, _reactor);
-		return true;
-	}
-	
-	public void leaveRoom(Charactor charactor){
-		size--;
-		Player player = charactor.getPlayer();
-		
-		players.remove(charactor.getId());
-		
-//		Packet ret = Packets.newPacket(Packets.ROOM, Packets.ROOM_LEAVE, getPlayers());
-//		broadcast(ret);
-		onLeaveRoom(player);
-	}
-	
-	
-	public Collection<Player> getPlayers(){
-		ArrayList<Player> ret = Lists.newArrayList();
-		for(Charactor c: players.values()){
-			ret.add(c.getPlayer());
-		}
-		return ret;
-	}
-	
-	public void close(){
-		players.clear();
-		players = null;
-	}
-
-	protected int getPlayerCount(){
-		return players.size();
-	}
+//	protected int getPlayerCount(){
+//		return players.size();
+//	}
 
 	public String getId() {
 		return id;

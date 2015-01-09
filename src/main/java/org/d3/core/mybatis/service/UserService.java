@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.codehaus.jackson.map.util.BeanUtil;
 import org.d3.core.mybatis.domain.User;
+import org.d3.core.mybatis.domain.UserRelation;
 import org.d3.core.mybatis.mapper.UserMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,16 +31,20 @@ public class UserService {
   
 //  @ReadThroughSingleCache(namespace = "occume", expiration = 3600)
   public User getById(int id) {
-	  System.out.println(123);
 	  return  userMapper.getById(id);
   }
   
   public User getByName(String name) {
-	  return  userMapper.getByName(name);
+	  User user = null;
+	  try{
+		  user = userMapper.getByName(name);
+	  }catch(Exception e){
+		  LOG.error("{}", e.getMessage());
+	  }
+	  return user;
   }
   
   public boolean auth(User user){
-	  System.out.println(user);
 	  
 	  try{
 		  User ret = userMapper.auth(user);
@@ -63,4 +68,7 @@ public class UserService {
 	  return userMapper.getFriendsById(id);
   }
   
+  public List<UserRelation> getRelationsById(int id, List<Integer> ids){
+	  return userMapper.getRelationsById(id, ids);
+  }
 }

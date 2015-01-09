@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.d3.core.mybatis.domain.User;
+import org.d3.core.mybatis.domain.UserRelation;
 
 public interface UserMapper {
 
@@ -23,4 +24,5 @@ public interface UserMapper {
   
   List<User> getFriendsById(@Param(value="id")int id);
   
+  List<UserRelation> getRelationsById(@Param(value="id")int id, @Param(value="list")List<Integer> ids);
 }

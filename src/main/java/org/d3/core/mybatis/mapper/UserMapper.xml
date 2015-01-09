@@ -7,11 +7,11 @@
   <cache />
 
   <select id="getById" parameterType="int" resultType="User">
-    SELECT * FROM d3_user WHERE id = #{id}
+    SELECT id, name, email FROM d3_user WHERE id = #{id}
   </select>
   
   <select id="getByName" parameterType="string" resultType="User">
-    SELECT * FROM d3_user WHERE name = #{name}
+    SELECT id, name, email FROM d3_user WHERE name = #{name}
   </select>
   
   <select id="auth" parameterType="User" resultType="User">
@@ -31,7 +31,7 @@
     <foreach collection="list" item="item" index="index" separator="," >  
         (#{item.name},#{item.password},#{item.email})  
     </foreach>  
-  </insert>  
+  </insert>
   
 	<insert id="addFriend">
     	INSERT INTO d3_user_relation
@@ -41,10 +41,28 @@
 	</insert>
 	
 	<select id="getFriendsById" resultType="User">
-		SELECT * FROM d3_user WHERE id in
+		SELECT name, email FROM d3_user WHERE id in
 			(SELECT t1.uid_2 FROM d3_user_relation t1 WHERE t1.uid_1 = #{id}
 			UNION
 			SELECT t2.uid_1  FROM d3_user_relation t2 WHERE t2.uid_2 = #{id})
+	</select>
+	
+	<select id="getRelationsById" resultType="UserRelation">
+		Select
+        	uid_1 as uid1, uid_2 as uid2, type
+         from d3_user_relation where uid_1 = #{id} and uid_2 in
+                  <foreach item="item" index="index" collection="list" 
+                         open="(" separator="," close=")">
+                        #{item}
+                </foreach>
+        Union
+        Select
+        	uid_2 as uid1, uid_1 as uid2, type
+         from d3_user_relation where uid_2 = #{id} and uid_1 in
+                  <foreach item="item" index="index" collection="list" 
+                         open="(" separator="," close=")">
+                        #{item}
+                </foreach>
 	</select>
  
 </mapper>

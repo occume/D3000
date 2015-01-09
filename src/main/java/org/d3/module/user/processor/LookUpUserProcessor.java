@@ -1,6 +1,7 @@
 package org.d3.module.user.processor;
 
 import java.util.Collection;
+import java.util.Collections;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -37,7 +38,7 @@ public class LookUpUserProcessor extends BaseProcessor {
 	
 	private static Logger LOG = LoggerFactory.getLogger(LookUpUserProcessor.class);
 	@Autowired
-	private UserService userService;
+	private UserService userDao;
 
 	@Override
 	public void doProcess(Session session, InPacket ask) {
@@ -51,7 +52,13 @@ public class LookUpUserProcessor extends BaseProcessor {
 		
 		switch(type){
 			case 1:
-				result = lookupUserByName(cmd.getName());
+				User user = lookupUserByName(cmd.getName());
+				if(user == null){
+					result = Collections.singletonList("");
+				}
+				else{
+					result = Collections.singletonList(user);
+				}
 				break;
 			case 2:
 				result = SessionManager.instance().randomUsers();
@@ -69,7 +76,7 @@ public class LookUpUserProcessor extends BaseProcessor {
 	}
 	
 	private User lookupUserByName(String name){
-		User user = userService.getByName(name);
+		User user = userDao.getByName(name);
 		return user;
 	}
 

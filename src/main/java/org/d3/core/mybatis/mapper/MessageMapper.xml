@@ -20,6 +20,10 @@
     VALUES
       (#{type},#{uid1}, #{uid2}, #{readed}, #{result}, #{info}, #{happenTime}, #{lastModifyTime})
   </insert>
+  
+ 	<select id="getMsgsByRcvId" resultType="Message">
+		SELECT * FROM d3_message WHERE uid2 = #{uid} and readed = 0
+	</select>
 
   <!--  
   TODO MyBatis 3 does not map booleans to integers

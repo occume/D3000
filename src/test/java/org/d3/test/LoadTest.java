@@ -23,7 +23,7 @@ public class LoadTest {
 	
 	public static void main(String...strings){
 	
-		for(int i = 0; i < 100; i++){
+		for(int i = 0; i < 10; i++){
 			new Thread(new Runnable() {
 				public void run() {
 					try {
@@ -61,11 +61,11 @@ class Client{
 			
 		});
 		
-		Channel c = b.connect("127.0.0.1", 10086).sync().channel();
+		Channel c = b.connect("127.0.0.1", 28256).sync().channel();
 //		c.writeAndFlush("11");
 //		Thread.sleep(10);
 		 final Stopwatch sw = Stopwatch.newStopwatch();
-		for(int i = 0; i < 10001; i++){
+		for(int i = 0; i < 100000; i++){
 //			if(c != null && c.isActive())
 				String name = "loadTest" + i;
 				byte[] body = name.getBytes();

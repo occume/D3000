@@ -10,6 +10,8 @@ public class User implements Serializable{
 	private String 	password;
 	private String 	email;
 	
+	private int		relation;
+	
 	public User(){}
 	
 	public User(String name, String password) {
@@ -45,6 +47,14 @@ public class User implements Serializable{
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public int getRelation() {
+		return relation;
+	}
+
+	public void setRelation(int relation) {
+		this.relation = relation;
 	}
 
 	public User(int id, String name, String email) {

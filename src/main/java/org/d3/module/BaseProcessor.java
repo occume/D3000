@@ -79,13 +79,13 @@ public abstract class BaseProcessor implements Processor {
 	
 	@PostConstruct
 	public void register() {
-		Registry registry = (Registry) D3Context.getBean(getModuleName());
-		if(registry != null){
-			if(LOG.isDebugEnabled()){
-				LOG.debug("register " +getDescription());
-			}
-			registry.register(getType(), this);
-		}
+//		Registry registry = (Registry) D3Context.getBean(getModuleName());
+//		if(registry != null){
+//			if(LOG.isDebugEnabled()){
+//				LOG.debug("register " +getDescription());
+//			}
+////			registry.register(getType(), this);
+//		}
 	}
 
 }

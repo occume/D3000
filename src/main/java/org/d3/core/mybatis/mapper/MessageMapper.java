@@ -1,5 +1,8 @@
 package org.d3.core.mybatis.mapper;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
 import org.d3.core.mybatis.domain.Message;
 
 public interface MessageMapper {
@@ -10,4 +13,5 @@ public interface MessageMapper {
   
   Message getByUid2(int uid2);
   
+  List<Message> getMsgsByRcvId(@Param(value="uid")int uid);
 }

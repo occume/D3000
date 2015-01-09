@@ -1,7 +1,6 @@
 package org.d3.net.handler;
 
 import org.d3.core.mybatis.domain.User;
-import org.d3.core.transfer.Charactor;
 import org.d3.module.Dispatcher;
 import org.d3.module.Module;
 import org.d3.net.packet.InPacket;

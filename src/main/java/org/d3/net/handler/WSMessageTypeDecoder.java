@@ -1,7 +1,6 @@
 package org.d3.net.handler;
 
 import org.d3.D3Context;
-import org.d3.core.transfer.Charactor;
 import org.d3.net.protocol.ProtobufDecoder;
 import org.d3.net.protocol.ProtobufEncoder;
 import org.d3.net.protocol.TextWebsocketDecoder;
@@ -52,18 +51,18 @@ public class WSMessageTypeDecoder extends SimpleChannelInboundHandler<WebSocketF
 		ctx.fireChannelRead(msg);
 	}
 	
-	private void applyProtocol(ChannelHandlerContext ctx, Charactor c){
-		
-		ChannelPipeline pipeline = ctx.pipeline();
-		TextWebsocketDecoder decoder = (TextWebsocketDecoder) D3Context.getBean("textWebsocketDecoder");
-		TextWebsocketEncoder encoder = (TextWebsocketEncoder) D3Context.getBean("textWebsocketEncoder");
-		pipeline.addLast(decoder);
-		pipeline.addLast(encoder);
-		pipeline.addLast("idleStateCheck", new IdleStateHandler(
-				300, 300, 300));
-//		pipeline.addLast(new PacketHandler(c));
-		
-		pipeline.remove(this);
-	}
+//	private void applyProtocol(ChannelHandlerContext ctx, Charactor c){
+//		
+//		ChannelPipeline pipeline = ctx.pipeline();
+//		TextWebsocketDecoder decoder = (TextWebsocketDecoder) D3Context.getBean("textWebsocketDecoder");
+//		TextWebsocketEncoder encoder = (TextWebsocketEncoder) D3Context.getBean("textWebsocketEncoder");
+//		pipeline.addLast(decoder);
+//		pipeline.addLast(encoder);
+//		pipeline.addLast("idleStateCheck", new IdleStateHandler(
+//				300, 300, 300));
+////		pipeline.addLast(new PacketHandler(c));
+//		
+//		pipeline.remove(this);
+//	}
 
 }

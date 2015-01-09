@@ -41,8 +41,8 @@ public abstract class BaseModule implements Module {
 		return processors.get(cmd);
 	}
 	
-	public void register(int type, Registerable module) {
-		processors.put(type, (Processor)module);
+	public void register(int type, Processor processor) {
+		processors.put(type, processor);
 	}
 
 }

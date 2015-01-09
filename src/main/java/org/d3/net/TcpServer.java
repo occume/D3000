@@ -48,7 +48,7 @@ public class TcpServer implements Server {
 			 .option(ChannelOption.SO_BACKLOG, 128)
 			 .option(ChannelOption.TCP_NODELAY, true)
 //			 .option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
-			 .option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
+//			 .option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
 			 .childOption(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
              .childOption(ChannelOption.SO_KEEPALIVE, true);
 			
