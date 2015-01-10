@@ -7,7 +7,6 @@ import javax.annotation.Resource;
 
 import org.d3.net.handler.string.FixedLengthMessageHandler;
 import org.d3.net.handler.string.StringHandler;
-import org.d3.net.manage.World;
 import org.d3.util.ProtocolUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

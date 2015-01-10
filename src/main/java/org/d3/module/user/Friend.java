@@ -22,15 +22,22 @@ public class Friend {
 	public void askFriend(UserCmd cmd, Session session) {
 		
 		User target = lookupUserByName(cmd.getTarget());
-		Session targetSession = SessionManager.instance().getByName(target.getName());
+		
 		
 		Message message = new Message();
 		message.setUid1(session.getUser().getId());
 		message.setUid2(target.getId());
 		message.setType(MessageType.ASK_ADD_FRIEND);
 		
-		messageService.addMessage(message);
+		Message existed = messageService.getMsg(message);
+		System.out.println(existed);
+		if(existed != null){
+			Sender.instance().repeatRequest(session);
+			return;
+		}
 		
+		messageService.addMessage(message);
+		Session targetSession = SessionManager.instance().getByName(target.getName());
 		if(targetSession == null || !targetSession.isActive()){
 			System.out.println("not online");
 			//缓存消息

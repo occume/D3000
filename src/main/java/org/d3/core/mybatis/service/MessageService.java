@@ -34,4 +34,8 @@ public class MessageService {
 	public List<Message> getMsgsByRcvId(int rcvId){
 		return messageMapper.getMsgsByRcvId(rcvId);
 	}
+	
+	public Message getMsg(Message message){
+		return messageMapper.getMsg(message);
+	}
 }

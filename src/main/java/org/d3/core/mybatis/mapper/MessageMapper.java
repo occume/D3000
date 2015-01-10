@@ -14,4 +14,6 @@ public interface MessageMapper {
   Message getByUid2(int uid2);
   
   List<Message> getMsgsByRcvId(@Param(value="uid")int uid);
+  
+  Message getMsg(Message message);
 }

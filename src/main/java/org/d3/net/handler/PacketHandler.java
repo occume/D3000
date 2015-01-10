@@ -21,8 +21,6 @@ import io.netty.channel.SimpleChannelInboundHandler;
 @Scope("prototype")
 public class PacketHandler extends SimpleChannelInboundHandler<InPacket> {
 	
-//	private Charactor charactor;
-	
 	private static Logger LOG = LoggerFactory.getLogger(PacketHandler.class);
 	private Session session;
 	

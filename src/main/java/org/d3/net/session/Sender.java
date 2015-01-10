@@ -17,6 +17,7 @@ import org.d3.module.user.UserModule;
 import org.d3.net.packet.InPacket;
 import org.d3.net.packet.Packets;
 import org.d3.net.packet.Protobufs;
+import org.d3.net.packet.Statu;
 import org.d3.net.packet.protobuf.Game;
 import org.d3.net.packet.protobuf.Game.Chat;
 import org.d3.net.packet.protobuf.Game.Login;
@@ -77,6 +78,16 @@ public class Sender {
 				cmd.getName(),
 				cmd.getTarget(),
 				""
+			);
+
+		ByteBuf resp = Packets.makeReplyPacket(Module.USER, UserModule.MESSAGE, ret.toByteArray());
+		session.sendMessage(resp);
+	}
+	
+	public void repeatRequest(Session session){
+		Chat ret = Protobufs.makePacket(
+				String.valueOf(MessageType.ASK_ADD_FRIEND),
+				Statu.REPEAT_REQUEST, ""
 			);
 
 		ByteBuf resp = Packets.makeReplyPacket(Module.USER, UserModule.MESSAGE, ret.toByteArray());

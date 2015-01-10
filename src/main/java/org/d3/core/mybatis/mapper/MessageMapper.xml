@@ -13,6 +13,10 @@
   <select id="getByUid1" parameterType="int" resultType="Message">
     SELECT * FROM d3_message WHERE uid1 = #{uid1}
   </select>
+  
+  <select id="getMsg" parameterType="Message" resultType="Message">
+    SELECT * FROM d3_message WHERE uid1 = #{uid1} and uid2 = #{uid2} and type = #{type} and readed = 0
+  </select>
 
   <insert id="addMessage" parameterType="Message">
     INSERT INTO d3_message

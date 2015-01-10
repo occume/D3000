@@ -17,7 +17,6 @@ import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
-import io.netty.handler.timeout.IdleStateHandler;
 
 @Component
 @Sharable

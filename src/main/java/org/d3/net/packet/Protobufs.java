@@ -5,7 +5,6 @@ import org.d3.module.chat.ChatInfo;
 import org.d3.module.user.UserCmd;
 import org.d3.net.packet.protobuf.Game;
 import org.d3.net.packet.protobuf.Game.Chat;
-import org.d3.util.ObjectConvert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -64,5 +63,9 @@ public class Protobufs {
 	public static Game.Chat makeOkChatPacket(String type, String name, 
 						String target, String info){
 		return makeChatPacket(type, name, target, info, "00", "");
+	}
+	
+	public static Game.Chat makePacket(String type, int statu, String statuDesc){
+		return makeChatPacket(type, "", "", "", String.valueOf(statu), statuDesc);
 	}
 }

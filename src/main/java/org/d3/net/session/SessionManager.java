@@ -9,7 +9,6 @@ import java.util.Map.Entry;
 import org.d3.D3Context;
 import org.d3.core.mybatis.domain.User;
 import org.d3.module.user.bean.Player;
-import org.d3.net.manage.World;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -102,7 +101,7 @@ public class SessionManager {
 	@Scheduled(cron = "0/1 * * * * *")
 	protected void worldBroadcast() {
 		
-		World.ALL.writeAndFlush("This is a world broadcast; player: " + World.ALL.size() + "; message: " + World.MSG_COUNT.get());
+//		World.ALL.writeAndFlush("This is a world broadcast; player: " + World.ALL.size() + "; message: " + World.MSG_COUNT.get());
 		
 	}
 }

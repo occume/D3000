@@ -11,5 +11,4 @@ public class World {
 	public static ChannelGroup ALL = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 	
 	public static AtomicLong MSG_COUNT = new AtomicLong();
-	
 }

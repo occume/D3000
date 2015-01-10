@@ -3,7 +3,6 @@ package org.d3.net.handler.string;
 import org.d3.D3Context;
 import org.d3.core.mybatis.domain.User;
 import org.d3.core.mybatis.service.UserService;
-import org.d3.net.manage.World;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;

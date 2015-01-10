@@ -76,6 +76,10 @@ public class UserModule extends BaseModule{
 						if(user == null){
 							result = Collections.singletonList("");
 						}
+						else if(user.getName().equals(session.getUser().getName())){
+							user.setRelation(-1);
+							result = Collections.singletonList(user);
+						}
 						else{
 							result = Collections.singletonList(user);
 							ids.add(user.getId());
